@@ -1,0 +1,128 @@
+name: Microsoft Entra API
+description: Microsoft Entra (formerly Azure Active Directory) provides identity and access management services including authentication, authorization, and directory services.
+url: https://learn.microsoft.com/en-us/entra/
+image: https://www.microsoft.com/en-us/security/content/dam/microsoft/final/security/includes/microsoft-entra-logo.svg
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+apis:
+- name: Microsoft Entra ID (Azure AD) API
+  description: Core identity and access management API for user authentication, authorization, and directory management
+  image: https://www.microsoft.com/en-us/security/content/dam/microsoft/final/security/includes/microsoft-entra-logo.svg
+  humanUrl: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
+  baseUrl: https://graph.microsoft.com/v1.0
+  tags:
+  - Identity
+  - Authentication
+  - Authorization
+  - Directory
+  - Users
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: https://learn.microsoft.com/en-us/graph/api/overview
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/entra/identity/
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/graph/auth/
+  - type: SDKs
+    url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
+  - type: Pricing
+    url: https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing
+- name: Microsoft Entra ID Protection API
+  description: API for identity risk detection, investigation, and remediation
+  humanUrl: https://learn.microsoft.com/en-us/graph/api/resources/identityprotection-overview
+  baseUrl: https://graph.microsoft.com/v1.0
+  tags:
+  - Security
+  - Risk Detection
+  - Identity Protection
+  - Threat Protection
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/entra/id-protection/
+  - type: API Reference
+    url: https://learn.microsoft.com/en-us/graph/api/resources/identityprotectionroot
+- name: Microsoft Entra Conditional Access API
+  description: API for managing conditional access policies and controls
+  humanUrl: https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccessroot
+  baseUrl: https://graph.microsoft.com/v1.0
+  tags:
+  - Conditional Access
+  - Policies
+  - Security
+  - Access Control
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/entra/identity/conditional-access/
+  - type: API Reference
+    url: https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccessroot
+- name: Microsoft Entra Privileged Identity Management API
+  description: API for managing privileged access and just-in-time administration
+  humanUrl: https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview
+  baseUrl: https://graph.microsoft.com/v1.0
+  tags:
+  - Privileged Access
+  - PIM
+  - Just-in-Time
+  - Role Management
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/
+  - type: API Reference
+    url: https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview
+- name: Microsoft Entra Verified ID API
+  description: API for issuing and verifying decentralized identity credentials
+  humanUrl: https://learn.microsoft.com/en-us/entra/verified-id/
+  baseUrl: https://verifiedid.did.msidentity.com/v1.0
+  tags:
+  - Verifiable Credentials
+  - Decentralized Identity
+  - DID
+  - SSI
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/entra/verified-id/verifiable-credentials-configure-tenant
+  - type: API Reference
+    url: https://learn.microsoft.com/en-us/entra/verified-id/get-started-request-api
+- name: Microsoft Entra External ID API
+  description: API for managing customer and partner identity and access management
+  humanUrl: https://learn.microsoft.com/en-us/entra/external-id/
+  baseUrl: https://graph.microsoft.com/v1.0
+  tags:
+  - External Identities
+  - B2B
+  - B2C
+  - Customer Identity
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/entra/external-id/external-identities-overview
+  - type: API Reference
+    url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
+common:
+- type: Portal
+  url: https://entra.microsoft.com/
+- type: Getting Started
+  url: https://learn.microsoft.com/en-us/entra/fundamentals/
+- type: Blog
+  url: https://techcommunity.microsoft.com/t5/microsoft-entra-azure-ad-blog/bg-p/Identity
+- type: Support
+  url: https://learn.microsoft.com/en-us/entra/fundamentals/how-to-get-support
+- type: Status
+  url: https://status.azure.com/
+- type: Terms of Service
+  url: https://www.microsoft.com/licensing/terms/
+- type: Privacy Policy
+  url: https://privacy.microsoft.com/
+maintainers:
+- FN: Microsoft
+  email: support@microsoft.com
+  url: https://www.microsoft.com/
+tags:
+- Identity
+- Access Management
+- Authentication
+- Security
+- Microsoft
+- Entra
+- Azure AD
