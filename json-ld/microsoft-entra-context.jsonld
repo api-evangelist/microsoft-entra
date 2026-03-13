@@ -1,0 +1,293 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "entra": "https://graph.microsoft.com/v1.0/",
+    "graph": "https://graph.microsoft.com/ns/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+
+    "User": {
+      "@id": "graph:User",
+      "@context": {
+        "id": "graph:id",
+        "displayName": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "givenName": {
+          "@id": "schema:givenName",
+          "@type": "xsd:string"
+        },
+        "surname": {
+          "@id": "schema:familyName",
+          "@type": "xsd:string"
+        },
+        "mail": {
+          "@id": "schema:email",
+          "@type": "xsd:string"
+        },
+        "userPrincipalName": {
+          "@id": "graph:userPrincipalName",
+          "@type": "xsd:string"
+        },
+        "jobTitle": {
+          "@id": "schema:jobTitle",
+          "@type": "xsd:string"
+        },
+        "department": {
+          "@id": "graph:department",
+          "@type": "xsd:string"
+        },
+        "companyName": {
+          "@id": "schema:worksFor",
+          "@type": "xsd:string"
+        },
+        "officeLocation": {
+          "@id": "schema:workLocation",
+          "@type": "xsd:string"
+        },
+        "mobilePhone": {
+          "@id": "schema:telephone",
+          "@type": "xsd:string"
+        },
+        "businessPhones": {
+          "@id": "graph:businessPhones",
+          "@container": "@set"
+        },
+        "streetAddress": {
+          "@id": "vcard:street-address",
+          "@type": "xsd:string"
+        },
+        "city": {
+          "@id": "vcard:locality",
+          "@type": "xsd:string"
+        },
+        "state": {
+          "@id": "vcard:region",
+          "@type": "xsd:string"
+        },
+        "postalCode": {
+          "@id": "vcard:postal-code",
+          "@type": "xsd:string"
+        },
+        "country": {
+          "@id": "vcard:country-name",
+          "@type": "xsd:string"
+        },
+        "userType": "graph:userType",
+        "accountEnabled": "graph:accountEnabled",
+        "employeeId": {
+          "@id": "graph:employeeId",
+          "@type": "xsd:string"
+        },
+        "employeeType": "graph:employeeType",
+        "employeeHireDate": {
+          "@id": "graph:employeeHireDate",
+          "@type": "xsd:dateTime"
+        },
+        "preferredLanguage": {
+          "@id": "schema:knowsLanguage",
+          "@type": "xsd:string"
+        },
+        "usageLocation": "graph:usageLocation",
+        "createdDateTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "lastSignInDateTime": {
+          "@id": "graph:lastSignInDateTime",
+          "@type": "xsd:dateTime"
+        },
+        "onPremisesSyncEnabled": "graph:onPremisesSyncEnabled",
+        "proxyAddresses": {
+          "@id": "graph:proxyAddresses",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Group": {
+      "@id": "graph:Group",
+      "@context": {
+        "id": "graph:id",
+        "displayName": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "description": {
+          "@id": "schema:description",
+          "@type": "xsd:string"
+        },
+        "mail": {
+          "@id": "schema:email",
+          "@type": "xsd:string"
+        },
+        "mailEnabled": "graph:mailEnabled",
+        "mailNickname": "graph:mailNickname",
+        "securityEnabled": "graph:securityEnabled",
+        "groupTypes": {
+          "@id": "graph:groupTypes",
+          "@container": "@set"
+        },
+        "visibility": "graph:visibility",
+        "membershipRule": "graph:membershipRule",
+        "isAssignableToRole": "graph:isAssignableToRole",
+        "createdDateTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "members": {
+          "@id": "graph:members",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "owners": {
+          "@id": "graph:owners",
+          "@type": "@id",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Application": {
+      "@id": "graph:Application",
+      "@context": {
+        "id": "graph:id",
+        "appId": {
+          "@id": "graph:appId",
+          "@type": "xsd:string"
+        },
+        "displayName": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "description": {
+          "@id": "schema:description",
+          "@type": "xsd:string"
+        },
+        "signInAudience": "graph:signInAudience",
+        "identifierUris": {
+          "@id": "graph:identifierUris",
+          "@container": "@set"
+        },
+        "tags": {
+          "@id": "schema:keywords",
+          "@container": "@set"
+        },
+        "publisherDomain": {
+          "@id": "graph:publisherDomain",
+          "@type": "xsd:string"
+        },
+        "createdDateTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "requiredResourceAccess": {
+          "@id": "graph:requiredResourceAccess",
+          "@container": "@set"
+        },
+        "appRoles": {
+          "@id": "graph:appRoles",
+          "@container": "@set"
+        },
+        "keyCredentials": {
+          "@id": "graph:keyCredentials",
+          "@container": "@set"
+        },
+        "passwordCredentials": {
+          "@id": "graph:passwordCredentials",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "ServicePrincipal": {
+      "@id": "graph:ServicePrincipal",
+      "@context": {
+        "id": "graph:id",
+        "appId": {
+          "@id": "graph:appId",
+          "@type": "xsd:string"
+        },
+        "displayName": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "description": {
+          "@id": "schema:description",
+          "@type": "xsd:string"
+        },
+        "servicePrincipalType": "graph:servicePrincipalType",
+        "appDisplayName": {
+          "@id": "graph:appDisplayName",
+          "@type": "xsd:string"
+        },
+        "accountEnabled": "graph:accountEnabled",
+        "homepage": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "loginUrl": {
+          "@id": "graph:loginUrl",
+          "@type": "@id"
+        },
+        "logoutUrl": {
+          "@id": "graph:logoutUrl",
+          "@type": "@id"
+        },
+        "replyUrls": {
+          "@id": "graph:replyUrls",
+          "@container": "@set"
+        },
+        "servicePrincipalNames": {
+          "@id": "graph:servicePrincipalNames",
+          "@container": "@set"
+        },
+        "tags": {
+          "@id": "schema:keywords",
+          "@container": "@set"
+        },
+        "appRoleAssignmentRequired": "graph:appRoleAssignmentRequired",
+        "createdDateTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "AppRoleAssignment": {
+      "@id": "graph:AppRoleAssignment",
+      "@context": {
+        "id": "graph:id",
+        "appRoleId": {
+          "@id": "graph:appRoleId",
+          "@type": "xsd:string"
+        },
+        "principalId": {
+          "@id": "graph:principalId",
+          "@type": "xsd:string"
+        },
+        "principalType": "graph:principalType",
+        "principalDisplayName": {
+          "@id": "graph:principalDisplayName",
+          "@type": "xsd:string"
+        },
+        "resourceId": {
+          "@id": "graph:resourceId",
+          "@type": "xsd:string"
+        },
+        "resourceDisplayName": {
+          "@id": "graph:resourceDisplayName",
+          "@type": "xsd:string"
+        },
+        "createdDateTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    }
+  }
+}

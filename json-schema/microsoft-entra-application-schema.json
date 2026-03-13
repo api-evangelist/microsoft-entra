@@ -1,0 +1,562 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://graph.microsoft.com/schemas/microsoft-entra/application.json",
+  "title": "Microsoft Entra Application",
+  "description": "Schema for a Microsoft Entra ID application registration as represented in the Microsoft Graph API. Defines the application's identity configuration, credentials, permissions, redirect URIs, and sign-in settings.",
+  "type": "object",
+  "required": [
+    "displayName"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the application object (GUID). This is the directory object ID, not the appId/client ID.",
+      "readOnly": true
+    },
+    "appId": {
+      "type": "string",
+      "description": "The unique application (client) identifier assigned by Microsoft Entra ID during app registration.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The display name for the application."
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "Free text field to provide a description of the application object to end users.",
+      "maxLength": 1024
+    },
+    "signInAudience": {
+      "type": "string",
+      "description": "Specifies which Microsoft accounts are supported for the current application.",
+      "enum": [
+        "AzureADMyOrg",
+        "AzureADMultipleOrgs",
+        "AzureADandPersonalMicrosoftAccount",
+        "PersonalMicrosoftAccount"
+      ],
+      "default": "AzureADMyOrg"
+    },
+    "identifierUris": {
+      "type": "array",
+      "description": "User-defined URIs that uniquely identify a Web application within its Microsoft Entra tenant or verified custom domain (e.g., api://contoso.com/myapp).",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "web": {
+      "$ref": "#/$defs/WebApplication"
+    },
+    "spa": {
+      "$ref": "#/$defs/SpaApplication"
+    },
+    "publicClient": {
+      "$ref": "#/$defs/PublicClientApplication"
+    },
+    "api": {
+      "$ref": "#/$defs/ApiApplication"
+    },
+    "requiredResourceAccess": {
+      "type": "array",
+      "description": "Specifies the resources that the application needs access to and the set of OAuth permission scopes and app roles required under each resource.",
+      "items": {
+        "$ref": "#/$defs/RequiredResourceAccess"
+      }
+    },
+    "appRoles": {
+      "type": "array",
+      "description": "Collection of roles defined for the application. These roles can be assigned to users, groups, or service principals.",
+      "items": {
+        "$ref": "#/$defs/AppRole"
+      }
+    },
+    "keyCredentials": {
+      "type": "array",
+      "description": "Collection of key (certificate) credentials associated with the application for token signing and verification.",
+      "items": {
+        "$ref": "#/$defs/KeyCredential"
+      }
+    },
+    "passwordCredentials": {
+      "type": "array",
+      "description": "Collection of password credentials (client secrets) associated with the application.",
+      "items": {
+        "$ref": "#/$defs/PasswordCredential"
+      }
+    },
+    "optionalClaims": {
+      "$ref": "#/$defs/OptionalClaims"
+    },
+    "info": {
+      "$ref": "#/$defs/InformationalUrl"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Custom strings that can be used to categorize and identify the application.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "groupMembershipClaims": {
+      "type": ["string", "null"],
+      "description": "Configures the groups claim issued in user or OAuth 2.0 access tokens.",
+      "enum": [
+        "None",
+        "SecurityGroup",
+        "DirectoryRole",
+        "ApplicationGroup",
+        "All",
+        null
+      ]
+    },
+    "isFallbackPublicClient": {
+      "type": ["boolean", "null"],
+      "description": "Specifies the fallback application type as public client (e.g., installed application on a mobile device). Default is false.",
+      "default": false
+    },
+    "defaultRedirectUri": {
+      "type": ["string", "null"],
+      "description": "The default redirect URI. If specified, it is used when no specific redirect URI is matched."
+    },
+    "certification": {
+      "type": ["object", "null"],
+      "description": "Publisher certification status of the application.",
+      "readOnly": true,
+      "properties": {
+        "isPublisherAttested": {
+          "type": "boolean",
+          "description": "Whether the application has been attested by the publisher."
+        },
+        "isCertifiedByMicrosoft": {
+          "type": "boolean",
+          "description": "Whether the application has been certified by Microsoft."
+        },
+        "lastCertificationDateTime": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Timestamp of last certification."
+        }
+      }
+    },
+    "publisherDomain": {
+      "type": "string",
+      "description": "The verified publisher domain for the application.",
+      "readOnly": true
+    },
+    "createdDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the application was registered.",
+      "readOnly": true
+    },
+    "deletedDateTime": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "The date and time the application was deleted.",
+      "readOnly": true
+    }
+  },
+  "$defs": {
+    "WebApplication": {
+      "type": "object",
+      "description": "Settings for a web application including redirect URIs and implicit grant configuration.",
+      "properties": {
+        "redirectUris": {
+          "type": "array",
+          "description": "Specifies URLs to which Azure AD will redirect after authentication for web applications.",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "homePageUrl": {
+          "type": ["string", "null"],
+          "description": "Home page or landing page URL of the application.",
+          "format": "uri"
+        },
+        "logoutUrl": {
+          "type": ["string", "null"],
+          "description": "URL used by the authorization service to sign out the user using front-channel, back-channel, or SAML logout protocols.",
+          "format": "uri"
+        },
+        "implicitGrantSettings": {
+          "type": "object",
+          "description": "Specifies whether this web application can request tokens using the OAuth 2.0 implicit flow.",
+          "properties": {
+            "enableIdTokenIssuance": {
+              "type": "boolean",
+              "description": "Specifies whether this web application can request an ID token using the OAuth 2.0 implicit flow.",
+              "default": false
+            },
+            "enableAccessTokenIssuance": {
+              "type": "boolean",
+              "description": "Specifies whether this web application can request an access token using the OAuth 2.0 implicit flow.",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "SpaApplication": {
+      "type": "object",
+      "description": "Settings for a single-page application including redirect URIs for MSAL.js 2.0 auth code flow with PKCE.",
+      "properties": {
+        "redirectUris": {
+          "type": "array",
+          "description": "Specifies redirect URIs for the SPA to receive authorization codes and access tokens.",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "PublicClientApplication": {
+      "type": "object",
+      "description": "Settings for installed (public client) applications on mobile and desktop devices.",
+      "properties": {
+        "redirectUris": {
+          "type": "array",
+          "description": "Specifies redirect URIs for native/public client applications (mobile and desktop).",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ApiApplication": {
+      "type": "object",
+      "description": "Settings for an application that implements a web API including permission scopes and pre-authorized applications.",
+      "properties": {
+        "acceptMappedClaims": {
+          "type": ["boolean", "null"],
+          "description": "When true, allows an application to use claims mapping without specifying a custom signing key."
+        },
+        "knownClientApplications": {
+          "type": "array",
+          "description": "Client application IDs considered as known clients for bundling consent.",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "oauth2PermissionScopes": {
+          "type": "array",
+          "description": "The definition of the delegated permissions (OAuth 2.0 scopes) exposed by the web API.",
+          "items": {
+            "$ref": "#/$defs/PermissionScope"
+          }
+        },
+        "preAuthorizedApplications": {
+          "type": "array",
+          "description": "Lists applications pre-authorized with the specified delegated permissions to access this API without user consent.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "The appId of the pre-authorized client application."
+              },
+              "delegatedPermissionIds": {
+                "type": "array",
+                "description": "The IDs of the OAuth 2.0 permission scopes the client is pre-authorized for.",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        },
+        "requestedAccessTokenVersion": {
+          "type": ["integer", "null"],
+          "description": "Specifies the access token version expected by this resource. Values: 1 (v1.0 tokens) or 2 (v2.0 tokens).",
+          "enum": [1, 2, null]
+        }
+      }
+    },
+    "PermissionScope": {
+      "type": "object",
+      "description": "Defines a delegated permission (OAuth 2.0 scope) that a web API application exposes to client applications.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique delegated permission identifier inside the collection of scopes."
+        },
+        "value": {
+          "type": "string",
+          "description": "The scope value string included in OAuth 2.0 access tokens (e.g., User.Read, Mail.Send)."
+        },
+        "type": {
+          "type": "string",
+          "description": "Whether this scope can be consented by end users or only by admins.",
+          "enum": ["User", "Admin"]
+        },
+        "adminConsentDisplayName": {
+          "type": "string",
+          "description": "Title of the permission shown on the admin consent page."
+        },
+        "adminConsentDescription": {
+          "type": "string",
+          "description": "Description of the permission shown on the admin consent page."
+        },
+        "userConsentDisplayName": {
+          "type": ["string", "null"],
+          "description": "Title of the permission shown on the user consent page."
+        },
+        "userConsentDescription": {
+          "type": ["string", "null"],
+          "description": "Description of the permission shown on the user consent page."
+        },
+        "isEnabled": {
+          "type": "boolean",
+          "description": "When creating or updating a permission, this must be set to true. To delete a permission, first set to false.",
+          "default": true
+        }
+      }
+    },
+    "RequiredResourceAccess": {
+      "type": "object",
+      "description": "Specifies the set of OAuth 2.0 permission scopes and app roles under a specified resource that an application requires.",
+      "properties": {
+        "resourceAppId": {
+          "type": "string",
+          "description": "The appId of the resource application (e.g., 00000003-0000-0000-c000-000000000000 for Microsoft Graph)."
+        },
+        "resourceAccess": {
+          "type": "array",
+          "description": "The list of OAuth 2.0 permission scopes and app roles required from the specified resource.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "The unique identifier for an app role or OAuth2 permission scope exposed by the resource application."
+              },
+              "type": {
+                "type": "string",
+                "description": "Specifies whether the id references a delegated permission (Scope) or an application permission (Role).",
+                "enum": ["Scope", "Role"]
+              }
+            },
+            "required": ["id", "type"]
+          }
+        }
+      },
+      "required": ["resourceAppId", "resourceAccess"]
+    },
+    "AppRole": {
+      "type": "object",
+      "description": "Represents an application role that can be requested by a client application calling another app, or assigned to users or groups.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique role identifier inside the appRoles collection."
+        },
+        "allowedMemberTypes": {
+          "type": "array",
+          "description": "Specifies whether the app role can be assigned to users/groups, applications, or both.",
+          "items": {
+            "type": "string",
+            "enum": ["User", "Application"]
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name for the permission that appears in the app role assignment and consent experiences."
+        },
+        "description": {
+          "type": ["string", "null"],
+          "description": "Description of the permission that appears in admin app assignment and consent experiences."
+        },
+        "value": {
+          "type": ["string", "null"],
+          "description": "Value included in the roles claim in ID tokens and access tokens authenticating an assigned user or service principal.",
+          "maxLength": 120
+        },
+        "isEnabled": {
+          "type": "boolean",
+          "description": "When creating or updating an app role, this must be set to true.",
+          "default": true
+        },
+        "origin": {
+          "type": "string",
+          "description": "Specifies if the app role is defined on the application or service principal object.",
+          "readOnly": true
+        }
+      }
+    },
+    "KeyCredential": {
+      "type": "object",
+      "description": "Contains a key (certificate) credential associated with an application used for token signing and verification.",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The unique identifier for the key."
+        },
+        "displayName": {
+          "type": ["string", "null"],
+          "description": "Friendly name for the key."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of key credential.",
+          "enum": ["AsymmetricX509Cert", "X509CertAndPassword"]
+        },
+        "usage": {
+          "type": "string",
+          "description": "A string that describes the purpose for which the key can be used.",
+          "enum": ["Sign", "Verify"]
+        },
+        "key": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "description": "The certificate's raw data in byte array converted to Base64 string."
+        },
+        "startDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the credential becomes valid."
+        },
+        "endDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the credential expires."
+        },
+        "customKeyIdentifier": {
+          "type": ["string", "null"],
+          "contentEncoding": "base64",
+          "description": "Custom key identifier (typically the certificate thumbprint)."
+        }
+      }
+    },
+    "PasswordCredential": {
+      "type": "object",
+      "description": "Represents a password credential (client secret) associated with an application.",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The unique identifier for the password.",
+          "readOnly": true
+        },
+        "displayName": {
+          "type": ["string", "null"],
+          "description": "Friendly name for the password. Maximum length is 32 characters.",
+          "maxLength": 32
+        },
+        "hint": {
+          "type": "string",
+          "description": "Contains the first three characters of the password.",
+          "readOnly": true,
+          "maxLength": 3
+        },
+        "secretText": {
+          "type": "string",
+          "description": "The strong password or secret generated by Microsoft Entra ID. Only returned at creation time and cannot be retrieved later.",
+          "readOnly": true
+        },
+        "startDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the password becomes valid."
+        },
+        "endDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time at which the password expires."
+        }
+      }
+    },
+    "OptionalClaims": {
+      "type": "object",
+      "description": "Declares the optional claims requested by an application. The application can configure optional claims to be returned in tokens from the Microsoft identity platform.",
+      "properties": {
+        "idToken": {
+          "type": "array",
+          "description": "The optional claims requested in the JWT ID token.",
+          "items": {
+            "$ref": "#/$defs/OptionalClaim"
+          }
+        },
+        "accessToken": {
+          "type": "array",
+          "description": "The optional claims requested in the JWT access token.",
+          "items": {
+            "$ref": "#/$defs/OptionalClaim"
+          }
+        },
+        "saml2Token": {
+          "type": "array",
+          "description": "The optional claims requested in the SAML token.",
+          "items": {
+            "$ref": "#/$defs/OptionalClaim"
+          }
+        }
+      }
+    },
+    "OptionalClaim": {
+      "type": "object",
+      "description": "An optional claim associated with an application.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the optional claim."
+        },
+        "source": {
+          "type": ["string", "null"],
+          "description": "The source (directory object) of the claim. If null, the claim is a predefined optional claim."
+        },
+        "essential": {
+          "type": "boolean",
+          "description": "If true, the claim specified by the client is necessary to ensure a smooth authorization experience.",
+          "default": false
+        },
+        "additionalProperties": {
+          "type": "array",
+          "description": "Additional properties of the claim.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "InformationalUrl": {
+      "type": "object",
+      "description": "Basic profile information of the application for user-facing scenarios.",
+      "properties": {
+        "logoUrl": {
+          "type": ["string", "null"],
+          "description": "CDN URL to the application's logo.",
+          "format": "uri"
+        },
+        "marketingUrl": {
+          "type": ["string", "null"],
+          "description": "Link to the application's marketing page.",
+          "format": "uri"
+        },
+        "privacyStatementUrl": {
+          "type": ["string", "null"],
+          "description": "Link to the application's privacy statement.",
+          "format": "uri"
+        },
+        "supportUrl": {
+          "type": ["string", "null"],
+          "description": "Link to the application's support page.",
+          "format": "uri"
+        },
+        "termsOfServiceUrl": {
+          "type": ["string", "null"],
+          "description": "Link to the application's terms of service statement.",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1962 @@
+openapi: 3.1.0
+info:
+  title: Microsoft Graph Identity API
+  description: >-
+    RESTful API for managing identity resources in Microsoft Entra ID
+    (formerly Azure Active Directory) through Microsoft Graph. Provides
+    CRUD operations for users, groups, applications, and service principals
+    enabling directory management, identity governance, and application
+    integration.
+  version: v1.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph
+  termsOfService: https://www.microsoft.com/licensing/terms/
+  license:
+    name: Microsoft API License
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+externalDocs:
+  description: Microsoft Graph Identity and Access Management Documentation
+  url: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
+servers:
+  - url: https://graph.microsoft.com/v1.0
+    description: Microsoft Graph v1.0 production endpoint
+  - url: https://graph.microsoft.com/beta
+    description: Microsoft Graph beta endpoint (preview features)
+tags:
+  - name: Users
+    description: >-
+      Manage user accounts in the directory including creation, updates,
+      profile management, and lifecycle operations
+  - name: Groups
+    description: >-
+      Manage groups for organizing users, devices, and other principals
+      including Microsoft 365 groups, security groups, and distribution lists
+  - name: Applications
+    description: >-
+      Register and manage application objects that define application
+      configuration including credentials, permissions, and sign-in settings
+  - name: ServicePrincipals
+    description: >-
+      Manage service principal objects that represent application instances
+      in a tenant for authentication and authorization
+security:
+  - oauth2: []
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List users
+      description: >-
+        Retrieve a list of user objects in the directory. Returns a paged
+        collection of user resources with support for OData query parameters
+        including $select, $filter, $orderby, $top, $skip, $count, $search,
+        and $expand.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/Count'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/Expand'
+        - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of user objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createUser
+      summary: Create user
+      description: >-
+        Create a new user in the directory. The request body must contain
+        the required properties including displayName, accountEnabled,
+        mailNickname, userPrincipalName, and passwordProfile.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /users/{user-id}:
+    get:
+      operationId: getUser
+      summary: Get user
+      description: >-
+        Retrieve the properties and relationships of a user object.
+        Specify the user by id or userPrincipalName.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Expand'
+      responses:
+        '200':
+          description: User object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateUser
+      summary: Update user
+      description: >-
+        Update the properties of a user object. Not all properties can be
+        updated by member or guest users with their default permissions
+        without administrator roles.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '204':
+          description: User updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteUser
+      summary: Delete user
+      description: >-
+        Delete a user object. The user is moved to the deletedItems
+        container and can be restored within 30 days. After 30 days the
+        user is permanently deleted.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '204':
+          description: User deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /users/{user-id}/memberOf:
+    get:
+      operationId: listUserMemberOf
+      summary: List user group memberships
+      description: >-
+        Get the groups, directory roles, and administrative units that the
+        user is a direct member of.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Top'
+      responses:
+        '200':
+          description: Collection of directory objects the user is a member of
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryObjectCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /groups:
+    get:
+      operationId: listGroups
+      summary: List groups
+      description: >-
+        List all groups in the directory including Microsoft 365 groups,
+        security groups, mail-enabled security groups, and distribution
+        groups. Returns a paged collection with OData query support.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/Count'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/Expand'
+        - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of group objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createGroup
+      summary: Create group
+      description: >-
+        Create a new group in the directory. You can create Microsoft 365
+        groups, security groups, or mail-enabled security groups. Specify
+        the groupTypes, mailEnabled, and securityEnabled properties to
+        determine the type of group.
+      tags:
+        - Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '201':
+          description: Group created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /groups/{group-id}:
+    get:
+      operationId: getGroup
+      summary: Get group
+      description: >-
+        Get the properties and relationships of a group object. Returns
+        the default set of properties unless $select is specified.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Expand'
+      responses:
+        '200':
+          description: Group object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateGroup
+      summary: Update group
+      description: >-
+        Update the properties of a group object. Not all properties can be
+        updated depending on the group type.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '204':
+          description: Group updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteGroup
+      summary: Delete group
+      description: >-
+        Delete a group. Deleting a Microsoft 365 group moves it to the
+        deletedItems container where it can be restored within 30 days.
+        Security groups are permanently deleted immediately.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+      responses:
+        '204':
+          description: Group deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /groups/{group-id}/members:
+    get:
+      operationId: listGroupMembers
+      summary: List group members
+      description: >-
+        Get the direct members of a group. A group can have users, devices,
+        other groups, organizational contacts, and service principals as
+        members.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Count'
+        - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of directory objects that are members of the group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryObjectCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /groups/{group-id}/members/$ref:
+    post:
+      operationId: addGroupMember
+      summary: Add group member
+      description: >-
+        Add a member to a Microsoft 365 group or a security group by
+        posting a reference to the directory object to add.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ODataReference'
+      responses:
+        '204':
+          description: Member added successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /groups/{group-id}/members/{directoryObject-id}/$ref:
+    delete:
+      operationId: removeGroupMember
+      summary: Remove group member
+      description: >-
+        Remove a member from a group via the members navigation property.
+        Specify the member to remove by its directory object id.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+        - name: directoryObject-id
+          in: path
+          required: true
+          description: Unique identifier of the directory object to remove
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Member removed successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /applications:
+    get:
+      operationId: listApplications
+      summary: List applications
+      description: >-
+        Get the list of application registrations in the directory. Returns
+        the application objects with their configuration properties including
+        credentials, permissions, and sign-in settings.
+      tags:
+        - Applications
+      parameters:
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/Count'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of application objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApplication
+      summary: Create application
+      description: >-
+        Create a new application registration in the directory. The
+        application object represents the global definition of the app
+        including its identity, access configuration, and settings.
+      tags:
+        - Applications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '201':
+          description: Application created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /applications/{application-id}:
+    get:
+      operationId: getApplication
+      summary: Get application
+      description: >-
+        Get the properties and relationships of an application object by
+        its id (object id, not appId).
+      tags:
+        - Applications
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Expand'
+      responses:
+        '200':
+          description: Application object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApplication
+      summary: Update application
+      description: >-
+        Update the properties of an application object.
+      tags:
+        - Applications
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '204':
+          description: Application updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApplication
+      summary: Delete application
+      description: >-
+        Delete an application object. The application is moved to the
+        deletedItems container and can be restored within 30 days.
+      tags:
+        - Applications
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      responses:
+        '204':
+          description: Application deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /applications/{application-id}/addPassword:
+    post:
+      operationId: addApplicationPassword
+      summary: Add password credential
+      description: >-
+        Add a strong password or secret to an application. The response
+        includes the generated secretText which is only returned at
+        creation time and cannot be retrieved later.
+      tags:
+        - Applications
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordCredential'
+      responses:
+        '200':
+          description: Password credential created with secretText
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordCredential'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /applications/{application-id}/removePassword:
+    post:
+      operationId: removeApplicationPassword
+      summary: Remove password credential
+      description: >-
+        Remove a password credential from an application by specifying
+        the keyId of the password to remove.
+      tags:
+        - Applications
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - keyId
+              properties:
+                keyId:
+                  type: string
+                  format: uuid
+                  description: The unique identifier for the password to remove
+      responses:
+        '204':
+          description: Password credential removed successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /servicePrincipals:
+    get:
+      operationId: listServicePrincipals
+      summary: List service principals
+      description: >-
+        Retrieve a list of service principal objects in the directory.
+        A service principal represents an instance of an application in
+        a tenant and is the identity used for authentication and
+        authorization.
+      tags:
+        - ServicePrincipals
+      parameters:
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/OrderBy'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/Count'
+        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of service principal objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServicePrincipalCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createServicePrincipal
+      summary: Create service principal
+      description: >-
+        Create a new service principal in the directory. The appId property
+        in the request body is required and must reference an existing
+        application registration.
+      tags:
+        - ServicePrincipals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServicePrincipal'
+      responses:
+        '201':
+          description: Service principal created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServicePrincipal'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /servicePrincipals/{servicePrincipal-id}:
+    get:
+      operationId: getServicePrincipal
+      summary: Get service principal
+      description: >-
+        Retrieve the properties and relationships of a service principal
+        object.
+      tags:
+        - ServicePrincipals
+      parameters:
+        - $ref: '#/components/parameters/ServicePrincipalId'
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Expand'
+      responses:
+        '200':
+          description: Service principal object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServicePrincipal'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateServicePrincipal
+      summary: Update service principal
+      description: >-
+        Update the properties of a service principal object.
+      tags:
+        - ServicePrincipals
+      parameters:
+        - $ref: '#/components/parameters/ServicePrincipalId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServicePrincipal'
+      responses:
+        '204':
+          description: Service principal updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteServicePrincipal
+      summary: Delete service principal
+      description: >-
+        Delete a service principal object. This removes the application
+        instance from the tenant but does not delete the application
+        registration.
+      tags:
+        - ServicePrincipals
+      parameters:
+        - $ref: '#/components/parameters/ServicePrincipalId'
+      responses:
+        '204':
+          description: Service principal deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /servicePrincipals/{servicePrincipal-id}/appRoleAssignments:
+    get:
+      operationId: listServicePrincipalAppRoleAssignments
+      summary: List app role assignments
+      description: >-
+        Get the app role assignments granted to this service principal.
+        App role assignments represent permissions granted to the service
+        principal to call another application's API.
+      tags:
+        - ServicePrincipals
+      parameters:
+        - $ref: '#/components/parameters/ServicePrincipalId'
+        - $ref: '#/components/parameters/Select'
+        - $ref: '#/components/parameters/Top'
+      responses:
+        '200':
+          description: Collection of app role assignments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRoleAssignmentCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: grantServicePrincipalAppRoleAssignment
+      summary: Grant app role assignment
+      description: >-
+        Grant an app role assignment to a service principal. App roles
+        assigned to service principals are also known as application
+        permissions.
+      tags:
+        - ServicePrincipals
+      parameters:
+        - $ref: '#/components/parameters/ServicePrincipalId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppRoleAssignment'
+      responses:
+        '201':
+          description: App role assignment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRoleAssignment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authorization using Microsoft identity platform.
+        Supports authorization code flow for delegated permissions
+        and client credentials flow for application permissions.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            User.Read: Read the signed-in user's profile
+            User.ReadWrite: Read and update the signed-in user's profile
+            User.Read.All: Read all users' profiles
+            User.ReadWrite.All: Read and write all users' profiles
+            Group.Read.All: Read all groups
+            Group.ReadWrite.All: Read and write all groups
+            GroupMember.Read.All: Read all group memberships
+            GroupMember.ReadWrite.All: Read and write all group memberships
+            Application.Read.All: Read all applications
+            Application.ReadWrite.All: Read and write all applications
+            Directory.Read.All: Read directory data
+            Directory.ReadWrite.All: Read and write directory data
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token
+          scopes:
+            https://graph.microsoft.com/.default: Default scope for application permissions
+  parameters:
+    UserId:
+      name: user-id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the user (object ID) or the
+        userPrincipalName (e.g., user@contoso.com)
+      schema:
+        type: string
+    GroupId:
+      name: group-id
+      in: path
+      required: true
+      description: Unique identifier of the group (object ID)
+      schema:
+        type: string
+    ApplicationId:
+      name: application-id
+      in: path
+      required: true
+      description: Unique identifier of the application (object ID, not appId)
+      schema:
+        type: string
+    ServicePrincipalId:
+      name: servicePrincipal-id
+      in: path
+      required: true
+      description: Unique identifier of the service principal (object ID)
+      schema:
+        type: string
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: >-
+        Comma-separated list of properties to include in the response.
+        If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: >-
+        Include a count of the total number of items in the collection.
+        Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: >-
+        Search string to filter results using tokenized search across
+        displayName and description properties. Requires ConsistencyLevel
+        header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: >-
+        Consistency level for advanced query capabilities. Set to
+        'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+          - eventual
+  schemas:
+    User:
+      type: object
+      description: >-
+        Represents a Microsoft Entra ID user account. Contains identity,
+        contact, organizational, and authentication properties.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: >-
+            Unique identifier for the user (GUID). Assigned automatically
+            by the directory.
+        displayName:
+          type: string
+          description: The name displayed in the address book for the user
+        givenName:
+          type: ['string', 'null']
+          description: The given name (first name) of the user
+        surname:
+          type: ['string', 'null']
+          description: The surname (family name) of the user
+        mail:
+          type: ['string', 'null']
+          description: >-
+            The SMTP address of the user. This property cannot be set
+            during creation for cloud-only users.
+        userPrincipalName:
+          type: string
+          description: >-
+            The user principal name (UPN) of the user in the format
+            alias@domain. The domain must be present in the tenant's
+            verified domains collection.
+          format: email
+        mailNickname:
+          type: string
+          description: >-
+            The mail alias for the user. Must be specified when creating
+            a new user.
+        accountEnabled:
+          type: boolean
+          description: >-
+            true if the account is enabled; otherwise, false. Must be
+            specified when creating a new user.
+        passwordProfile:
+          $ref: '#/components/schemas/PasswordProfile'
+        jobTitle:
+          type: ['string', 'null']
+          description: The user's job title
+        department:
+          type: ['string', 'null']
+          description: The department in which the user works
+        officeLocation:
+          type: ['string', 'null']
+          description: The office location in the user's place of business
+        companyName:
+          type: ['string', 'null']
+          description: The company name associated with the user
+        mobilePhone:
+          type: ['string', 'null']
+          description: The primary cellular telephone number for the user
+        businessPhones:
+          type: array
+          description: The telephone numbers for the user's business
+          items:
+            type: string
+        streetAddress:
+          type: ['string', 'null']
+          description: The street address of the user's place of business
+        city:
+          type: ['string', 'null']
+          description: The city in which the user is located
+        state:
+          type: ['string', 'null']
+          description: The state or province in the user's address
+        postalCode:
+          type: ['string', 'null']
+          description: The postal code for the user's postal address
+        country:
+          type: ['string', 'null']
+          description: >-
+            The country or region in which the user is located (ISO 3166
+            two-letter code)
+        usageLocation:
+          type: ['string', 'null']
+          description: >-
+            Two-letter country code (ISO 3166). Required for users
+            assigned licenses due to legal requirements for checking
+            service availability.
+        preferredLanguage:
+          type: ['string', 'null']
+          description: >-
+            The preferred language for the user in ISO 639-1 code format
+            (e.g., en-US)
+        userType:
+          type: string
+          description: >-
+            Classification of the user type relative to the tenant
+          enum:
+            - Member
+            - Guest
+        employeeId:
+          type: ['string', 'null']
+          description: >-
+            The employee identifier assigned by the organization
+        employeeType:
+          type: ['string', 'null']
+          description: >-
+            Captures the type of worker (e.g., Employee, Contractor,
+            Consultant, Vendor)
+        employeeHireDate:
+          type: ['string', 'null']
+          format: date-time
+          description: The date and time when the user was hired
+        onPremisesSyncEnabled:
+          type: ['boolean', 'null']
+          readOnly: true
+          description: >-
+            true if this user is synced from an on-premises directory;
+            false if originally created in Azure AD; null if never synced
+        onPremisesSamAccountName:
+          type: ['string', 'null']
+          readOnly: true
+          description: >-
+            The on-premises SAM account name synchronized from the
+            on-premises directory
+        proxyAddresses:
+          type: array
+          readOnly: true
+          description: >-
+            List of proxy addresses for the user including SMTP and smtp
+            prefixed addresses
+          items:
+            type: string
+        assignedLicenses:
+          type: array
+          readOnly: true
+          description: Licenses assigned to the user
+          items:
+            $ref: '#/components/schemas/AssignedLicense'
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date and time the user was created
+        lastSignInDateTime:
+          type: ['string', 'null']
+          format: date-time
+          readOnly: true
+          description: >-
+            The date and time of the user's most recent interactive
+            sign-in activity
+    PasswordProfile:
+      type: object
+      description: >-
+        Contains the password profile associated with a user. The
+        passwordProfile property of the user entity is a passwordProfile
+        object.
+      properties:
+        password:
+          type: string
+          writeOnly: true
+          description: >-
+            The password for the user. Must satisfy the password complexity
+            requirements of the tenant. Required on create.
+        forceChangePasswordNextSignIn:
+          type: boolean
+          description: >-
+            true if the user must change the password on the next sign-in;
+            false otherwise
+          default: false
+        forceChangePasswordNextSignInWithMfa:
+          type: boolean
+          description: >-
+            true if the user must perform multi-factor authentication
+            before being forced to change the password
+          default: false
+    AssignedLicense:
+      type: object
+      description: Represents a license assigned to a user
+      properties:
+        disabledPlans:
+          type: array
+          description: Collection of unique identifiers for disabled service plans
+          items:
+            type: string
+            format: uuid
+        skuId:
+          type: string
+          format: uuid
+          description: Unique identifier for the SKU
+    Group:
+      type: object
+      description: >-
+        Represents a Microsoft Entra group. Groups can be Microsoft 365
+        groups, security groups, mail-enabled security groups, or
+        distribution groups.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the group (GUID)
+        displayName:
+          type: string
+          description: The display name for the group. Required on create.
+        description:
+          type: ['string', 'null']
+          description: An optional description for the group
+        mailEnabled:
+          type: boolean
+          description: >-
+            Specifies whether the group is mail-enabled. Required on
+            create. Set to true for Microsoft 365 groups.
+        mailNickname:
+          type: string
+          description: >-
+            The mail alias for the group, unique for Microsoft 365 groups.
+            Required on create.
+        securityEnabled:
+          type: boolean
+          description: >-
+            Specifies whether the group is a security group. Required on
+            create. Set to false for Microsoft 365 groups.
+        groupTypes:
+          type: array
+          description: >-
+            Specifies the group type. Set to ["Unified"] for Microsoft
+            365 groups. Empty array or ["DynamicMembership"] for other
+            types.
+          items:
+            type: string
+            enum:
+              - Unified
+              - DynamicMembership
+        visibility:
+          type: ['string', 'null']
+          description: >-
+            Specifies the group's join policy and content visibility for
+            Microsoft 365 groups
+          enum:
+            - Public
+            - Private
+            - HiddenMembership
+            - null
+        membershipRule:
+          type: ['string', 'null']
+          description: >-
+            The rule that determines members for this group if the group
+            is a dynamic group. Example: user.department -eq "Marketing"
+        membershipRuleProcessingState:
+          type: ['string', 'null']
+          description: >-
+            Indicates whether the dynamic membership processing is on or
+            paused. Possible values are On or Paused.
+          enum:
+            - 'On'
+            - Paused
+            - null
+        mail:
+          type: ['string', 'null']
+          readOnly: true
+          description: The SMTP address for the group
+        proxyAddresses:
+          type: array
+          readOnly: true
+          description: Email addresses for the group that direct to the same inbox
+          items:
+            type: string
+        isAssignableToRole:
+          type: ['boolean', 'null']
+          description: >-
+            Indicates whether this group can be assigned to a Microsoft
+            Entra role. Can only be set at group creation time.
+        onPremisesSyncEnabled:
+          type: ['boolean', 'null']
+          readOnly: true
+          description: >-
+            true if this group is synced from an on-premises directory
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp of when the group was created
+        renewedDateTime:
+          type: ['string', 'null']
+          format: date-time
+          readOnly: true
+          description: >-
+            Timestamp of when the group was last renewed (activity that
+            extends expiration)
+        members:
+          type: array
+          readOnly: true
+          description: >-
+            Direct members of this group. Returned only with $expand.
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+        owners:
+          type: array
+          readOnly: true
+          description: >-
+            Owners of the group. Returned only with $expand.
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+    Application:
+      type: object
+      description: >-
+        Represents an application registration in Microsoft Entra ID.
+        Defines the app's identity configuration, credentials, permissions
+        requested, and reply URLs.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: >-
+            Unique identifier for the application object (GUID). This is
+            the object ID, not the appId.
+        appId:
+          type: string
+          readOnly: true
+          description: >-
+            The unique application identifier assigned by Microsoft Entra
+            ID (also known as the client ID)
+        displayName:
+          type: string
+          description: The display name for the application
+        description:
+          type: ['string', 'null']
+          description: An optional description of the application
+        signInAudience:
+          type: string
+          description: >-
+            Specifies which Microsoft accounts are supported for the
+            application
+          enum:
+            - AzureADMyOrg
+            - AzureADMultipleOrgs
+            - AzureADandPersonalMicrosoftAccount
+            - PersonalMicrosoftAccount
+        identifierUris:
+          type: array
+          description: >-
+            URIs that uniquely identify the application within its
+            Azure AD tenant or verified custom domain
+          items:
+            type: string
+        web:
+          $ref: '#/components/schemas/WebApplication'
+        spa:
+          $ref: '#/components/schemas/SpaApplication'
+        api:
+          $ref: '#/components/schemas/ApiApplication'
+        requiredResourceAccess:
+          type: array
+          description: >-
+            Specifies the resources that the application needs access to
+            and the set of OAuth permission scopes and app roles needed
+            under each resource
+          items:
+            $ref: '#/components/schemas/RequiredResourceAccess'
+        appRoles:
+          type: array
+          description: >-
+            Collection of roles defined for the application that can
+            be assigned to users, groups, or service principals
+          items:
+            $ref: '#/components/schemas/AppRole'
+        keyCredentials:
+          type: array
+          description: Collection of certificate credentials associated with the app
+          items:
+            $ref: '#/components/schemas/KeyCredential'
+        passwordCredentials:
+          type: array
+          description: Collection of password credentials (client secrets)
+          items:
+            $ref: '#/components/schemas/PasswordCredential'
+        publicClient:
+          type: object
+          description: Public client settings for mobile and desktop apps
+          properties:
+            redirectUris:
+              type: array
+              items:
+                type: string
+        tags:
+          type: array
+          description: Custom strings used to categorize and identify the application
+          items:
+            type: string
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date and time the application was registered
+    WebApplication:
+      type: object
+      description: Web application configuration including redirect URIs
+      properties:
+        redirectUris:
+          type: array
+          description: >-
+            URIs to which Microsoft Entra ID will redirect after
+            authentication
+          items:
+            type: string
+            format: uri
+        homePageUrl:
+          type: ['string', 'null']
+          description: Home page URL of the application
+          format: uri
+        logoutUrl:
+          type: ['string', 'null']
+          description: URL used by the authorization service to sign out the user
+          format: uri
+        implicitGrantSettings:
+          type: object
+          description: Settings for implicit grant flow tokens
+          properties:
+            enableIdTokenIssuance:
+              type: boolean
+              description: Whether ID tokens can be issued using the implicit flow
+              default: false
+            enableAccessTokenIssuance:
+              type: boolean
+              description: Whether access tokens can be issued using the implicit flow
+              default: false
+    SpaApplication:
+      type: object
+      description: Single-page application configuration
+      properties:
+        redirectUris:
+          type: array
+          description: Redirect URIs for single-page application authentication
+          items:
+            type: string
+            format: uri
+    ApiApplication:
+      type: object
+      description: Settings for an application that implements a web API
+      properties:
+        acceptMappedClaims:
+          type: ['boolean', 'null']
+          description: >-
+            Allows an application to use claims mapping without specifying
+            a custom signing key
+        knownClientApplications:
+          type: array
+          description: >-
+            Used for bundling consent. Lists client app IDs that are
+            considered known clients of this API
+          items:
+            type: string
+            format: uuid
+        oauth2PermissionScopes:
+          type: array
+          description: >-
+            OAuth 2.0 permission scopes exposed by the web API to
+            client applications
+          items:
+            $ref: '#/components/schemas/PermissionScope'
+        preAuthorizedApplications:
+          type: array
+          description: >-
+            Lists client applications pre-authorized with specified
+            delegated permissions that do not require user consent
+          items:
+            type: object
+            properties:
+              appId:
+                type: string
+              delegatedPermissionIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        requestedAccessTokenVersion:
+          type: ['integer', 'null']
+          description: >-
+            Specifies the access token version expected by the resource.
+            Possible values are 1 or 2.
+          enum:
+            - 1
+            - 2
+            - null
+    PermissionScope:
+      type: object
+      description: >-
+        Defines an OAuth 2.0 delegated permission scope exposed by a
+        web API application
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the scope
+        value:
+          type: string
+          description: >-
+            The value that identifies the scope in OAuth 2.0
+            authorization requests
+        type:
+          type: string
+          description: >-
+            Whether the scope can be consented to by a user or requires
+            admin consent
+          enum:
+            - User
+            - Admin
+        adminConsentDisplayName:
+          type: string
+          description: Display name shown on the admin consent experience
+        adminConsentDescription:
+          type: string
+          description: Description shown on the admin consent experience
+        userConsentDisplayName:
+          type: ['string', 'null']
+          description: Display name shown on the user consent experience
+        userConsentDescription:
+          type: ['string', 'null']
+          description: Description shown on the user consent experience
+        isEnabled:
+          type: boolean
+          description: Whether the scope is enabled and can be requested
+    RequiredResourceAccess:
+      type: object
+      description: >-
+        Specifies the set of OAuth 2.0 permission scopes and app roles
+        under a specified resource that an application requires access to
+      properties:
+        resourceAppId:
+          type: string
+          description: >-
+            The unique identifier for the resource that the application
+            requires access to (the appId of the target application)
+        resourceAccess:
+          type: array
+          description: >-
+            The list of OAuth 2.0 permission scopes and app roles
+            required from the specified resource
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: >-
+                  Unique identifier for the app role or OAuth 2.0
+                  permission scope
+              type:
+                type: string
+                description: >-
+                  Specifies whether the id property references a Scope
+                  (delegated permission) or a Role (application permission)
+                enum:
+                  - Scope
+                  - Role
+    AppRole:
+      type: object
+      description: >-
+        Represents a role defined by an application that can be assigned
+        to users, groups, or service principals
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the app role
+        allowedMemberTypes:
+          type: array
+          description: >-
+            Specifies whether the role can be assigned to users/groups,
+            applications, or both
+          items:
+            type: string
+            enum:
+              - User
+              - Application
+        displayName:
+          type: string
+          description: Display name for the app role
+        description:
+          type: ['string', 'null']
+          description: Description of the app role
+        value:
+          type: ['string', 'null']
+          description: >-
+            Value that is included in the roles claim in authentication
+            tokens
+        isEnabled:
+          type: boolean
+          description: Whether the app role is enabled
+    KeyCredential:
+      type: object
+      description: >-
+        Contains a key credential (certificate) associated with an
+        application or service principal
+      properties:
+        keyId:
+          type: string
+          format: uuid
+          description: Unique identifier for the key
+        displayName:
+          type: ['string', 'null']
+          description: Friendly name for the key
+        type:
+          type: string
+          description: Type of key credential
+          enum:
+            - AsymmetricX509Cert
+            - X509CertAndPassword
+        usage:
+          type: string
+          description: Describes the purpose of the key
+          enum:
+            - Sign
+            - Verify
+        key:
+          type: string
+          format: byte
+          description: >-
+            The certificate's raw data in byte array converted to Base64
+            string
+        startDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the credential becomes valid
+        endDateTime:
+          type: string
+          format: date-time
+          description: >-
+            The date and time at which the credential expires
+    PasswordCredential:
+      type: object
+      description: >-
+        Represents a password credential (client secret) associated with
+        an application or service principal
+      properties:
+        keyId:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the password
+        displayName:
+          type: ['string', 'null']
+          description: Friendly name for the password credential
+        hint:
+          type: string
+          readOnly: true
+          description: >-
+            Contains the first three characters of the password (returned
+            on read operations)
+        secretText:
+          type: string
+          readOnly: true
+          description: >-
+            The generated password value. Only returned at creation time
+            and cannot be retrieved later.
+        startDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the password becomes valid
+        endDateTime:
+          type: string
+          format: date-time
+          description: >-
+            The date and time at which the password expires. Maximum
+            lifetime varies by policy.
+    ServicePrincipal:
+      type: object
+      description: >-
+        Represents an instance of an application in a tenant. The service
+        principal is the local representation used for sign-in and access
+        to resources. It inherits certain properties from the application
+        object.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the service principal (GUID)
+        appId:
+          type: string
+          description: >-
+            The unique identifier for the associated application
+            (application's appId). Required on create.
+        displayName:
+          type: string
+          description: The display name for the service principal
+        description:
+          type: ['string', 'null']
+          description: Description of the service principal's function
+        servicePrincipalType:
+          type: string
+          description: >-
+            Identifies whether the service principal represents an
+            application, a managed identity, or a legacy app
+          enum:
+            - Application
+            - ManagedIdentity
+            - Legacy
+            - SocialIdp
+        appDisplayName:
+          type: string
+          readOnly: true
+          description: >-
+            The display name exposed by the associated application
+        appOwnerOrganizationId:
+          type: ['string', 'null']
+          format: uuid
+          readOnly: true
+          description: >-
+            Contains the tenant ID where the application is registered
+        accountEnabled:
+          type: boolean
+          description: >-
+            true if the service principal account is enabled; false
+            otherwise
+          default: true
+        homepage:
+          type: ['string', 'null']
+          description: Home page or landing page of the application
+          format: uri
+        loginUrl:
+          type: ['string', 'null']
+          description: >-
+            URL where the service provider redirects the user to Microsoft
+            Entra ID to authenticate (SAML sign-on)
+          format: uri
+        logoutUrl:
+          type: ['string', 'null']
+          description: >-
+            URL used by Microsoft's authorization service to sign out a
+            user
+          format: uri
+        replyUrls:
+          type: array
+          description: >-
+            URLs where user tokens are sent for sign-in or redirect URIs
+            for authorization codes and access tokens
+          items:
+            type: string
+        servicePrincipalNames:
+          type: array
+          description: >-
+            Contains the list of identifierUris copied from the
+            associated application plus the appId
+          items:
+            type: string
+        tags:
+          type: array
+          description: >-
+            Custom strings used to categorize and identify the service
+            principal. Values include WindowsAzureActiveDirectoryIntegratedApp.
+          items:
+            type: string
+        appRoles:
+          type: array
+          readOnly: true
+          description: >-
+            The roles exposed by the application that this service
+            principal represents
+          items:
+            $ref: '#/components/schemas/AppRole'
+        oauth2PermissionScopes:
+          type: array
+          readOnly: true
+          description: >-
+            The delegated permission scopes exposed by the application
+          items:
+            $ref: '#/components/schemas/PermissionScope'
+        appRoleAssignmentRequired:
+          type: boolean
+          description: >-
+            If true, users and other service principals must first be
+            granted an app role assignment before they can sign in or
+            obtain tokens
+          default: false
+        keyCredentials:
+          type: array
+          description: Collection of certificate credentials
+          items:
+            $ref: '#/components/schemas/KeyCredential'
+        passwordCredentials:
+          type: array
+          description: Collection of password credentials
+          items:
+            $ref: '#/components/schemas/PasswordCredential'
+        createdDateTime:
+          type: ['string', 'null']
+          format: date-time
+          readOnly: true
+          description: Date and time the service principal was created
+    AppRoleAssignment:
+      type: object
+      description: >-
+        Represents an app role granted to a user, group, or service
+        principal
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the assignment (GUID)
+        appRoleId:
+          type: string
+          format: uuid
+          description: >-
+            The ID of the app role to assign. Use the default role ID
+            00000000-0000-0000-0000-000000000000 for default access.
+        principalId:
+          type: string
+          format: uuid
+          description: >-
+            The unique identifier of the user, group, or service principal
+            being granted the app role
+        principalType:
+          type: string
+          description: The type of the assigned principal
+          enum:
+            - User
+            - Group
+            - ServicePrincipal
+        principalDisplayName:
+          type: string
+          readOnly: true
+          description: Display name of the principal
+        resourceId:
+          type: string
+          format: uuid
+          description: >-
+            The unique identifier of the resource service principal to
+            which the assignment is made
+        resourceDisplayName:
+          type: string
+          readOnly: true
+          description: Display name of the resource application
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Time when the app role assignment was created
+    DirectoryObject:
+      type: object
+      description: >-
+        Base type for many directory resources including users, groups,
+        and service principals
+      properties:
+        '@odata.type':
+          type: string
+          description: The OData type string for the directory object
+          examples:
+            - '#microsoft.graph.user'
+            - '#microsoft.graph.group'
+            - '#microsoft.graph.servicePrincipal'
+        id:
+          type: string
+          description: Unique identifier for the directory object
+        displayName:
+          type: ['string', 'null']
+          description: The display name of the directory object
+    ODataReference:
+      type: object
+      description: OData reference link used to add relationships
+      required:
+        - '@odata.id'
+      properties:
+        '@odata.id':
+          type: string
+          description: >-
+            The full URL to the directory object to add as a member.
+            Format: https://graph.microsoft.com/v1.0/directoryObjects/{id}
+          format: uri
+    UserCollectionResponse:
+      type: object
+      description: Paged collection of user objects
+      properties:
+        '@odata.context':
+          type: string
+          description: OData context URL
+        '@odata.count':
+          type: integer
+          description: Total count of matching resources (if $count=true)
+        '@odata.nextLink':
+          type: string
+          format: uri
+          description: URL to retrieve the next page of results
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    GroupCollectionResponse:
+      type: object
+      description: Paged collection of group objects
+      properties:
+        '@odata.context':
+          type: string
+        '@odata.count':
+          type: integer
+        '@odata.nextLink':
+          type: string
+          format: uri
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+    ApplicationCollectionResponse:
+      type: object
+      description: Paged collection of application objects
+      properties:
+        '@odata.context':
+          type: string
+        '@odata.count':
+          type: integer
+        '@odata.nextLink':
+          type: string
+          format: uri
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+    ServicePrincipalCollectionResponse:
+      type: object
+      description: Paged collection of service principal objects
+      properties:
+        '@odata.context':
+          type: string
+        '@odata.count':
+          type: integer
+        '@odata.nextLink':
+          type: string
+          format: uri
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePrincipal'
+    DirectoryObjectCollectionResponse:
+      type: object
+      description: Paged collection of directory objects
+      properties:
+        '@odata.context':
+          type: string
+        '@odata.count':
+          type: integer
+        '@odata.nextLink':
+          type: string
+          format: uri
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+    AppRoleAssignmentCollectionResponse:
+      type: object
+      description: Paged collection of app role assignments
+      properties:
+        '@odata.context':
+          type: string
+        '@odata.count':
+          type: integer
+        '@odata.nextLink':
+          type: string
+          format: uri
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppRoleAssignment'
+    ODataError:
+      type: object
+      description: OData error response
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
+  responses:
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
