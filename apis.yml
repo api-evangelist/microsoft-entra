@@ -1,4 +1,4 @@
-name: Microsoft Entra API
+name: Microsoft Entra
 description: Microsoft Entra (formerly Azure Active Directory) provides identity and access management services including authentication, authorization, and directory services.
 url: https://learn.microsoft.com/en-us/entra/
 image: https://www.microsoft.com/en-us/security/content/dam/microsoft/final/security/includes/microsoft-entra-logo.svg
