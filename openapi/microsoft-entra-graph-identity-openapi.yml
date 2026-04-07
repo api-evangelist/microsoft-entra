@@ -24,22 +24,22 @@ servers:
   - url: https://graph.microsoft.com/beta
     description: Microsoft Graph beta endpoint (preview features)
 tags:
-  - name: Users
-    description: >-
-      Manage user accounts in the directory including creation, updates,
-      profile management, and lifecycle operations
-  - name: Groups
-    description: >-
-      Manage groups for organizing users, devices, and other principals
-      including Microsoft 365 groups, security groups, and distribution lists
   - name: Applications
     description: >-
       Register and manage application objects that define application
       configuration including credentials, permissions, and sign-in settings
+  - name: Groups
+    description: >-
+      Manage groups for organizing users, devices, and other principals
+      including Microsoft 365 groups, security groups, and distribution lists
   - name: ServicePrincipals
     description: >-
       Manage service principal objects that represent application instances
       in a tenant for authentication and authorization
+  - name: Users
+    description: >-
+      Manage user accounts in the directory including creation, updates,
+      profile management, and lifecycle operations
 security:
   - oauth2: []
 paths:
