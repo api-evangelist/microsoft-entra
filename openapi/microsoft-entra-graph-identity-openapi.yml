@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Microsoft Graph Identity API
+  title: Microsoft Entra Microsoft Graph Identity API
   description: >-
     RESTful API for managing identity resources in Microsoft Entra ID
     (formerly Azure Active Directory) through Microsoft Graph. Provides
@@ -46,7 +46,7 @@ paths:
   /users:
     get:
       operationId: listUsers
-      summary: List users
+      summary: Microsoft Entra List users
       description: >-
         Retrieve a list of user objects in the directory. Returns a paged
         collection of user resources with support for OData query parameters
@@ -77,7 +77,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createUser
-      summary: Create user
+      summary: Microsoft Entra Create user
       description: >-
         Create a new user in the directory. The request body must contain
         the required properties including displayName, accountEnabled,
@@ -106,7 +106,7 @@ paths:
   /users/{user-id}:
     get:
       operationId: getUser
-      summary: Get user
+      summary: Microsoft Entra Get user
       description: >-
         Retrieve the properties and relationships of a user object.
         Specify the user by id or userPrincipalName.
@@ -131,7 +131,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateUser
-      summary: Update user
+      summary: Microsoft Entra Update user
       description: >-
         Update the properties of a user object. Not all properties can be
         updated by member or guest users with their default permissions
@@ -159,7 +159,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteUser
-      summary: Delete user
+      summary: Microsoft Entra Delete user
       description: >-
         Delete a user object. The user is moved to the deletedItems
         container and can be restored within 30 days. After 30 days the
@@ -180,7 +180,7 @@ paths:
   /users/{user-id}/memberOf:
     get:
       operationId: listUserMemberOf
-      summary: List user group memberships
+      summary: Microsoft Entra List user group memberships
       description: >-
         Get the groups, directory roles, and administrative units that the
         user is a direct member of.
@@ -207,7 +207,7 @@ paths:
   /groups:
     get:
       operationId: listGroups
-      summary: List groups
+      summary: Microsoft Entra List groups
       description: >-
         List all groups in the directory including Microsoft 365 groups,
         security groups, mail-enabled security groups, and distribution
@@ -237,7 +237,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createGroup
-      summary: Create group
+      summary: Microsoft Entra Create group
       description: >-
         Create a new group in the directory. You can create Microsoft 365
         groups, security groups, or mail-enabled security groups. Specify
@@ -267,7 +267,7 @@ paths:
   /groups/{group-id}:
     get:
       operationId: getGroup
-      summary: Get group
+      summary: Microsoft Entra Get group
       description: >-
         Get the properties and relationships of a group object. Returns
         the default set of properties unless $select is specified.
@@ -292,7 +292,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateGroup
-      summary: Update group
+      summary: Microsoft Entra Update group
       description: >-
         Update the properties of a group object. Not all properties can be
         updated depending on the group type.
@@ -319,7 +319,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteGroup
-      summary: Delete group
+      summary: Microsoft Entra Delete group
       description: >-
         Delete a group. Deleting a Microsoft 365 group moves it to the
         deletedItems container where it can be restored within 30 days.
@@ -340,7 +340,7 @@ paths:
   /groups/{group-id}/members:
     get:
       operationId: listGroupMembers
-      summary: List group members
+      summary: Microsoft Entra List group members
       description: >-
         Get the direct members of a group. A group can have users, devices,
         other groups, organizational contacts, and service principals as
@@ -370,7 +370,7 @@ paths:
   /groups/{group-id}/members/$ref:
     post:
       operationId: addGroupMember
-      summary: Add group member
+      summary: Microsoft Entra Add group member
       description: >-
         Add a member to a Microsoft 365 group or a security group by
         posting a reference to the directory object to add.
@@ -398,7 +398,7 @@ paths:
   /groups/{group-id}/members/{directoryObject-id}/$ref:
     delete:
       operationId: removeGroupMember
-      summary: Remove group member
+      summary: Microsoft Entra Remove group member
       description: >-
         Remove a member from a group via the members navigation property.
         Specify the member to remove by its directory object id.
@@ -424,7 +424,7 @@ paths:
   /applications:
     get:
       operationId: listApplications
-      summary: List applications
+      summary: Microsoft Entra List applications
       description: >-
         Get the list of application registrations in the directory. Returns
         the application objects with their configuration properties including
@@ -453,7 +453,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApplication
-      summary: Create application
+      summary: Microsoft Entra Create application
       description: >-
         Create a new application registration in the directory. The
         application object represents the global definition of the app
@@ -482,7 +482,7 @@ paths:
   /applications/{application-id}:
     get:
       operationId: getApplication
-      summary: Get application
+      summary: Microsoft Entra Get application
       description: >-
         Get the properties and relationships of an application object by
         its id (object id, not appId).
@@ -507,7 +507,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApplication
-      summary: Update application
+      summary: Microsoft Entra Update application
       description: >-
         Update the properties of an application object.
       tags:
@@ -533,7 +533,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApplication
-      summary: Delete application
+      summary: Microsoft Entra Delete application
       description: >-
         Delete an application object. The application is moved to the
         deletedItems container and can be restored within 30 days.
@@ -553,7 +553,7 @@ paths:
   /applications/{application-id}/addPassword:
     post:
       operationId: addApplicationPassword
-      summary: Add password credential
+      summary: Microsoft Entra Add password credential
       description: >-
         Add a strong password or secret to an application. The response
         includes the generated secretText which is only returned at
@@ -586,7 +586,7 @@ paths:
   /applications/{application-id}/removePassword:
     post:
       operationId: removeApplicationPassword
-      summary: Remove password credential
+      summary: Microsoft Entra Remove password credential
       description: >-
         Remove a password credential from an application by specifying
         the keyId of the password to remove.
@@ -621,7 +621,7 @@ paths:
   /servicePrincipals:
     get:
       operationId: listServicePrincipals
-      summary: List service principals
+      summary: Microsoft Entra List service principals
       description: >-
         Retrieve a list of service principal objects in the directory.
         A service principal represents an instance of an application in
@@ -651,7 +651,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createServicePrincipal
-      summary: Create service principal
+      summary: Microsoft Entra Create service principal
       description: >-
         Create a new service principal in the directory. The appId property
         in the request body is required and must reference an existing
@@ -680,7 +680,7 @@ paths:
   /servicePrincipals/{servicePrincipal-id}:
     get:
       operationId: getServicePrincipal
-      summary: Get service principal
+      summary: Microsoft Entra Get service principal
       description: >-
         Retrieve the properties and relationships of a service principal
         object.
@@ -705,7 +705,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateServicePrincipal
-      summary: Update service principal
+      summary: Microsoft Entra Update service principal
       description: >-
         Update the properties of a service principal object.
       tags:
@@ -731,7 +731,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteServicePrincipal
-      summary: Delete service principal
+      summary: Microsoft Entra Delete service principal
       description: >-
         Delete a service principal object. This removes the application
         instance from the tenant but does not delete the application
@@ -752,7 +752,7 @@ paths:
   /servicePrincipals/{servicePrincipal-id}/appRoleAssignments:
     get:
       operationId: listServicePrincipalAppRoleAssignments
-      summary: List app role assignments
+      summary: Microsoft Entra List app role assignments
       description: >-
         Get the app role assignments granted to this service principal.
         App role assignments represent permissions granted to the service
@@ -778,7 +778,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       operationId: grantServicePrincipalAppRoleAssignment
-      summary: Grant app role assignment
+      summary: Microsoft Entra Grant app role assignment
       description: >-
         Grant an app role assignment to a service principal. App roles
         assigned to service principals are also known as application
@@ -1191,7 +1191,7 @@ components:
             - Public
             - Private
             - HiddenMembership
-            - null
+            - 
         membershipRule:
           type: ['string', 'null']
           description: >-
@@ -1205,7 +1205,7 @@ components:
           enum:
             - 'On'
             - Paused
-            - null
+            - 
         mail:
           type: ['string', 'null']
           readOnly: true
@@ -1432,7 +1432,7 @@ components:
           enum:
             - 1
             - 2
-            - null
+            - 
     PermissionScope:
       type: object
       description: >-
