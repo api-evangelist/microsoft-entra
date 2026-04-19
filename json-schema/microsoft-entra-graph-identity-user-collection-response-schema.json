@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserCollectionResponse",
+  "type": "object",
+  "description": "Paged collection of user objects",
+  "properties": {
+    "@odata.context": {
+      "type": "string",
+      "description": "OData context URL"
+    },
+    "@odata.count": {
+      "type": "integer",
+      "description": "Total count of matching resources (if $count=true)"
+    },
+    "@odata.nextLink": {
+      "type": "string",
+      "description": "URL to retrieve the next page of results"
+    },
+    "value": {
+      "type": "array"
+    }
+  }
+}

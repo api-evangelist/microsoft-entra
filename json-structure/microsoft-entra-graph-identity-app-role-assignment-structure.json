@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "AppRoleAssignment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "appRoleId": {
+      "type": "string"
+    },
+    "principalId": {
+      "type": "string"
+    },
+    "principalType": {
+      "type": "string"
+    },
+    "principalDisplayName": {
+      "type": "string"
+    },
+    "resourceId": {
+      "type": "string"
+    },
+    "resourceDisplayName": {
+      "type": "string"
+    },
+    "createdDateTime": {
+      "type": "string"
+    }
+  }
+}

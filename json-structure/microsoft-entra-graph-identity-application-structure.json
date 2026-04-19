@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Application",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "appId": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "['string', 'null']"
+    },
+    "signInAudience": {
+      "type": "string"
+    },
+    "identifierUris": {
+      "type": "array"
+    },
+    "requiredResourceAccess": {
+      "type": "array"
+    },
+    "appRoles": {
+      "type": "array"
+    },
+    "keyCredentials": {
+      "type": "array"
+    },
+    "passwordCredentials": {
+      "type": "array"
+    },
+    "publicClient": {
+      "type": "object"
+    },
+    "tags": {
+      "type": "array"
+    },
+    "createdDateTime": {
+      "type": "string"
+    }
+  }
+}

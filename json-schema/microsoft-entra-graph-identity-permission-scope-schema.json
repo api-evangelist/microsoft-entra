@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PermissionScope",
+  "type": "object",
+  "description": "Defines an OAuth 2.0 delegated permission scope exposed by a web API application",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the scope"
+    },
+    "value": {
+      "type": "string",
+      "description": "The value that identifies the scope in OAuth 2.0 authorization requests"
+    },
+    "type": {
+      "type": "string",
+      "description": "Whether the scope can be consented to by a user or requires admin consent"
+    },
+    "adminConsentDisplayName": {
+      "type": "string",
+      "description": "Display name shown on the admin consent experience"
+    },
+    "adminConsentDescription": {
+      "type": "string",
+      "description": "Description shown on the admin consent experience"
+    },
+    "userConsentDisplayName": {
+      "type": "['string', 'null']",
+      "description": "Display name shown on the user consent experience"
+    },
+    "userConsentDescription": {
+      "type": "['string', 'null']",
+      "description": "Description shown on the user consent experience"
+    },
+    "isEnabled": {
+      "type": "boolean",
+      "description": "Whether the scope is enabled and can be requested"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GroupCollectionResponse",
+  "type": "object",
+  "description": "Paged collection of group objects",
+  "properties": {
+    "@odata.context": {
+      "type": "string"
+    },
+    "@odata.count": {
+      "type": "integer"
+    },
+    "@odata.nextLink": {
+      "type": "string"
+    },
+    "value": {
+      "type": "array"
+    }
+  }
+}

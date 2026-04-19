@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DirectoryObject",
+  "type": "object",
+  "description": "Base type for many directory resources including users, groups, and service principals",
+  "properties": {
+    "@odata.type": {
+      "type": "string",
+      "description": "The OData type string for the directory object"
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the directory object"
+    },
+    "displayName": {
+      "type": "['string', 'null']",
+      "description": "The display name of the directory object"
+    }
+  }
+}

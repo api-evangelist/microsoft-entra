@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Group",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "['string', 'null']"
+    },
+    "mailEnabled": {
+      "type": "boolean"
+    },
+    "mailNickname": {
+      "type": "string"
+    },
+    "securityEnabled": {
+      "type": "boolean"
+    },
+    "groupTypes": {
+      "type": "array"
+    },
+    "visibility": {
+      "type": "['string', 'null']"
+    },
+    "membershipRule": {
+      "type": "['string', 'null']"
+    },
+    "membershipRuleProcessingState": {
+      "type": "['string', 'null']"
+    },
+    "mail": {
+      "type": "['string', 'null']"
+    },
+    "proxyAddresses": {
+      "type": "array"
+    },
+    "isAssignableToRole": {
+      "type": "['boolean', 'null']"
+    },
+    "onPremisesSyncEnabled": {
+      "type": "['boolean', 'null']"
+    },
+    "createdDateTime": {
+      "type": "string"
+    },
+    "renewedDateTime": {
+      "type": "['string', 'null']"
+    },
+    "members": {
+      "type": "array"
+    },
+    "owners": {
+      "type": "array"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Application",
+  "type": "object",
+  "description": "Represents an application registration in Microsoft Entra ID. Defines the app's identity configuration, credentials, permissions requested, and reply URLs.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the application object (GUID). This is the object ID, not the appId."
+    },
+    "appId": {
+      "type": "string",
+      "description": "The unique application identifier assigned by Microsoft Entra ID (also known as the client ID)"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The display name for the application"
+    },
+    "description": {
+      "type": "['string', 'null']",
+      "description": "An optional description of the application"
+    },
+    "signInAudience": {
+      "type": "string",
+      "description": "Specifies which Microsoft accounts are supported for the application"
+    },
+    "identifierUris": {
+      "type": "array",
+      "description": "URIs that uniquely identify the application within its Azure AD tenant or verified custom domain"
+    },
+    "requiredResourceAccess": {
+      "type": "array",
+      "description": "Specifies the resources that the application needs access to and the set of OAuth permission scopes and app roles needed under each resource"
+    },
+    "appRoles": {
+      "type": "array",
+      "description": "Collection of roles defined for the application that can be assigned to users, groups, or service principals"
+    },
+    "keyCredentials": {
+      "type": "array",
+      "description": "Collection of certificate credentials associated with the app"
+    },
+    "passwordCredentials": {
+      "type": "array",
+      "description": "Collection of password credentials (client secrets)"
+    },
+    "publicClient": {
+      "type": "object",
+      "description": "Public client settings for mobile and desktop apps"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Custom strings used to categorize and identify the application"
+    },
+    "createdDateTime": {
+      "type": "string",
+      "description": "The date and time the application was registered"
+    }
+  }
+}

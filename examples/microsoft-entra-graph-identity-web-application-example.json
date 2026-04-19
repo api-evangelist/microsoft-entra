@@ -1,0 +1,6 @@
+{
+  "redirectUris": [],
+  "homePageUrl": "https://www.example.com",
+  "logoutUrl": "https://www.example.com",
+  "implicitGrantSettings": "example_value"
+}

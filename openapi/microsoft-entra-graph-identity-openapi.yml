@@ -19,51 +19,51 @@ externalDocs:
   description: Microsoft Graph Identity and Access Management Documentation
   url: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
 servers:
-  - url: https://graph.microsoft.com/v1.0
-    description: Microsoft Graph v1.0 production endpoint
-  - url: https://graph.microsoft.com/beta
-    description: Microsoft Graph beta endpoint (preview features)
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+- url: https://graph.microsoft.com/beta
+  description: Microsoft Graph beta endpoint (preview features)
 tags:
-  - name: Applications
-    description: >-
-      Register and manage application objects that define application
-      configuration including credentials, permissions, and sign-in settings
-  - name: Groups
-    description: >-
-      Manage groups for organizing users, devices, and other principals
-      including Microsoft 365 groups, security groups, and distribution lists
-  - name: ServicePrincipals
-    description: >-
-      Manage service principal objects that represent application instances
-      in a tenant for authentication and authorization
-  - name: Users
-    description: >-
-      Manage user accounts in the directory including creation, updates,
-      profile management, and lifecycle operations
+- name: Applications
+  description: >-
+    Register and manage application objects that define application
+    configuration including credentials, permissions, and sign-in settings
+- name: Groups
+  description: >-
+    Manage groups for organizing users, devices, and other principals
+    including Microsoft 365 groups, security groups, and distribution lists
+- name: ServicePrincipals
+  description: >-
+    Manage service principal objects that represent application instances
+    in a tenant for authentication and authorization
+- name: Users
+  description: >-
+    Manage user accounts in the directory including creation, updates,
+    profile management, and lifecycle operations
 security:
-  - oauth2: []
+- oauth2: []
 paths:
   /users:
     get:
       operationId: listUsers
-      summary: Microsoft Entra List users
+      summary: Microsoft Entra List Users
       description: >-
         Retrieve a list of user objects in the directory. Returns a paged
         collection of user resources with support for OData query parameters
         including $select, $filter, $orderby, $top, $skip, $count, $search,
         and $expand.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Filter'
-        - $ref: '#/components/parameters/OrderBy'
-        - $ref: '#/components/parameters/Top'
-        - $ref: '#/components/parameters/Skip'
-        - $ref: '#/components/parameters/Count'
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Expand'
-        - $ref: '#/components/parameters/ConsistencyLevel'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/OrderBy'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Skip'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/ConsistencyLevel'
       responses:
         '200':
           description: Collection of user objects
@@ -75,15 +75,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createUser
-      summary: Microsoft Entra Create user
+      summary: Microsoft Entra Create User
       description: >-
         Create a new user in the directory. The request body must contain
         the required properties including displayName, accountEnabled,
         mailNickname, userPrincipalName, and passwordProfile.
       tags:
-        - Users
+      - Users
       requestBody:
         required: true
         content:
@@ -103,19 +106,22 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /users/{user-id}:
     get:
       operationId: getUser
-      summary: Microsoft Entra Get user
+      summary: Microsoft Entra Get User
       description: >-
         Retrieve the properties and relationships of a user object.
         Specify the user by id or userPrincipalName.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/UserId'
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Expand'
       responses:
         '200':
           description: User object
@@ -129,17 +135,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     patch:
       operationId: updateUser
-      summary: Microsoft Entra Update user
+      summary: Microsoft Entra Update User
       description: >-
         Update the properties of a user object. Not all properties can be
         updated by member or guest users with their default permissions
         without administrator roles.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/UserId'
       requestBody:
         required: true
         content:
@@ -157,17 +166,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteUser
-      summary: Microsoft Entra Delete user
+      summary: Microsoft Entra Delete User
       description: >-
         Delete a user object. The user is moved to the deletedItems
         container and can be restored within 30 days. After 30 days the
         user is permanently deleted.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/UserId'
       responses:
         '204':
           description: User deleted successfully
@@ -177,20 +189,23 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /users/{user-id}/memberOf:
     get:
       operationId: listUserMemberOf
-      summary: Microsoft Entra List user group memberships
+      summary: Microsoft Entra List User Group Memberships
       description: >-
         Get the groups, directory roles, and administrative units that the
         user is a direct member of.
       tags:
-        - Users
+      - Users
       parameters:
-        - $ref: '#/components/parameters/UserId'
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Filter'
-        - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/Top'
       responses:
         '200':
           description: Collection of directory objects the user is a member of
@@ -204,26 +219,29 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /groups:
     get:
       operationId: listGroups
-      summary: Microsoft Entra List groups
+      summary: Microsoft Entra List Groups
       description: >-
         List all groups in the directory including Microsoft 365 groups,
         security groups, mail-enabled security groups, and distribution
         groups. Returns a paged collection with OData query support.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Filter'
-        - $ref: '#/components/parameters/OrderBy'
-        - $ref: '#/components/parameters/Top'
-        - $ref: '#/components/parameters/Skip'
-        - $ref: '#/components/parameters/Count'
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Expand'
-        - $ref: '#/components/parameters/ConsistencyLevel'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/OrderBy'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Skip'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/ConsistencyLevel'
       responses:
         '200':
           description: Collection of group objects
@@ -235,16 +253,19 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createGroup
-      summary: Microsoft Entra Create group
+      summary: Microsoft Entra Create Group
       description: >-
         Create a new group in the directory. You can create Microsoft 365
         groups, security groups, or mail-enabled security groups. Specify
         the groupTypes, mailEnabled, and securityEnabled properties to
         determine the type of group.
       tags:
-        - Groups
+      - Groups
       requestBody:
         required: true
         content:
@@ -264,19 +285,22 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /groups/{group-id}:
     get:
       operationId: getGroup
-      summary: Microsoft Entra Get group
+      summary: Microsoft Entra Get Group
       description: >-
         Get the properties and relationships of a group object. Returns
         the default set of properties unless $select is specified.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/GroupId'
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/GroupId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Expand'
       responses:
         '200':
           description: Group object
@@ -290,16 +314,19 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     patch:
       operationId: updateGroup
-      summary: Microsoft Entra Update group
+      summary: Microsoft Entra Update Group
       description: >-
         Update the properties of a group object. Not all properties can be
         updated depending on the group type.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/GroupId'
+      - $ref: '#/components/parameters/GroupId'
       requestBody:
         required: true
         content:
@@ -317,17 +344,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteGroup
-      summary: Microsoft Entra Delete group
+      summary: Microsoft Entra Delete Group
       description: >-
         Delete a group. Deleting a Microsoft 365 group moves it to the
         deletedItems container where it can be restored within 30 days.
         Security groups are permanently deleted immediately.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/GroupId'
+      - $ref: '#/components/parameters/GroupId'
       responses:
         '204':
           description: Group deleted successfully
@@ -337,23 +367,26 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /groups/{group-id}/members:
     get:
       operationId: listGroupMembers
-      summary: Microsoft Entra List group members
+      summary: Microsoft Entra List Group Members
       description: >-
         Get the direct members of a group. A group can have users, devices,
         other groups, organizational contacts, and service principals as
         members.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/GroupId'
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Filter'
-        - $ref: '#/components/parameters/Top'
-        - $ref: '#/components/parameters/Count'
-        - $ref: '#/components/parameters/ConsistencyLevel'
+      - $ref: '#/components/parameters/GroupId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/ConsistencyLevel'
       responses:
         '200':
           description: Collection of directory objects that are members of the group
@@ -367,17 +400,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /groups/{group-id}/members/$ref:
     post:
       operationId: addGroupMember
-      summary: Microsoft Entra Add group member
+      summary: Microsoft Entra Add Group Member
       description: >-
         Add a member to a Microsoft 365 group or a security group by
         posting a reference to the directory object to add.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/GroupId'
+      - $ref: '#/components/parameters/GroupId'
       requestBody:
         required: true
         content:
@@ -395,23 +431,26 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /groups/{group-id}/members/{directoryObject-id}/$ref:
     delete:
       operationId: removeGroupMember
-      summary: Microsoft Entra Remove group member
+      summary: Microsoft Entra Remove Group Member
       description: >-
         Remove a member from a group via the members navigation property.
         Specify the member to remove by its directory object id.
       tags:
-        - Groups
+      - Groups
       parameters:
-        - $ref: '#/components/parameters/GroupId'
-        - name: directoryObject-id
-          in: path
-          required: true
-          description: Unique identifier of the directory object to remove
-          schema:
-            type: string
+      - $ref: '#/components/parameters/GroupId'
+      - name: directoryObject-id
+        in: path
+        required: true
+        description: Unique identifier of the directory object to remove
+        schema:
+          type: string
       responses:
         '204':
           description: Member removed successfully
@@ -421,25 +460,28 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /applications:
     get:
       operationId: listApplications
-      summary: Microsoft Entra List applications
+      summary: Microsoft Entra List Applications
       description: >-
         Get the list of application registrations in the directory. Returns
         the application objects with their configuration properties including
         credentials, permissions, and sign-in settings.
       tags:
-        - Applications
+      - Applications
       parameters:
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Filter'
-        - $ref: '#/components/parameters/OrderBy'
-        - $ref: '#/components/parameters/Top'
-        - $ref: '#/components/parameters/Skip'
-        - $ref: '#/components/parameters/Count'
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/ConsistencyLevel'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/OrderBy'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Skip'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/ConsistencyLevel'
       responses:
         '200':
           description: Collection of application objects
@@ -451,15 +493,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createApplication
-      summary: Microsoft Entra Create application
+      summary: Microsoft Entra Create Application
       description: >-
         Create a new application registration in the directory. The
         application object represents the global definition of the app
         including its identity, access configuration, and settings.
       tags:
-        - Applications
+      - Applications
       requestBody:
         required: true
         content:
@@ -479,19 +524,22 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /applications/{application-id}:
     get:
       operationId: getApplication
-      summary: Microsoft Entra Get application
+      summary: Microsoft Entra Get Application
       description: >-
         Get the properties and relationships of an application object by
         its id (object id, not appId).
       tags:
-        - Applications
+      - Applications
       parameters:
-        - $ref: '#/components/parameters/ApplicationId'
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Expand'
       responses:
         '200':
           description: Application object
@@ -505,15 +553,18 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     patch:
       operationId: updateApplication
-      summary: Microsoft Entra Update application
+      summary: Microsoft Entra Update Application
       description: >-
         Update the properties of an application object.
       tags:
-        - Applications
+      - Applications
       parameters:
-        - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/ApplicationId'
       requestBody:
         required: true
         content:
@@ -531,16 +582,19 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteApplication
-      summary: Microsoft Entra Delete application
+      summary: Microsoft Entra Delete Application
       description: >-
         Delete an application object. The application is moved to the
         deletedItems container and can be restored within 30 days.
       tags:
-        - Applications
+      - Applications
       parameters:
-        - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/ApplicationId'
       responses:
         '204':
           description: Application deleted successfully
@@ -550,18 +604,21 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /applications/{application-id}/addPassword:
     post:
       operationId: addApplicationPassword
-      summary: Microsoft Entra Add password credential
+      summary: Microsoft Entra Add Password Credential
       description: >-
         Add a strong password or secret to an application. The response
         includes the generated secretText which is only returned at
         creation time and cannot be retrieved later.
       tags:
-        - Applications
+      - Applications
       parameters:
-        - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/ApplicationId'
       requestBody:
         required: true
         content:
@@ -583,17 +640,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /applications/{application-id}/removePassword:
     post:
       operationId: removeApplicationPassword
-      summary: Microsoft Entra Remove password credential
+      summary: Microsoft Entra Remove Password Credential
       description: >-
         Remove a password credential from an application by specifying
         the keyId of the password to remove.
       tags:
-        - Applications
+      - Applications
       parameters:
-        - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/ApplicationId'
       requestBody:
         required: true
         content:
@@ -601,7 +661,7 @@ paths:
             schema:
               type: object
               required:
-                - keyId
+              - keyId
               properties:
                 keyId:
                   type: string
@@ -618,26 +678,29 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /servicePrincipals:
     get:
       operationId: listServicePrincipals
-      summary: Microsoft Entra List service principals
+      summary: Microsoft Entra List Service Principals
       description: >-
         Retrieve a list of service principal objects in the directory.
         A service principal represents an instance of an application in
         a tenant and is the identity used for authentication and
         authorization.
       tags:
-        - ServicePrincipals
+      - ServicePrincipals
       parameters:
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Filter'
-        - $ref: '#/components/parameters/OrderBy'
-        - $ref: '#/components/parameters/Top'
-        - $ref: '#/components/parameters/Skip'
-        - $ref: '#/components/parameters/Count'
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/ConsistencyLevel'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/OrderBy'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Skip'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/ConsistencyLevel'
       responses:
         '200':
           description: Collection of service principal objects
@@ -649,15 +712,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createServicePrincipal
-      summary: Microsoft Entra Create service principal
+      summary: Microsoft Entra Create Service Principal
       description: >-
         Create a new service principal in the directory. The appId property
         in the request body is required and must reference an existing
         application registration.
       tags:
-        - ServicePrincipals
+      - ServicePrincipals
       requestBody:
         required: true
         content:
@@ -677,19 +743,22 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /servicePrincipals/{servicePrincipal-id}:
     get:
       operationId: getServicePrincipal
-      summary: Microsoft Entra Get service principal
+      summary: Microsoft Entra Get Service Principal
       description: >-
         Retrieve the properties and relationships of a service principal
         object.
       tags:
-        - ServicePrincipals
+      - ServicePrincipals
       parameters:
-        - $ref: '#/components/parameters/ServicePrincipalId'
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/ServicePrincipalId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Expand'
       responses:
         '200':
           description: Service principal object
@@ -703,15 +772,18 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     patch:
       operationId: updateServicePrincipal
-      summary: Microsoft Entra Update service principal
+      summary: Microsoft Entra Update Service Principal
       description: >-
         Update the properties of a service principal object.
       tags:
-        - ServicePrincipals
+      - ServicePrincipals
       parameters:
-        - $ref: '#/components/parameters/ServicePrincipalId'
+      - $ref: '#/components/parameters/ServicePrincipalId'
       requestBody:
         required: true
         content:
@@ -729,17 +801,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteServicePrincipal
-      summary: Microsoft Entra Delete service principal
+      summary: Microsoft Entra Delete Service Principal
       description: >-
         Delete a service principal object. This removes the application
         instance from the tenant but does not delete the application
         registration.
       tags:
-        - ServicePrincipals
+      - ServicePrincipals
       parameters:
-        - $ref: '#/components/parameters/ServicePrincipalId'
+      - $ref: '#/components/parameters/ServicePrincipalId'
       responses:
         '204':
           description: Service principal deleted successfully
@@ -749,20 +824,23 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /servicePrincipals/{servicePrincipal-id}/appRoleAssignments:
     get:
       operationId: listServicePrincipalAppRoleAssignments
-      summary: Microsoft Entra List app role assignments
+      summary: Microsoft Entra List App Role Assignments
       description: >-
         Get the app role assignments granted to this service principal.
         App role assignments represent permissions granted to the service
         principal to call another application's API.
       tags:
-        - ServicePrincipals
+      - ServicePrincipals
       parameters:
-        - $ref: '#/components/parameters/ServicePrincipalId'
-        - $ref: '#/components/parameters/Select'
-        - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/ServicePrincipalId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Top'
       responses:
         '200':
           description: Collection of app role assignments
@@ -776,17 +854,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: grantServicePrincipalAppRoleAssignment
-      summary: Microsoft Entra Grant app role assignment
+      summary: Microsoft Entra Grant App Role Assignment
       description: >-
         Grant an app role assignment to a service principal. App roles
         assigned to service principals are also known as application
         permissions.
       tags:
-        - ServicePrincipals
+      - ServicePrincipals
       parameters:
-        - $ref: '#/components/parameters/ServicePrincipalId'
+      - $ref: '#/components/parameters/ServicePrincipalId'
       requestBody:
         required: true
         content:
@@ -806,6 +887,9 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     oauth2:
@@ -947,7 +1031,7 @@ components:
       schema:
         type: string
         enum:
-          - eventual
+        - eventual
   schemas:
     User:
       type: object
@@ -961,20 +1045,25 @@ components:
           description: >-
             Unique identifier for the user (GUID). Assigned automatically
             by the directory.
+          example: abc123
         displayName:
           type: string
           description: The name displayed in the address book for the user
+          example: example_value
         givenName:
           type: ['string', 'null']
           description: The given name (first name) of the user
+          example: example_value
         surname:
           type: ['string', 'null']
           description: The surname (family name) of the user
+          example: example_value
         mail:
           type: ['string', 'null']
           description: >-
             The SMTP address of the user. This property cannot be set
             during creation for cloud-only users.
+          example: example_value
         userPrincipalName:
           type: string
           description: >-
@@ -982,98 +1071,120 @@ components:
             alias@domain. The domain must be present in the tenant's
             verified domains collection.
           format: email
+          example: example_value
         mailNickname:
           type: string
           description: >-
             The mail alias for the user. Must be specified when creating
             a new user.
+          example: example_value
         accountEnabled:
           type: boolean
           description: >-
             true if the account is enabled; otherwise, false. Must be
             specified when creating a new user.
+          example: true
         passwordProfile:
           $ref: '#/components/schemas/PasswordProfile'
         jobTitle:
           type: ['string', 'null']
           description: The user's job title
+          example: example_value
         department:
           type: ['string', 'null']
           description: The department in which the user works
+          example: example_value
         officeLocation:
           type: ['string', 'null']
           description: The office location in the user's place of business
+          example: example_value
         companyName:
           type: ['string', 'null']
           description: The company name associated with the user
+          example: example_value
         mobilePhone:
           type: ['string', 'null']
           description: The primary cellular telephone number for the user
+          example: example_value
         businessPhones:
           type: array
           description: The telephone numbers for the user's business
           items:
             type: string
+          example: []
         streetAddress:
           type: ['string', 'null']
           description: The street address of the user's place of business
+          example: example_value
         city:
           type: ['string', 'null']
           description: The city in which the user is located
+          example: example_value
         state:
           type: ['string', 'null']
           description: The state or province in the user's address
+          example: example_value
         postalCode:
           type: ['string', 'null']
           description: The postal code for the user's postal address
+          example: example_value
         country:
           type: ['string', 'null']
           description: >-
             The country or region in which the user is located (ISO 3166
             two-letter code)
+          example: example_value
         usageLocation:
           type: ['string', 'null']
           description: >-
             Two-letter country code (ISO 3166). Required for users
             assigned licenses due to legal requirements for checking
             service availability.
+          example: example_value
         preferredLanguage:
           type: ['string', 'null']
           description: >-
             The preferred language for the user in ISO 639-1 code format
             (e.g., en-US)
+          example: example_value
         userType:
           type: string
           description: >-
             Classification of the user type relative to the tenant
           enum:
-            - Member
-            - Guest
+          - Member
+          - Guest
+          example: Member
         employeeId:
           type: ['string', 'null']
           description: >-
             The employee identifier assigned by the organization
+          example: '500123'
         employeeType:
           type: ['string', 'null']
           description: >-
             Captures the type of worker (e.g., Employee, Contractor,
             Consultant, Vendor)
+          example: example_value
         employeeHireDate:
           type: ['string', 'null']
           format: date-time
           description: The date and time when the user was hired
+          example: '2026-01-15T10:30:00Z'
         onPremisesSyncEnabled:
           type: ['boolean', 'null']
           readOnly: true
           description: >-
             true if this user is synced from an on-premises directory;
             false if originally created in Azure AD; null if never synced
+          example: example_value
         onPremisesSamAccountName:
           type: ['string', 'null']
           readOnly: true
           description: >-
             The on-premises SAM account name synchronized from the
             on-premises directory
+          example: example_value
         proxyAddresses:
           type: array
           readOnly: true
@@ -1082,17 +1193,20 @@ components:
             prefixed addresses
           items:
             type: string
+          example: []
         assignedLicenses:
           type: array
           readOnly: true
           description: Licenses assigned to the user
           items:
             $ref: '#/components/schemas/AssignedLicense'
+          example: []
         createdDateTime:
           type: string
           format: date-time
           readOnly: true
           description: The date and time the user was created
+          example: '2026-01-15T10:30:00Z'
         lastSignInDateTime:
           type: ['string', 'null']
           format: date-time
@@ -1100,6 +1214,7 @@ components:
           description: >-
             The date and time of the user's most recent interactive
             sign-in activity
+          example: '2026-01-15T10:30:00Z'
     PasswordProfile:
       type: object
       description: >-
@@ -1113,18 +1228,21 @@ components:
           description: >-
             The password for the user. Must satisfy the password complexity
             requirements of the tenant. Required on create.
+          example: example_value
         forceChangePasswordNextSignIn:
           type: boolean
           description: >-
             true if the user must change the password on the next sign-in;
             false otherwise
           default: false
+          example: true
         forceChangePasswordNextSignInWithMfa:
           type: boolean
           description: >-
             true if the user must perform multi-factor authentication
             before being forced to change the password
           default: false
+          example: true
     AssignedLicense:
       type: object
       description: Represents a license assigned to a user
@@ -1135,10 +1253,12 @@ components:
           items:
             type: string
             format: uuid
+          example: []
         skuId:
           type: string
           format: uuid
           description: Unique identifier for the SKU
+          example: '500123'
     Group:
       type: object
       description: >-
@@ -1150,27 +1270,33 @@ components:
           type: string
           readOnly: true
           description: Unique identifier for the group (GUID)
+          example: abc123
         displayName:
           type: string
           description: The display name for the group. Required on create.
+          example: example_value
         description:
           type: ['string', 'null']
           description: An optional description for the group
+          example: A sample description.
         mailEnabled:
           type: boolean
           description: >-
             Specifies whether the group is mail-enabled. Required on
             create. Set to true for Microsoft 365 groups.
+          example: true
         mailNickname:
           type: string
           description: >-
             The mail alias for the group, unique for Microsoft 365 groups.
             Required on create.
+          example: example_value
         securityEnabled:
           type: boolean
           description: >-
             Specifies whether the group is a security group. Required on
             create. Set to false for Microsoft 365 groups.
+          example: true
         groupTypes:
           type: array
           description: >-
@@ -1180,57 +1306,66 @@ components:
           items:
             type: string
             enum:
-              - Unified
-              - DynamicMembership
+            - Unified
+            - DynamicMembership
+          example: []
         visibility:
           type: ['string', 'null']
           description: >-
             Specifies the group's join policy and content visibility for
             Microsoft 365 groups
           enum:
-            - Public
-            - Private
-            - HiddenMembership
-            - 
+          - Public
+          - Private
+          - HiddenMembership
+          - 
+          example: Public
         membershipRule:
           type: ['string', 'null']
           description: >-
             The rule that determines members for this group if the group
             is a dynamic group. Example: user.department -eq "Marketing"
+          example: example_value
         membershipRuleProcessingState:
           type: ['string', 'null']
           description: >-
             Indicates whether the dynamic membership processing is on or
             paused. Possible values are On or Paused.
           enum:
-            - 'On'
-            - Paused
-            - 
+          - 'On'
+          - Paused
+          - 
+          example: 'On'
         mail:
           type: ['string', 'null']
           readOnly: true
           description: The SMTP address for the group
+          example: example_value
         proxyAddresses:
           type: array
           readOnly: true
           description: Email addresses for the group that direct to the same inbox
           items:
             type: string
+          example: []
         isAssignableToRole:
           type: ['boolean', 'null']
           description: >-
             Indicates whether this group can be assigned to a Microsoft
             Entra role. Can only be set at group creation time.
+          example: example_value
         onPremisesSyncEnabled:
           type: ['boolean', 'null']
           readOnly: true
           description: >-
             true if this group is synced from an on-premises directory
+          example: example_value
         createdDateTime:
           type: string
           format: date-time
           readOnly: true
           description: Timestamp of when the group was created
+          example: '2026-01-15T10:30:00Z'
         renewedDateTime:
           type: ['string', 'null']
           format: date-time
@@ -1238,6 +1373,7 @@ components:
           description: >-
             Timestamp of when the group was last renewed (activity that
             extends expiration)
+          example: '2026-01-15T10:30:00Z'
         members:
           type: array
           readOnly: true
@@ -1245,6 +1381,7 @@ components:
             Direct members of this group. Returned only with $expand.
           items:
             $ref: '#/components/schemas/DirectoryObject'
+          example: []
         owners:
           type: array
           readOnly: true
@@ -1252,6 +1389,7 @@ components:
             Owners of the group. Returned only with $expand.
           items:
             $ref: '#/components/schemas/DirectoryObject'
+          example: []
     Application:
       type: object
       description: >-
@@ -1265,28 +1403,33 @@ components:
           description: >-
             Unique identifier for the application object (GUID). This is
             the object ID, not the appId.
+          example: abc123
         appId:
           type: string
           readOnly: true
           description: >-
             The unique application identifier assigned by Microsoft Entra
             ID (also known as the client ID)
+          example: '500123'
         displayName:
           type: string
           description: The display name for the application
+          example: example_value
         description:
           type: ['string', 'null']
           description: An optional description of the application
+          example: A sample description.
         signInAudience:
           type: string
           description: >-
             Specifies which Microsoft accounts are supported for the
             application
           enum:
-            - AzureADMyOrg
-            - AzureADMultipleOrgs
-            - AzureADandPersonalMicrosoftAccount
-            - PersonalMicrosoftAccount
+          - AzureADMyOrg
+          - AzureADMultipleOrgs
+          - AzureADandPersonalMicrosoftAccount
+          - PersonalMicrosoftAccount
+          example: AzureADMyOrg
         identifierUris:
           type: array
           description: >-
@@ -1294,6 +1437,7 @@ components:
             Azure AD tenant or verified custom domain
           items:
             type: string
+          example: []
         web:
           $ref: '#/components/schemas/WebApplication'
         spa:
@@ -1308,6 +1452,7 @@ components:
             under each resource
           items:
             $ref: '#/components/schemas/RequiredResourceAccess'
+          example: []
         appRoles:
           type: array
           description: >-
@@ -1315,16 +1460,19 @@ components:
             be assigned to users, groups, or service principals
           items:
             $ref: '#/components/schemas/AppRole'
+          example: []
         keyCredentials:
           type: array
           description: Collection of certificate credentials associated with the app
           items:
             $ref: '#/components/schemas/KeyCredential'
+          example: []
         passwordCredentials:
           type: array
           description: Collection of password credentials (client secrets)
           items:
             $ref: '#/components/schemas/PasswordCredential'
+          example: []
         publicClient:
           type: object
           description: Public client settings for mobile and desktop apps
@@ -1333,16 +1481,19 @@ components:
               type: array
               items:
                 type: string
+          example: example_value
         tags:
           type: array
           description: Custom strings used to categorize and identify the application
           items:
             type: string
+          example: []
         createdDateTime:
           type: string
           format: date-time
           readOnly: true
           description: The date and time the application was registered
+          example: '2026-01-15T10:30:00Z'
     WebApplication:
       type: object
       description: Web application configuration including redirect URIs
@@ -1355,14 +1506,17 @@ components:
           items:
             type: string
             format: uri
+          example: []
         homePageUrl:
           type: ['string', 'null']
           description: Home page URL of the application
           format: uri
+          example: https://www.example.com
         logoutUrl:
           type: ['string', 'null']
           description: URL used by the authorization service to sign out the user
           format: uri
+          example: https://www.example.com
         implicitGrantSettings:
           type: object
           description: Settings for implicit grant flow tokens
@@ -1375,6 +1529,7 @@ components:
               type: boolean
               description: Whether access tokens can be issued using the implicit flow
               default: false
+          example: example_value
     SpaApplication:
       type: object
       description: Single-page application configuration
@@ -1385,6 +1540,7 @@ components:
           items:
             type: string
             format: uri
+          example: []
     ApiApplication:
       type: object
       description: Settings for an application that implements a web API
@@ -1394,6 +1550,7 @@ components:
           description: >-
             Allows an application to use claims mapping without specifying
             a custom signing key
+          example: example_value
         knownClientApplications:
           type: array
           description: >-
@@ -1402,6 +1559,7 @@ components:
           items:
             type: string
             format: uuid
+          example: []
         oauth2PermissionScopes:
           type: array
           description: >-
@@ -1409,6 +1567,7 @@ components:
             client applications
           items:
             $ref: '#/components/schemas/PermissionScope'
+          example: []
         preAuthorizedApplications:
           type: array
           description: >-
@@ -1424,15 +1583,17 @@ components:
                 items:
                   type: string
                   format: uuid
+          example: []
         requestedAccessTokenVersion:
           type: ['integer', 'null']
           description: >-
             Specifies the access token version expected by the resource.
             Possible values are 1 or 2.
           enum:
-            - 1
-            - 2
-            - 
+          - 1
+          - 2
+          - 
+          example: 1
     PermissionScope:
       type: object
       description: >-
@@ -1443,34 +1604,42 @@ components:
           type: string
           format: uuid
           description: Unique identifier for the scope
+          example: abc123
         value:
           type: string
           description: >-
             The value that identifies the scope in OAuth 2.0
             authorization requests
+          example: example_value
         type:
           type: string
           description: >-
             Whether the scope can be consented to by a user or requires
             admin consent
           enum:
-            - User
-            - Admin
+          - User
+          - Admin
+          example: User
         adminConsentDisplayName:
           type: string
           description: Display name shown on the admin consent experience
+          example: example_value
         adminConsentDescription:
           type: string
           description: Description shown on the admin consent experience
+          example: example_value
         userConsentDisplayName:
           type: ['string', 'null']
           description: Display name shown on the user consent experience
+          example: example_value
         userConsentDescription:
           type: ['string', 'null']
           description: Description shown on the user consent experience
+          example: example_value
         isEnabled:
           type: boolean
           description: Whether the scope is enabled and can be requested
+          example: true
     RequiredResourceAccess:
       type: object
       description: >-
@@ -1482,6 +1651,7 @@ components:
           description: >-
             The unique identifier for the resource that the application
             requires access to (the appId of the target application)
+          example: '500123'
         resourceAccess:
           type: array
           description: >-
@@ -1502,8 +1672,9 @@ components:
                   Specifies whether the id property references a Scope
                   (delegated permission) or a Role (application permission)
                 enum:
-                  - Scope
-                  - Role
+                - Scope
+                - Role
+          example: []
     AppRole:
       type: object
       description: >-
@@ -1514,6 +1685,7 @@ components:
           type: string
           format: uuid
           description: Unique identifier for the app role
+          example: abc123
         allowedMemberTypes:
           type: array
           description: >-
@@ -1522,22 +1694,27 @@ components:
           items:
             type: string
             enum:
-              - User
-              - Application
+            - User
+            - Application
+          example: []
         displayName:
           type: string
           description: Display name for the app role
+          example: example_value
         description:
           type: ['string', 'null']
           description: Description of the app role
+          example: A sample description.
         value:
           type: ['string', 'null']
           description: >-
             Value that is included in the roles claim in authentication
             tokens
+          example: example_value
         isEnabled:
           type: boolean
           description: Whether the app role is enabled
+          example: true
     KeyCredential:
       type: object
       description: >-
@@ -1548,36 +1725,43 @@ components:
           type: string
           format: uuid
           description: Unique identifier for the key
+          example: '500123'
         displayName:
           type: ['string', 'null']
           description: Friendly name for the key
+          example: example_value
         type:
           type: string
           description: Type of key credential
           enum:
-            - AsymmetricX509Cert
-            - X509CertAndPassword
+          - AsymmetricX509Cert
+          - X509CertAndPassword
+          example: AsymmetricX509Cert
         usage:
           type: string
           description: Describes the purpose of the key
           enum:
-            - Sign
-            - Verify
+          - Sign
+          - Verify
+          example: Sign
         key:
           type: string
           format: byte
           description: >-
             The certificate's raw data in byte array converted to Base64
             string
+          example: example_value
         startDateTime:
           type: string
           format: date-time
           description: The date and time at which the credential becomes valid
+          example: '2026-01-15T10:30:00Z'
         endDateTime:
           type: string
           format: date-time
           description: >-
             The date and time at which the credential expires
+          example: '2026-01-15T10:30:00Z'
     PasswordCredential:
       type: object
       description: >-
@@ -1589,31 +1773,37 @@ components:
           format: uuid
           readOnly: true
           description: Unique identifier for the password
+          example: '500123'
         displayName:
           type: ['string', 'null']
           description: Friendly name for the password credential
+          example: example_value
         hint:
           type: string
           readOnly: true
           description: >-
             Contains the first three characters of the password (returned
             on read operations)
+          example: example_value
         secretText:
           type: string
           readOnly: true
           description: >-
             The generated password value. Only returned at creation time
             and cannot be retrieved later.
+          example: example_value
         startDateTime:
           type: string
           format: date-time
           description: The date and time at which the password becomes valid
+          example: '2026-01-15T10:30:00Z'
         endDateTime:
           type: string
           format: date-time
           description: >-
             The date and time at which the password expires. Maximum
             lifetime varies by policy.
+          example: '2026-01-15T10:30:00Z'
     ServicePrincipal:
       type: object
       description: >-
@@ -1626,60 +1816,71 @@ components:
           type: string
           readOnly: true
           description: Unique identifier for the service principal (GUID)
+          example: abc123
         appId:
           type: string
           description: >-
             The unique identifier for the associated application
             (application's appId). Required on create.
+          example: '500123'
         displayName:
           type: string
           description: The display name for the service principal
+          example: example_value
         description:
           type: ['string', 'null']
           description: Description of the service principal's function
+          example: A sample description.
         servicePrincipalType:
           type: string
           description: >-
             Identifies whether the service principal represents an
             application, a managed identity, or a legacy app
           enum:
-            - Application
-            - ManagedIdentity
-            - Legacy
-            - SocialIdp
+          - Application
+          - ManagedIdentity
+          - Legacy
+          - SocialIdp
+          example: Application
         appDisplayName:
           type: string
           readOnly: true
           description: >-
             The display name exposed by the associated application
+          example: example_value
         appOwnerOrganizationId:
           type: ['string', 'null']
           format: uuid
           readOnly: true
           description: >-
             Contains the tenant ID where the application is registered
+          example: '500123'
         accountEnabled:
           type: boolean
           description: >-
             true if the service principal account is enabled; false
             otherwise
           default: true
+          example: true
         homepage:
           type: ['string', 'null']
           description: Home page or landing page of the application
           format: uri
+          example: https://www.example.com
         loginUrl:
           type: ['string', 'null']
           description: >-
             URL where the service provider redirects the user to Microsoft
             Entra ID to authenticate (SAML sign-on)
           format: uri
+          example: https://www.example.com
         logoutUrl:
           type: ['string', 'null']
           description: >-
             URL used by Microsoft's authorization service to sign out a
             user
           format: uri
+          example: https://www.example.com
         replyUrls:
           type: array
           description: >-
@@ -1687,6 +1888,7 @@ components:
             for authorization codes and access tokens
           items:
             type: string
+          example: https://www.example.com
         servicePrincipalNames:
           type: array
           description: >-
@@ -1694,6 +1896,7 @@ components:
             associated application plus the appId
           items:
             type: string
+          example: []
         tags:
           type: array
           description: >-
@@ -1701,6 +1904,7 @@ components:
             principal. Values include WindowsAzureActiveDirectoryIntegratedApp.
           items:
             type: string
+          example: []
         appRoles:
           type: array
           readOnly: true
@@ -1709,6 +1913,7 @@ components:
             principal represents
           items:
             $ref: '#/components/schemas/AppRole'
+          example: []
         oauth2PermissionScopes:
           type: array
           readOnly: true
@@ -1716,6 +1921,7 @@ components:
             The delegated permission scopes exposed by the application
           items:
             $ref: '#/components/schemas/PermissionScope'
+          example: []
         appRoleAssignmentRequired:
           type: boolean
           description: >-
@@ -1723,21 +1929,25 @@ components:
             granted an app role assignment before they can sign in or
             obtain tokens
           default: false
+          example: true
         keyCredentials:
           type: array
           description: Collection of certificate credentials
           items:
             $ref: '#/components/schemas/KeyCredential'
+          example: []
         passwordCredentials:
           type: array
           description: Collection of password credentials
           items:
             $ref: '#/components/schemas/PasswordCredential'
+          example: []
         createdDateTime:
           type: ['string', 'null']
           format: date-time
           readOnly: true
           description: Date and time the service principal was created
+          example: '2026-01-15T10:30:00Z'
     AppRoleAssignment:
       type: object
       description: >-
@@ -1748,44 +1958,52 @@ components:
           type: string
           readOnly: true
           description: Unique identifier for the assignment (GUID)
+          example: abc123
         appRoleId:
           type: string
           format: uuid
           description: >-
             The ID of the app role to assign. Use the default role ID
             00000000-0000-0000-0000-000000000000 for default access.
+          example: '500123'
         principalId:
           type: string
           format: uuid
           description: >-
             The unique identifier of the user, group, or service principal
             being granted the app role
+          example: '500123'
         principalType:
           type: string
           description: The type of the assigned principal
           enum:
-            - User
-            - Group
-            - ServicePrincipal
+          - User
+          - Group
+          - ServicePrincipal
+          example: User
         principalDisplayName:
           type: string
           readOnly: true
           description: Display name of the principal
+          example: example_value
         resourceId:
           type: string
           format: uuid
           description: >-
             The unique identifier of the resource service principal to
             which the assignment is made
+          example: '500123'
         resourceDisplayName:
           type: string
           readOnly: true
           description: Display name of the resource application
+          example: example_value
         createdDateTime:
           type: string
           format: date-time
           readOnly: true
           description: Time when the app role assignment was created
+          example: '2026-01-15T10:30:00Z'
     DirectoryObject:
       type: object
       description: >-
@@ -1796,20 +2014,22 @@ components:
           type: string
           description: The OData type string for the directory object
           examples:
-            - '#microsoft.graph.user'
-            - '#microsoft.graph.group'
-            - '#microsoft.graph.servicePrincipal'
+          - '#microsoft.graph.user'
+          - '#microsoft.graph.group'
+          - '#microsoft.graph.servicePrincipal'
         id:
           type: string
           description: Unique identifier for the directory object
+          example: abc123
         displayName:
           type: ['string', 'null']
           description: The display name of the directory object
+          example: example_value
     ODataReference:
       type: object
       description: OData reference link used to add relationships
       required:
-        - '@odata.id'
+      - '@odata.id'
       properties:
         '@odata.id':
           type: string
@@ -1817,6 +2037,7 @@ components:
             The full URL to the directory object to add as a member.
             Format: https://graph.microsoft.com/v1.0/directoryObjects/{id}
           format: uri
+          example: https://www.example.com
     UserCollectionResponse:
       type: object
       description: Paged collection of user objects
@@ -1824,92 +2045,116 @@ components:
         '@odata.context':
           type: string
           description: OData context URL
+          example: example_value
         '@odata.count':
           type: integer
           description: Total count of matching resources (if $count=true)
+          example: 10
         '@odata.nextLink':
           type: string
           format: uri
           description: URL to retrieve the next page of results
+          example: https://www.example.com
         value:
           type: array
           items:
             $ref: '#/components/schemas/User'
+          example: []
     GroupCollectionResponse:
       type: object
       description: Paged collection of group objects
       properties:
         '@odata.context':
           type: string
+          example: example_value
         '@odata.count':
           type: integer
+          example: 10
         '@odata.nextLink':
           type: string
           format: uri
+          example: https://www.example.com
         value:
           type: array
           items:
             $ref: '#/components/schemas/Group'
+          example: []
     ApplicationCollectionResponse:
       type: object
       description: Paged collection of application objects
       properties:
         '@odata.context':
           type: string
+          example: example_value
         '@odata.count':
           type: integer
+          example: 10
         '@odata.nextLink':
           type: string
           format: uri
+          example: https://www.example.com
         value:
           type: array
           items:
             $ref: '#/components/schemas/Application'
+          example: []
     ServicePrincipalCollectionResponse:
       type: object
       description: Paged collection of service principal objects
       properties:
         '@odata.context':
           type: string
+          example: example_value
         '@odata.count':
           type: integer
+          example: 10
         '@odata.nextLink':
           type: string
           format: uri
+          example: https://www.example.com
         value:
           type: array
           items:
             $ref: '#/components/schemas/ServicePrincipal'
+          example: []
     DirectoryObjectCollectionResponse:
       type: object
       description: Paged collection of directory objects
       properties:
         '@odata.context':
           type: string
+          example: example_value
         '@odata.count':
           type: integer
+          example: 10
         '@odata.nextLink':
           type: string
           format: uri
+          example: https://www.example.com
         value:
           type: array
           items:
             $ref: '#/components/schemas/DirectoryObject'
+          example: []
     AppRoleAssignmentCollectionResponse:
       type: object
       description: Paged collection of app role assignments
       properties:
         '@odata.context':
           type: string
+          example: example_value
         '@odata.count':
           type: integer
+          example: 10
         '@odata.nextLink':
           type: string
           format: uri
+          example: https://www.example.com
         value:
           type: array
           items:
             $ref: '#/components/schemas/AppRoleAssignment'
+          example: []
     ODataError:
       type: object
       description: OData error response
@@ -1935,6 +2180,7 @@ components:
                 client-request-id:
                   type: string
                   format: uuid
+          example: example_value
   responses:
     BadRequest:
       description: Bad request - invalid input or malformed request body

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "PermissionScope",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "adminConsentDisplayName": {
+      "type": "string"
+    },
+    "adminConsentDescription": {
+      "type": "string"
+    },
+    "userConsentDisplayName": {
+      "type": "['string', 'null']"
+    },
+    "userConsentDescription": {
+      "type": "['string', 'null']"
+    },
+    "isEnabled": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "abc123",
+  "appId": "500123",
+  "displayName": "example_value",
+  "description": "A sample description.",
+  "servicePrincipalType": "example_value",
+  "appDisplayName": "example_value",
+  "appOwnerOrganizationId": "500123",
+  "accountEnabled": true,
+  "homepage": "example_value",
+  "loginUrl": "https://www.example.com",
+  "logoutUrl": "https://www.example.com",
+  "replyUrls": "https://www.example.com",
+  "servicePrincipalNames": [],
+  "tags": [],
+  "appRoles": [],
+  "oauth2PermissionScopes": [],
+  "appRoleAssignmentRequired": true,
+  "keyCredentials": [],
+  "passwordCredentials": [],
+  "createdDateTime": "example_value"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "abc123",
+  "appId": "500123",
+  "displayName": "example_value",
+  "description": "A sample description.",
+  "signInAudience": "example_value",
+  "identifierUris": [],
+  "requiredResourceAccess": [],
+  "appRoles": [],
+  "keyCredentials": [],
+  "passwordCredentials": [],
+  "publicClient": "example_value",
+  "tags": [],
+  "createdDateTime": "example_value"
+}

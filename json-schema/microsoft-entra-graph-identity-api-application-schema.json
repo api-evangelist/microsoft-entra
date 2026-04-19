@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ApiApplication",
+  "type": "object",
+  "description": "Settings for an application that implements a web API",
+  "properties": {
+    "acceptMappedClaims": {
+      "type": "['boolean', 'null']",
+      "description": "Allows an application to use claims mapping without specifying a custom signing key"
+    },
+    "knownClientApplications": {
+      "type": "array",
+      "description": "Used for bundling consent. Lists client app IDs that are considered known clients of this API"
+    },
+    "oauth2PermissionScopes": {
+      "type": "array",
+      "description": "OAuth 2.0 permission scopes exposed by the web API to client applications"
+    },
+    "preAuthorizedApplications": {
+      "type": "array",
+      "description": "Lists client applications pre-authorized with specified delegated permissions that do not require user consent"
+    },
+    "requestedAccessTokenVersion": {
+      "type": "['integer', 'null']",
+      "description": "Specifies the access token version expected by the resource. Possible values are 1 or 2."
+    }
+  }
+}

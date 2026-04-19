@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "givenName": {
+      "type": "['string', 'null']"
+    },
+    "surname": {
+      "type": "['string', 'null']"
+    },
+    "mail": {
+      "type": "['string', 'null']"
+    },
+    "userPrincipalName": {
+      "type": "string"
+    },
+    "mailNickname": {
+      "type": "string"
+    },
+    "accountEnabled": {
+      "type": "boolean"
+    },
+    "jobTitle": {
+      "type": "['string', 'null']"
+    },
+    "department": {
+      "type": "['string', 'null']"
+    },
+    "officeLocation": {
+      "type": "['string', 'null']"
+    },
+    "companyName": {
+      "type": "['string', 'null']"
+    },
+    "mobilePhone": {
+      "type": "['string', 'null']"
+    },
+    "businessPhones": {
+      "type": "array"
+    },
+    "streetAddress": {
+      "type": "['string', 'null']"
+    },
+    "city": {
+      "type": "['string', 'null']"
+    },
+    "state": {
+      "type": "['string', 'null']"
+    },
+    "postalCode": {
+      "type": "['string', 'null']"
+    },
+    "country": {
+      "type": "['string', 'null']"
+    },
+    "usageLocation": {
+      "type": "['string', 'null']"
+    },
+    "preferredLanguage": {
+      "type": "['string', 'null']"
+    },
+    "userType": {
+      "type": "string"
+    },
+    "employeeId": {
+      "type": "['string', 'null']"
+    },
+    "employeeType": {
+      "type": "['string', 'null']"
+    },
+    "employeeHireDate": {
+      "type": "['string', 'null']"
+    },
+    "onPremisesSyncEnabled": {
+      "type": "['boolean', 'null']"
+    },
+    "onPremisesSamAccountName": {
+      "type": "['string', 'null']"
+    },
+    "proxyAddresses": {
+      "type": "array"
+    },
+    "assignedLicenses": {
+      "type": "array"
+    },
+    "createdDateTime": {
+      "type": "string"
+    },
+    "lastSignInDateTime": {
+      "type": "['string', 'null']"
+    }
+  }
+}

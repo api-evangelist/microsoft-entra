@@ -1,0 +1,10 @@
+{
+  "id": "abc123",
+  "appRoleId": "500123",
+  "principalId": "500123",
+  "principalType": "example_value",
+  "principalDisplayName": "example_value",
+  "resourceId": "500123",
+  "resourceDisplayName": "example_value",
+  "createdDateTime": "example_value"
+}

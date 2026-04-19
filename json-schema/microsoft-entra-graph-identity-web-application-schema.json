@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WebApplication",
+  "type": "object",
+  "description": "Web application configuration including redirect URIs",
+  "properties": {
+    "redirectUris": {
+      "type": "array",
+      "description": "URIs to which Microsoft Entra ID will redirect after authentication"
+    },
+    "homePageUrl": {
+      "type": "['string', 'null']",
+      "description": "Home page URL of the application"
+    },
+    "logoutUrl": {
+      "type": "['string', 'null']",
+      "description": "URL used by the authorization service to sign out the user"
+    },
+    "implicitGrantSettings": {
+      "type": "object",
+      "description": "Settings for implicit grant flow tokens"
+    }
+  }
+}

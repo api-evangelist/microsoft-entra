@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "ServicePrincipal",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "appId": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "['string', 'null']"
+    },
+    "servicePrincipalType": {
+      "type": "string"
+    },
+    "appDisplayName": {
+      "type": "string"
+    },
+    "appOwnerOrganizationId": {
+      "type": "['string', 'null']"
+    },
+    "accountEnabled": {
+      "type": "boolean"
+    },
+    "homepage": {
+      "type": "['string', 'null']"
+    },
+    "loginUrl": {
+      "type": "['string', 'null']"
+    },
+    "logoutUrl": {
+      "type": "['string', 'null']"
+    },
+    "replyUrls": {
+      "type": "array"
+    },
+    "servicePrincipalNames": {
+      "type": "array"
+    },
+    "tags": {
+      "type": "array"
+    },
+    "appRoles": {
+      "type": "array"
+    },
+    "oauth2PermissionScopes": {
+      "type": "array"
+    },
+    "appRoleAssignmentRequired": {
+      "type": "boolean"
+    },
+    "keyCredentials": {
+      "type": "array"
+    },
+    "passwordCredentials": {
+      "type": "array"
+    },
+    "createdDateTime": {
+      "type": "['string', 'null']"
+    }
+  }
+}
