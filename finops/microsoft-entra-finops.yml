@@ -1,0 +1,265 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+provider: Microsoft Entra
+providerId: microsoft-entra
+publisherName: Microsoft Entra
+serviceCategory: API
+created: '2026-05-04'
+modified: '2026-05-04'
+tags:
+  - Access Management
+  - Authentication
+  - Azure AD
+  - Entra
+  - Identity
+  - Identity Governance
+  - Microsoft
+  - Network Security
+  - Security
+  - Zero Trust
+  - FinOps
+  - Cost Management
+  - FOCUS
+description: FinOps framework definition for the Microsoft Entra API surface. Provides a FOCUS-aligned
+  mapping for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
+principles:
+  - name: Visibility
+    description: Make API consumption costs visible to engineering, product, and finance teams in near
+      real-time.
+  - name: Allocation
+    description: Tag every chargeable API call with the consuming team, environment, application, and
+      feature so cost can be allocated.
+  - name: Optimization
+    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
+      cost per useful unit of work.
+  - name: Accountability
+    description: Establish budget owners and chargeback or showback flows for each consuming team.
+domains:
+  - name: Understand Usage and Cost
+    capabilities:
+      - Data Ingestion
+      - Allocation
+      - Reporting and Analytics
+      - Anomaly Management
+  - name: Quantify Business Value
+    capabilities:
+      - Planning and Estimating
+      - Forecasting
+      - Budgeting
+      - Benchmarking
+      - Unit Economics
+  - name: Optimize Usage and Cost
+    capabilities:
+      - Architecting for Cloud
+      - Rate Optimization
+      - Workload Optimization
+      - Cloud Sustainability
+      - Licensing and SaaS
+  - name: Manage the FinOps Practice
+    capabilities:
+      - FinOps Practice Operations
+      - FinOps Education and Enablement
+      - Invoicing and Chargeback
+      - Onboarding Workloads
+      - Intersecting Disciplines
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Tax
+    - Credit
+    - Adjustment
+  chargeFrequency: Recurring
+focusColumns:
+  ServiceName: Microsoft Entra
+  ServiceCategory: Developer Tools / API
+  ProviderName: Microsoft Entra
+  PublisherName: Microsoft Entra
+  InvoiceIssuerName: Microsoft Entra
+  PricingCategory: Usage-Based
+  PricingUnit: request
+  BillingCurrency: USD
+  ChargeCategory: Usage
+meters:
+  - name: api_requests
+    description: Count of billable API requests
+    unit: request
+    aggregation: sum
+    dimensions:
+      - api
+      - endpoint
+      - tier
+      - region
+      - consumer
+  - name: data_egress
+    description: Bytes returned over the network in API responses
+    unit: GB
+    aggregation: sum
+    dimensions:
+      - api
+      - region
+      - consumer
+  - name: compute_seconds
+    description: Server-side compute consumed by the request, where applicable
+    unit: second
+    aggregation: sum
+    dimensions:
+      - api
+      - endpoint
+      - tier
+apis:
+  - name: Microsoft Entra ID (Azure AD) API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Authentication
+      - Authorization
+      - Directory
+      - Groups
+      - Identity
+      - Users
+    serviceName: Microsoft Entra ID (Azure AD) API
+    serviceCategory: API
+  - name: Microsoft Entra ID Protection API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Identity Protection
+      - Risk Detection
+      - Security
+      - Threat Protection
+    serviceName: Microsoft Entra ID Protection API
+    serviceCategory: API
+  - name: Microsoft Entra Conditional Access API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Access Control
+      - Conditional Access
+      - Policies
+      - Security
+    serviceName: Microsoft Entra Conditional Access API
+    serviceCategory: API
+  - name: Microsoft Entra Privileged Identity Management API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Just-In-Time
+      - PIM
+      - Privileged Access
+      - Role Management
+    serviceName: Microsoft Entra Privileged Identity Management API
+    serviceCategory: API
+  - name: Microsoft Entra Verified ID API
+    baseURL: https://verifiedid.did.msidentity.com/v1.0
+    tags:
+      - Decentralized Identity
+      - DID
+      - SSI
+      - Verifiable Credentials
+    serviceName: Microsoft Entra Verified ID API
+    serviceCategory: API
+  - name: Microsoft Entra External ID API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - B2B
+      - B2C
+      - Customer Identity
+      - External Identities
+    serviceName: Microsoft Entra External ID API
+    serviceCategory: API
+  - name: Microsoft Entra ID Governance API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Access Reviews
+      - Compliance
+      - Entitlement Management
+      - Identity Governance
+      - Lifecycle Workflows
+    serviceName: Microsoft Entra ID Governance API
+    serviceCategory: API
+  - name: Microsoft Entra Application Management API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - App Registration
+      - Applications
+      - Credentials
+      - OAuth
+      - Service Principals
+    serviceName: Microsoft Entra Application Management API
+    serviceCategory: API
+  - name: Microsoft Entra Authentication Methods API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Authentication Methods
+      - FIDO2
+      - MFA
+      - Passkeys
+      - Passwordless
+    serviceName: Microsoft Entra Authentication Methods API
+    serviceCategory: API
+  - name: Microsoft Entra Workload ID API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Managed Identities
+      - Service Principals
+      - Workload Identities
+      - Workload Identity Federation
+    serviceName: Microsoft Entra Workload ID API
+    serviceCategory: API
+  - name: Microsoft Entra Provisioning API
+    baseURL: https://graph.microsoft.com/v1.0
+    tags:
+      - Inbound Provisioning
+      - Provisioning
+      - SCIM
+      - Synchronization
+      - User Lifecycle
+    serviceName: Microsoft Entra Provisioning API
+    serviceCategory: API
+  - name: Microsoft Entra Global Secure Access API
+    baseURL: https://graph.microsoft.com/beta
+    tags:
+      - Internet Access
+      - Network Security
+      - Private Access
+      - Secure Web Gateway
+      - Zero Trust
+      - ZTNA
+    serviceName: Microsoft Entra Global Secure Access API
+    serviceCategory: API
+  - name: Microsoft Identity Platform API
+    baseURL: https://login.microsoftonline.com
+    tags:
+      - Identity Platform
+      - OAuth 2.0
+      - OpenID Connect
+      - SAML
+      - Token Service
+    serviceName: Microsoft Identity Platform API
+    serviceCategory: API
+  - name: Microsoft Entra Agent ID API
+    baseURL: https://graph.microsoft.com/beta
+    tags:
+      - Agent Identity
+      - Agent Registry
+      - AI Agents
+      - Machine Identity
+    serviceName: Microsoft Entra Agent ID API
+    serviceCategory: API
+unitEconomics:
+  - name: Cost per 1K Requests
+    metric: billed_cost / (api_requests / 1000)
+    target: TBD
+  - name: Cost per Active Consumer
+    metric: billed_cost / active_consumers
+    target: TBD
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+    url: https://apievangelist.com/
