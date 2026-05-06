@@ -4,157 +4,91 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Microsoft Entra
 providerId: microsoft-entra
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Access Management
-  - Authentication
-  - Azure AD
-  - Entra
-  - Identity
-  - Identity Governance
-  - Microsoft
-  - Network Security
-  - Security
-  - Zero Trust
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Microsoft Entra API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+  - Identity
+  - Access Management
+  - Microsoft Graph
+  - Microsoft
+description: Microsoft Entra (Azure AD) administration is performed primarily through Microsoft Graph.
+  Throttling for the directory/identity service uses a ResourceUnit token-bucket model scoped per (application,
+  tenant) pair, with separate write quotas. Limits scale with tenant size (Small <50 users, Medium 50-500,
+  Large >500). Returns 429 Too Many Requests with a Retry-After header.
+sources:
+  - https://learn.microsoft.com/en-us/graph/throttling-limits#identity-and-access-service-limits
+  - https://learn.microsoft.com/en-us/graph/throttling
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
   retryAfter: Retry-After
-  policy: RateLimit-Policy
+  requestId: request-id
+  throttleScope: x-ms-throttle-scope
+  throttleLimit: x-ms-throttle-limit-percentage
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Read ResourceUnits — small tenant (<50 users) per app
+    scope: app/tenant
+    metric: resource_units_per_10_seconds
+    limit: 3500
+    timeFrame: second
+    notes: 10-second sliding window
+  - name: Read ResourceUnits — medium tenant (50–500 users) per app
+    scope: app/tenant
+    metric: resource_units_per_10_seconds
+    limit: 5000
+    timeFrame: second
+    notes: 10-second sliding window
+  - name: Read ResourceUnits — large tenant (>500 users) per app
+    scope: app/tenant
+    metric: resource_units_per_10_seconds
+    limit: 8000
+    timeFrame: second
+    notes: 10-second sliding window
+  - name: Write requests per app/tenant
+    scope: app/tenant
+    metric: requests_per_2m30s
+    limit: 3000
+    timeFrame: second
+    notes: 2-minute 30-second window
+  - name: Read ResourceUnits per application across all tenants
+    scope: application
+    metric: resource_units_per_20_seconds
+    limit: 150000
+    timeFrame: second
+  - name: Write requests per application across all tenants
+    scope: application
+    metric: requests_per_5_minutes
+    limit: 35000
+    timeFrame: minute
+  - name: Write requests per tenant across all apps
+    scope: tenant
+    metric: requests_per_5_minutes
+    limit: 18000
+    timeFrame: minute
+  - name: Identity & Access Reports — any request
+    scope: app/tenant
+    metric: requests_per_10_seconds
+    limit: 5
+    timeFrame: second
+  - name: signInActivity GET
+    scope: app/tenant
     metric: requests_per_minute
     limit: 10
-    burst: 20
     timeFrame: minute
-    applies:
-      - Microsoft Entra ID (Azure AD) API
-      - Microsoft Entra ID Protection API
-      - Microsoft Entra Conditional Access API
-      - Microsoft Entra Privileged Identity Management API
-      - Microsoft Entra Verified ID API
-      - Microsoft Entra External ID API
-      - Microsoft Entra ID Governance API
-      - Microsoft Entra Application Management API
-      - Microsoft Entra Authentication Methods API
-      - Microsoft Entra Workload ID API
-      - Microsoft Entra Provisioning API
-      - Microsoft Entra Global Secure Access API
-      - Microsoft Identity Platform API
-      - Microsoft Entra Agent ID API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Microsoft Entra ID (Azure AD) API
-      - Microsoft Entra ID Protection API
-      - Microsoft Entra Conditional Access API
-      - Microsoft Entra Privileged Identity Management API
-      - Microsoft Entra Verified ID API
-      - Microsoft Entra External ID API
-      - Microsoft Entra ID Governance API
-      - Microsoft Entra Application Management API
-      - Microsoft Entra Authentication Methods API
-      - Microsoft Entra Workload ID API
-      - Microsoft Entra Provisioning API
-      - Microsoft Entra Global Secure Access API
-      - Microsoft Identity Platform API
-      - Microsoft Entra Agent ID API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Microsoft Entra ID (Azure AD) API
-      - Microsoft Entra ID Protection API
-      - Microsoft Entra Conditional Access API
-      - Microsoft Entra Privileged Identity Management API
-      - Microsoft Entra Verified ID API
-      - Microsoft Entra External ID API
-      - Microsoft Entra ID Governance API
-      - Microsoft Entra Application Management API
-      - Microsoft Entra Authentication Methods API
-      - Microsoft Entra Workload ID API
-      - Microsoft Entra Provisioning API
-      - Microsoft Entra Global Secure Access API
-      - Microsoft Identity Platform API
-      - Microsoft Entra Agent ID API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Microsoft Entra ID (Azure AD) API
-      - Microsoft Entra ID Protection API
-      - Microsoft Entra Conditional Access API
-      - Microsoft Entra Privileged Identity Management API
-      - Microsoft Entra Verified ID API
-      - Microsoft Entra External ID API
-      - Microsoft Entra ID Governance API
-      - Microsoft Entra Application Management API
-      - Microsoft Entra Authentication Methods API
-      - Microsoft Entra Workload ID API
-      - Microsoft Entra Provisioning API
-      - Microsoft Entra Global Secure Access API
-      - Microsoft Identity Platform API
-      - Microsoft Entra Agent ID API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Microsoft Entra ID (Azure AD) API
-      - Microsoft Entra ID Protection API
-      - Microsoft Entra Conditional Access API
-      - Microsoft Entra Privileged Identity Management API
-      - Microsoft Entra Verified ID API
-      - Microsoft Entra External ID API
-      - Microsoft Entra ID Governance API
-      - Microsoft Entra Application Management API
-      - Microsoft Entra Authentication Methods API
-      - Microsoft Entra Workload ID API
-      - Microsoft Entra Provisioning API
-      - Microsoft Entra Global Secure Access API
-      - Microsoft Identity Platform API
-      - Microsoft Entra Agent ID API
 policies:
+  - name: ResourceUnit cost model
+    description: Each Graph request to Entra is charged a base ResourceUnit cost (most are 1 RU; some
+      paths cost 2–5 RU, e.g. group transitiveMembers = 5 RU). Plan capacity in ResourceUnits, not raw
+      requests.
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: Honour the Retry-After header on 429; otherwise apply exponential backoff with jitter.
+  - name: Tenant-size scaling
+    description: Read budget grows with tenant user count (3500 / 5000 / 8000 RU per 10s for Small / Medium
+      / Large).
+  - name: Use change-tracking
+    description: Prefer delta queries and change notifications over polling for directory objects.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
-    url: https://apievangelist.com/
