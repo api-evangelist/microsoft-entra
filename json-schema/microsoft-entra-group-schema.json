@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Group",
+  "title": "Group",
+  "type": "object",
+  "description": "Represents a Microsoft Entra group. Groups can be Microsoft 365 groups, security groups, mail-enabled security groups, or distribution groups.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Unique identifier for the group (GUID)",
+      "example": "abc123"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The display name for the group. Required on create.",
+      "example": "example_value"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "An optional description for the group",
+      "example": "A sample description."
+    },
+    "mailEnabled": {
+      "type": "boolean",
+      "description": "Specifies whether the group is mail-enabled. Required on create. Set to true for Microsoft 365 groups.",
+      "example": true
+    },
+    "mailNickname": {
+      "type": "string",
+      "description": "The mail alias for the group, unique for Microsoft 365 groups. Required on create.",
+      "example": "example_value"
+    },
+    "securityEnabled": {
+      "type": "boolean",
+      "description": "Specifies whether the group is a security group. Required on create. Set to false for Microsoft 365 groups.",
+      "example": true
+    },
+    "groupTypes": {
+      "type": "array",
+      "description": "Specifies the group type. Set to [\"Unified\"] for Microsoft 365 groups. Empty array or [\"DynamicMembership\"] for other types.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Unified",
+          "DynamicMembership"
+        ]
+      },
+      "example": []
+    },
+    "visibility": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Specifies the group's join policy and content visibility for Microsoft 365 groups",
+      "enum": [
+        "Public",
+        "Private",
+        "HiddenMembership",
+        null
+      ],
+      "example": "Public"
+    },
+    "membershipRule": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The rule that determines members for this group if the group is a dynamic group. Example: user.department -eq \"Marketing\"",
+      "example": "example_value"
+    },
+    "membershipRuleProcessingState": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Indicates whether the dynamic membership processing is on or paused. Possible values are On or Paused.",
+      "enum": [
+        "On",
+        "Paused",
+        null
+      ],
+      "example": "On"
+    },
+    "mail": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "The SMTP address for the group",
+      "example": "example_value"
+    },
+    "proxyAddresses": {
+      "type": "array",
+      "readOnly": true,
+      "description": "Email addresses for the group that direct to the same inbox",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "isAssignableToRole": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Indicates whether this group can be assigned to a Microsoft Entra role. Can only be set at group creation time.",
+      "example": "example_value"
+    },
+    "onPremisesSyncEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "true if this group is synced from an on-premises directory",
+      "example": "example_value"
+    },
+    "createdDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true,
+      "description": "Timestamp of when the group was created",
+      "example": "2026-01-15T10:30:00Z"
+    },
+    "renewedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "readOnly": true,
+      "description": "Timestamp of when the group was last renewed (activity that extends expiration)",
+      "example": "2026-01-15T10:30:00Z"
+    },
+    "members": {
+      "type": "array",
+      "readOnly": true,
+      "description": "Direct members of this group. Returned only with $expand.",
+      "items": {
+        "$ref": "#/components/schemas/DirectoryObject"
+      },
+      "example": []
+    },
+    "owners": {
+      "type": "array",
+      "readOnly": true,
+      "description": "Owners of the group. Returned only with $expand.",
+      "items": {
+        "$ref": "#/components/schemas/DirectoryObject"
+      },
+      "example": []
+    }
+  }
+}

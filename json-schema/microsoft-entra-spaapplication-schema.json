@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SpaApplication",
+  "title": "SpaApplication",
+  "type": "object",
+  "description": "Single-page application configuration",
+  "properties": {
+    "redirectUris": {
+      "type": "array",
+      "description": "Redirect URIs for single-page application authentication",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "example": []
+    }
+  }
+}

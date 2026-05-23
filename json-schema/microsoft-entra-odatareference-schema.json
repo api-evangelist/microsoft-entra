@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ODataReference",
+  "title": "ODataReference",
+  "type": "object",
+  "description": "OData reference link used to add relationships",
+  "required": [
+    "@odata.id"
+  ],
+  "properties": {
+    "@odata.id": {
+      "type": "string",
+      "description": "The full URL to the directory object to add as a member. Format: https://graph.microsoft.com/v1.0/directoryObjects/{id}",
+      "format": "uri",
+      "example": "https://www.example.com"
+    }
+  }
+}

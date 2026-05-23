@@ -1,0 +1,15 @@
+name: Microsoft Entra Domain Vocabulary
+provider: Microsoft Entra
+providerId: microsoft-entra
+description: Tag-derived vocabulary for the Microsoft Entra API surface; sourced from openapi/ tags.
+terms:
+- term: Applications
+  description: Register and manage application objects that define application configuration including credentials, permissions,
+    and sign-in settings
+- term: Groups
+  description: Manage groups for organizing users, devices, and other principals including Microsoft 365 groups, security
+    groups, and distribution lists
+- term: ServicePrincipals
+  description: Manage service principal objects that represent application instances in a tenant for authentication and authorization
+- term: Users
+  description: Manage user accounts in the directory including creation, updates, profile management, and lifecycle operations

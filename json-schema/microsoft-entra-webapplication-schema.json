@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WebApplication",
+  "title": "WebApplication",
+  "type": "object",
+  "description": "Web application configuration including redirect URIs",
+  "properties": {
+    "redirectUris": {
+      "type": "array",
+      "description": "URIs to which Microsoft Entra ID will redirect after authentication",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "example": []
+    },
+    "homePageUrl": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Home page URL of the application",
+      "format": "uri",
+      "example": "https://www.example.com"
+    },
+    "logoutUrl": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "URL used by the authorization service to sign out the user",
+      "format": "uri",
+      "example": "https://www.example.com"
+    },
+    "implicitGrantSettings": {
+      "type": "object",
+      "description": "Settings for implicit grant flow tokens",
+      "properties": {
+        "enableIdTokenIssuance": {
+          "type": "boolean",
+          "description": "Whether ID tokens can be issued using the implicit flow",
+          "default": false
+        },
+        "enableAccessTokenIssuance": {
+          "type": "boolean",
+          "description": "Whether access tokens can be issued using the implicit flow",
+          "default": false
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

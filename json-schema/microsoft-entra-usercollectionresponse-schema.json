@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserCollectionResponse",
+  "title": "UserCollectionResponse",
+  "type": "object",
+  "description": "Paged collection of user objects",
+  "properties": {
+    "@odata.context": {
+      "type": "string",
+      "description": "OData context URL",
+      "example": "example_value"
+    },
+    "@odata.count": {
+      "type": "integer",
+      "description": "Total count of matching resources (if $count=true)",
+      "example": 10
+    },
+    "@odata.nextLink": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to retrieve the next page of results",
+      "example": "https://www.example.com"
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/User"
+      },
+      "example": []
+    }
+  }
+}
