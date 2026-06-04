@@ -1,0 +1,98 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Provision User
+  summary: Create a new Entra ID user and read back the provisioned account.
+  description: >-
+    Provisions a brand new user in Microsoft Entra ID (Azure AD) through
+    Microsoft Graph, then immediately reads the created user back to confirm
+    the directory assigned an object id and to surface the default account
+    properties. The create step supplies the required identity fields
+    (displayName, accountEnabled, mailNickname, userPrincipalName, and a
+    passwordProfile), and the follow-up get resolves the full user object.
+    Every step spells out its request inline so the flow can be read and run
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-user
+  summary: Create a user then fetch the resulting object by its new id.
+  description: >-
+    Posts a new user to the directory and uses the returned object id to
+    retrieve the full user resource, confirming the account was created.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - displayName
+    - mailNickname
+    - userPrincipalName
+    - password
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with User.ReadWrite.All permission.
+      displayName:
+        type: string
+        description: The name displayed in the address book for the user.
+      mailNickname:
+        type: string
+        description: The mail alias for the user.
+      userPrincipalName:
+        type: string
+        description: The UPN in alias@verifieddomain format.
+      password:
+        type: string
+        description: Initial password satisfying the tenant complexity policy.
+      forceChangePassword:
+        type: boolean
+        description: Whether the user must change the password at next sign-in.
+        default: true
+  steps:
+  - stepId: createUser
+    description: >-
+      Create the user with the required identity properties and an initial
+      password profile.
+    operationId: createUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/json
+      payload:
+        accountEnabled: true
+        displayName: $inputs.displayName
+        mailNickname: $inputs.mailNickname
+        userPrincipalName: $inputs.userPrincipalName
+        passwordProfile:
+          password: $inputs.password
+          forceChangePasswordNextSignIn: $inputs.forceChangePassword
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      userId: $response.body#/id
+      createdUpn: $response.body#/userPrincipalName
+  - stepId: getUser
+    description: >-
+      Read the newly created user back by its object id to confirm it exists
+      and to capture the default property set.
+    operationId: getUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: user-id
+      in: path
+      value: $steps.createUser.outputs.userId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/id
+      displayName: $response.body#/displayName
+      accountEnabled: $response.body#/accountEnabled
+  outputs:
+    userId: $steps.getUser.outputs.userId
+    userPrincipalName: $steps.createUser.outputs.createdUpn

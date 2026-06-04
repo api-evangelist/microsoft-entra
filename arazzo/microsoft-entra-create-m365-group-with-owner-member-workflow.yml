@@ -1,0 +1,104 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Create Microsoft 365 Group With Member
+  summary: Create a Unified M365 group, add a member, and read the group back.
+  description: >-
+    Creates a collaboration-ready Microsoft 365 (Unified) group in Microsoft
+    Entra ID, adds an initial member by posting an OData reference, and reads
+    the group back to confirm its settings. The create step sets groupTypes to
+    ["Unified"], mailEnabled true, securityEnabled false, and a Private
+    visibility per the Microsoft 365 group requirements. Every request is
+    inlined so the chain reads end to end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-m365-group-with-member
+  summary: Create a Unified group, add a member, then get the group.
+  description: >-
+    Creates a Microsoft 365 group, references a member into it, and retrieves
+    the group object to confirm creation.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - displayName
+    - mailNickname
+    - memberId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Group.ReadWrite.All and GroupMember.ReadWrite.All.
+      displayName:
+        type: string
+        description: Display name for the Microsoft 365 group.
+      mailNickname:
+        type: string
+        description: Unique mail alias for the Microsoft 365 group.
+      memberId:
+        type: string
+        description: Object id of the directory object to add as the first member.
+  steps:
+  - stepId: createGroup
+    description: >-
+      Create the Microsoft 365 (Unified) group with mail enabled and Private
+      visibility.
+    operationId: createGroup
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.displayName
+        mailNickname: $inputs.mailNickname
+        mailEnabled: true
+        securityEnabled: false
+        groupTypes:
+        - Unified
+        visibility: Private
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      groupId: $response.body#/id
+  - stepId: addMember
+    description: >-
+      Add the initial member to the group by posting an OData reference to its
+      members collection. Returns 204.
+    operationId: addGroupMember
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: group-id
+      in: path
+      value: $steps.createGroup.outputs.groupId
+    requestBody:
+      contentType: application/json
+      payload:
+        '@odata.id': "https://graph.microsoft.com/v1.0/directoryObjects/$inputs.memberId"
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      addStatus: $statusCode
+  - stepId: getGroup
+    description: Read the group back to confirm its type and settings.
+    operationId: getGroup
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: group-id
+      in: path
+      value: $steps.createGroup.outputs.groupId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      displayName: $response.body#/displayName
+      groupTypes: $response.body#/groupTypes
+  outputs:
+    groupId: $steps.createGroup.outputs.groupId
+    displayName: $steps.getGroup.outputs.displayName

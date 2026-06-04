@@ -1,0 +1,109 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Find And Update User
+  summary: Find a user by UPN, update its profile, and read the result.
+  description: >-
+    Locates a single user in Microsoft Entra ID by filtering the users
+    collection on userPrincipalName, patches selected profile properties on the
+    matched user, and reads the user back to confirm the changes. Because Graph
+    update operations return 204 with no body, the final get retrieves the
+    refreshed object. Every request is inlined so the chain reads end to end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: find-and-update-user
+  summary: Filter users by UPN, patch the match, then re-read the user.
+  description: >-
+    Searches for a user by userPrincipalName, updates job/department fields on
+    the match, and fetches the updated user object.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - userPrincipalName
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with User.ReadWrite.All.
+      userPrincipalName:
+        type: string
+        description: UPN of the user to locate (e.g. user@contoso.com).
+      jobTitle:
+        type: string
+        description: New job title to set on the user.
+        default: ""
+      department:
+        type: string
+        description: New department to set on the user.
+        default: ""
+  steps:
+  - stepId: findUser
+    description: >-
+      Filter the users collection on userPrincipalName to locate the target
+      user and capture its object id.
+    operationId: listUsers
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: $filter
+      in: query
+      value: "userPrincipalName eq '$inputs.userPrincipalName'"
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedUserId: $response.body#/value/0/id
+    onSuccess:
+    - name: userFound
+      type: goto
+      stepId: updateUser
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+  - stepId: updateUser
+    description: >-
+      Patch the matched user with the supplied job title and department. The
+      update returns 204 with no body.
+    operationId: updateUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: user-id
+      in: path
+      value: $steps.findUser.outputs.matchedUserId
+    requestBody:
+      contentType: application/json
+      payload:
+        jobTitle: $inputs.jobTitle
+        department: $inputs.department
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      updateStatus: $statusCode
+  - stepId: getUser
+    description: Read the updated user back to confirm the new property values.
+    operationId: getUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: user-id
+      in: path
+      value: $steps.findUser.outputs.matchedUserId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      jobTitle: $response.body#/jobTitle
+      department: $response.body#/department
+  outputs:
+    userId: $steps.findUser.outputs.matchedUserId
+    jobTitle: $steps.getUser.outputs.jobTitle
+    department: $steps.getUser.outputs.department

@@ -1,0 +1,110 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Decommission Application
+  summary: Find a service principal by appId, delete it, then delete the app.
+  description: >-
+    Fully decommissions an application in Microsoft Entra ID. The matching
+    service principal is first located by filtering the servicePrincipals
+    collection on appId and deleted (removing the application instance from the
+    tenant), and then the application registration itself is deleted (moving it
+    to the deletedItems container for possible restore within 30 days). Tearing
+    down the service principal before the registration mirrors the order in
+    which they are created. Every request is inlined so the chain reads end to
+    end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: decommission-application
+  summary: Resolve the service principal by appId, delete it, then delete the app.
+  description: >-
+    Finds the service principal for an appId and deletes it, then deletes the
+    application registration object.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - appId
+    - applicationId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Application.ReadWrite.All.
+      appId:
+        type: string
+        description: The application's appId, used to find its service principal.
+      applicationId:
+        type: string
+        description: Object id of the application registration to delete.
+  steps:
+  - stepId: findServicePrincipal
+    description: >-
+      Filter the servicePrincipals collection on appId to resolve the service
+      principal's object id.
+    operationId: listServicePrincipals
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: $filter
+      in: query
+      value: "appId eq '$inputs.appId'"
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedServicePrincipalId: $response.body#/value/0/id
+    onSuccess:
+    - name: spFound
+      type: goto
+      stepId: deleteServicePrincipal
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: spMissing
+      type: goto
+      stepId: deleteApplication
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: deleteServicePrincipal
+    description: >-
+      Delete the service principal, removing the application instance from the
+      tenant. Returns 204.
+    operationId: deleteServicePrincipal
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: servicePrincipal-id
+      in: path
+      value: $steps.findServicePrincipal.outputs.matchedServicePrincipalId
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      spDeleteStatus: $statusCode
+  - stepId: deleteApplication
+    description: >-
+      Delete the application registration, moving it to the deletedItems
+      container. Returns 204.
+    operationId: deleteApplication
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: application-id
+      in: path
+      value: $inputs.applicationId
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      appDeleteStatus: $statusCode
+  outputs:
+    servicePrincipalId: $steps.findServicePrincipal.outputs.matchedServicePrincipalId
+    appDeleteStatus: $steps.deleteApplication.outputs.appDeleteStatus

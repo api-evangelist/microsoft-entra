@@ -1,0 +1,105 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Create Group With Member
+  summary: Create a security group, add a member, and list its members.
+  description: >-
+    Stands up a new security group in Microsoft Entra ID, adds an existing
+    directory object (a user, service principal, or nested group) as a member
+    by posting an OData reference, and then reads back the group's members
+    collection to confirm the member is present. The create step sets the
+    mailEnabled, securityEnabled, and mailNickname fields required by Graph.
+    Every request is inlined so the chain reads end to end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-group-with-member
+  summary: Create a group, add one member, then verify the members list.
+  description: >-
+    Creates a security group, references a directory object into its members
+    collection, and lists members to confirm the addition.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - displayName
+    - mailNickname
+    - memberId
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Group.ReadWrite.All and GroupMember.ReadWrite.All.
+      displayName:
+        type: string
+        description: Display name for the new group.
+      mailNickname:
+        type: string
+        description: Mail alias for the new group (unique within the tenant).
+      description:
+        type: string
+        description: Optional description for the group.
+        default: ""
+      memberId:
+        type: string
+        description: Object id of the directory object to add as a member.
+  steps:
+  - stepId: createGroup
+    description: >-
+      Create a security group with mail disabled and security enabled.
+    operationId: createGroup
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.displayName
+        mailNickname: $inputs.mailNickname
+        description: $inputs.description
+        mailEnabled: false
+        securityEnabled: true
+        groupTypes: []
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      groupId: $response.body#/id
+  - stepId: addMember
+    description: >-
+      Add the supplied directory object to the group by posting an OData
+      reference to its members collection.
+    operationId: addGroupMember
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: group-id
+      in: path
+      value: $steps.createGroup.outputs.groupId
+    requestBody:
+      contentType: application/json
+      payload:
+        '@odata.id': "https://graph.microsoft.com/v1.0/directoryObjects/$inputs.memberId"
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      addStatus: $statusCode
+  - stepId: listMembers
+    description: List the direct members of the group to confirm the addition.
+    operationId: listGroupMembers
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: group-id
+      in: path
+      value: $steps.createGroup.outputs.groupId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      members: $response.body#/value
+  outputs:
+    groupId: $steps.createGroup.outputs.groupId
+    members: $steps.listMembers.outputs.members

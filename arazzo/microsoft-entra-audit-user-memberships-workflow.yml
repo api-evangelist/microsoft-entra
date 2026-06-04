@@ -1,0 +1,96 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Audit User Memberships
+  summary: Find a user by UPN, read its profile, and list its group memberships.
+  description: >-
+    Produces an access audit snapshot for a user in Microsoft Entra ID. The
+    user is located by filtering the users collection on userPrincipalName, the
+    full user object is retrieved by id, and the user's memberOf relationship is
+    listed to enumerate the groups, directory roles, and administrative units
+    the user belongs to. Every request is inlined so the chain reads end to end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: audit-user-memberships
+  summary: Resolve a user by UPN, get the user, then list memberOf.
+  description: >-
+    Finds a user by userPrincipalName, fetches the user object, and enumerates
+    its direct memberships for an access review.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - userPrincipalName
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with User.Read.All and Directory.Read.All.
+      userPrincipalName:
+        type: string
+        description: UPN of the user to audit (e.g. user@contoso.com).
+  steps:
+  - stepId: findUser
+    description: >-
+      Filter the users collection on userPrincipalName to resolve the user's
+      object id.
+    operationId: listUsers
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: $filter
+      in: query
+      value: "userPrincipalName eq '$inputs.userPrincipalName'"
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedUserId: $response.body#/value/0/id
+    onSuccess:
+    - name: userFound
+      type: goto
+      stepId: getUser
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+  - stepId: getUser
+    description: Retrieve the full user object for the audit record.
+    operationId: getUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: user-id
+      in: path
+      value: $steps.findUser.outputs.matchedUserId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      displayName: $response.body#/displayName
+      accountEnabled: $response.body#/accountEnabled
+  - stepId: listMemberships
+    description: >-
+      List the groups, directory roles, and administrative units the user is a
+      direct member of.
+    operationId: listUserMemberOf
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: user-id
+      in: path
+      value: $steps.findUser.outputs.matchedUserId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberships: $response.body#/value
+  outputs:
+    userId: $steps.findUser.outputs.matchedUserId
+    displayName: $steps.getUser.outputs.displayName
+    memberships: $steps.listMemberships.outputs.memberships

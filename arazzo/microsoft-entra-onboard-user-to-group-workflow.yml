@@ -1,0 +1,112 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Onboard User To Group
+  summary: Create a user, add it to an existing group, and confirm membership.
+  description: >-
+    A classic onboarding chain in Microsoft Entra ID. A new user is created in
+    the directory, then added as a member of an existing group by posting an
+    OData reference to the group's members collection, and finally the user's
+    group memberships are listed to confirm the assignment landed. The add
+    member step builds the @odata.id reference URL from the new user's object
+    id. Every request is written inline so the flow runs without consulting the
+    source OpenAPI.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: onboard-user-to-group
+  summary: Create a user, add it to a group, then verify its memberships.
+  description: >-
+    Provisions a user, references it into a target group's members
+    collection, and reads back the user's memberOf relationship.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - groupId
+    - displayName
+    - mailNickname
+    - userPrincipalName
+    - password
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with User.ReadWrite.All and GroupMember.ReadWrite.All.
+      groupId:
+        type: string
+        description: Object id of the existing group to add the user to.
+      displayName:
+        type: string
+        description: Display name for the new user.
+      mailNickname:
+        type: string
+        description: Mail alias for the new user.
+      userPrincipalName:
+        type: string
+        description: UPN for the new user in alias@verifieddomain format.
+      password:
+        type: string
+        description: Initial password for the new user.
+  steps:
+  - stepId: createUser
+    description: Create the user that will be onboarded into the group.
+    operationId: createUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/json
+      payload:
+        accountEnabled: true
+        displayName: $inputs.displayName
+        mailNickname: $inputs.mailNickname
+        userPrincipalName: $inputs.userPrincipalName
+        passwordProfile:
+          password: $inputs.password
+          forceChangePasswordNextSignIn: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      userId: $response.body#/id
+  - stepId: addMember
+    description: >-
+      Add the new user to the group by posting an OData reference that points
+      at the user's directory object.
+    operationId: addGroupMember
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: group-id
+      in: path
+      value: $inputs.groupId
+    requestBody:
+      contentType: application/json
+      payload:
+        '@odata.id': "https://graph.microsoft.com/v1.0/directoryObjects/$steps.createUser.outputs.userId"
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      addStatus: $statusCode
+  - stepId: verifyMembership
+    description: >-
+      List the groups, directory roles, and administrative units the user is a
+      direct member of to confirm the group assignment.
+    operationId: listUserMemberOf
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: user-id
+      in: path
+      value: $steps.createUser.outputs.userId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberships: $response.body#/value
+  outputs:
+    userId: $steps.createUser.outputs.userId
+    memberships: $steps.verifyMembership.outputs.memberships

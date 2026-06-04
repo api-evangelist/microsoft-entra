@@ -1,0 +1,78 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Register Application With Service Principal
+  summary: Create an app registration then instantiate its service principal.
+  description: >-
+    Registers a new application object in Microsoft Entra ID and then creates
+    the matching service principal in the tenant using the appId returned by
+    the registration. This is the standard two-object pattern required before
+    an application can sign in or be granted access: the application object is
+    the global definition while the service principal is the local tenant
+    instance. Every request is written inline so the chain reads end to end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: register-app-with-service-principal
+  summary: Register an application, then create its service principal by appId.
+  description: >-
+    Creates an application registration and feeds the resulting appId into a
+    service principal creation so the app is usable in the tenant.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - displayName
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Application.ReadWrite.All.
+      displayName:
+        type: string
+        description: Display name for both the application and service principal.
+      signInAudience:
+        type: string
+        description: Which Microsoft accounts the application supports.
+        default: AzureADMyOrg
+  steps:
+  - stepId: createApplication
+    description: Register the application object that defines the app globally.
+    operationId: createApplication
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.displayName
+        signInAudience: $inputs.signInAudience
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      applicationId: $response.body#/id
+      appId: $response.body#/appId
+  - stepId: createServicePrincipal
+    description: >-
+      Create the service principal that instantiates the application in the
+      tenant, referencing the appId from the registration.
+    operationId: createServicePrincipal
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/json
+      payload:
+        appId: $steps.createApplication.outputs.appId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      servicePrincipalId: $response.body#/id
+      servicePrincipalAppId: $response.body#/appId
+  outputs:
+    applicationId: $steps.createApplication.outputs.applicationId
+    appId: $steps.createApplication.outputs.appId
+    servicePrincipalId: $steps.createServicePrincipal.outputs.servicePrincipalId

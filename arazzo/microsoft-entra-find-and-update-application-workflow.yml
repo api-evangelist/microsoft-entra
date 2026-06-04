@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Find And Update Application
+  summary: Find an app by appId, update its display name, and read it back.
+  description: >-
+    Locates an application registration in Microsoft Entra ID by filtering the
+    applications collection on appId (the client id), patches its display name
+    and sign-in audience, and reads the application back to confirm the change.
+    Because Graph update operations return 204 with no body, the final get
+    retrieves the refreshed object. Every request is inlined so the chain reads
+    end to end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: find-and-update-application
+  summary: Filter applications by appId, patch the match, then re-read it.
+  description: >-
+    Searches for an application by appId, updates its display name, and fetches
+    the updated application object.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - appId
+    - newDisplayName
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with Application.ReadWrite.All.
+      appId:
+        type: string
+        description: The application's appId (client id) to locate it by.
+      newDisplayName:
+        type: string
+        description: New display name to set on the matched application.
+  steps:
+  - stepId: findApplication
+    description: >-
+      Filter the applications collection on appId to locate the registration
+      and capture its object id.
+    operationId: listApplications
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: $filter
+      in: query
+      value: "appId eq '$inputs.appId'"
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedApplicationId: $response.body#/value/0/id
+    onSuccess:
+    - name: applicationFound
+      type: goto
+      stepId: updateApplication
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+  - stepId: updateApplication
+    description: >-
+      Patch the matched application with the new display name. Returns 204 with
+      no body.
+    operationId: updateApplication
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: application-id
+      in: path
+      value: $steps.findApplication.outputs.matchedApplicationId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.newDisplayName
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      updateStatus: $statusCode
+  - stepId: getApplication
+    description: Read the updated application back to confirm the new name.
+    operationId: getApplication
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: application-id
+      in: path
+      value: $steps.findApplication.outputs.matchedApplicationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      displayName: $response.body#/displayName
+  outputs:
+    applicationId: $steps.findApplication.outputs.matchedApplicationId
+    displayName: $steps.getApplication.outputs.displayName

@@ -1,0 +1,102 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Entra Offboard User From Group
+  summary: Find a user by UPN, remove it from a group, and verify removal.
+  description: >-
+    Removes a user from a group in Microsoft Entra ID. The user is first
+    located by filtering the users collection on userPrincipalName, then the
+    matched object id is used to delete the membership reference from the
+    group's members collection, and finally the group's members are listed to
+    confirm the user is gone. Every request is inlined so the chain reads end to
+    end.
+  version: 1.0.0
+sourceDescriptions:
+- name: graphIdentityApi
+  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+  type: openapi
+workflows:
+- workflowId: offboard-user-from-group
+  summary: Resolve a user by UPN, remove from a group, then list members.
+  description: >-
+    Finds a user by userPrincipalName, removes the membership reference from
+    the target group, and reads back the members collection.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - groupId
+    - userPrincipalName
+    properties:
+      accessToken:
+        type: string
+        description: OAuth 2.0 bearer token with User.Read.All and GroupMember.ReadWrite.All.
+      groupId:
+        type: string
+        description: Object id of the group to remove the user from.
+      userPrincipalName:
+        type: string
+        description: UPN of the user to remove (e.g. user@contoso.com).
+  steps:
+  - stepId: findUser
+    description: >-
+      Filter the users collection on userPrincipalName to resolve the user's
+      object id.
+    operationId: listUsers
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: $filter
+      in: query
+      value: "userPrincipalName eq '$inputs.userPrincipalName'"
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedUserId: $response.body#/value/0/id
+    onSuccess:
+    - name: userFound
+      type: goto
+      stepId: removeMember
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+  - stepId: removeMember
+    description: >-
+      Remove the user from the group by deleting the membership reference
+      identified by the user's object id. Returns 204.
+    operationId: removeGroupMember
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: group-id
+      in: path
+      value: $inputs.groupId
+    - name: directoryObject-id
+      in: path
+      value: $steps.findUser.outputs.matchedUserId
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      removeStatus: $statusCode
+  - stepId: listMembers
+    description: List the group's remaining members to confirm the removal.
+    operationId: listGroupMembers
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: group-id
+      in: path
+      value: $inputs.groupId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      members: $response.body#/value
+  outputs:
+    userId: $steps.findUser.outputs.matchedUserId
+    members: $steps.listMembers.outputs.members
