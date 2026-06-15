@@ -1,0 +1,895 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Entra Microsoft Graph Identity API",
+    "version": "v1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Entra List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/users",
+            "headers": [
+              {
+                "name": "ConsistencyLevel",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$orderby",
+                "value": "displayName asc",
+                "type": "query",
+                "description": "Comma-separated list of properties to sort results by"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in the result set"
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$search",
+                "value": "\"displayName:John\"",
+                "type": "query",
+                "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of user objects in the directory. Returns a paged collection of user resources with support for OData query parameters including $select, $filter, $orderby, $top, $skip, $count, $search, and $expand."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user in the directory. The request body must contain the required properties including displayName, accountEnabled, mailNickname, userPrincipalName, and passwordProfile."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Retrieve the properties and relationships of a user object. Specify the user by id or userPrincipalName."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of a user object. Not all properties can be updated by member or guest users with their default permissions without administrator roles."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              }
+            ]
+          },
+          "docs": "Delete a user object. The user is moved to the deletedItems container and can be restored within 30 days. After 30 days the user is permanently deleted."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra List User Group Memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id/memberOf",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              }
+            ]
+          },
+          "docs": "Get the groups, directory roles, and administrative units that the user is a direct member of."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Entra List Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/groups",
+            "headers": [
+              {
+                "name": "ConsistencyLevel",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$orderby",
+                "value": "displayName asc",
+                "type": "query",
+                "description": "Comma-separated list of properties to sort results by"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in the result set"
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$search",
+                "value": "\"displayName:John\"",
+                "type": "query",
+                "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "List all groups in the directory including Microsoft 365 groups, security groups, mail-enabled security groups, and distribution groups. Returns a paged collection with OData query support."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Create Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new group in the directory. You can create Microsoft 365 groups, security groups, or mail-enabled security groups. Specify the groupTypes, mailEnabled, and securityEnabled properties to determine the type of group."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Get Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/groups/:group-id",
+            "params": [
+              {
+                "name": "group-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group (object ID)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Get the properties and relationships of a group object. Returns the default set of properties unless $select is specified."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Update Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/groups/:group-id",
+            "params": [
+              {
+                "name": "group-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group (object ID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of a group object. Not all properties can be updated depending on the group type."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Delete Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/groups/:group-id",
+            "params": [
+              {
+                "name": "group-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group (object ID)"
+              }
+            ]
+          },
+          "docs": "Delete a group. Deleting a Microsoft 365 group moves it to the deletedItems container where it can be restored within 30 days. Security groups are permanently deleted immediately."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra List Group Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/groups/:group-id/members",
+            "headers": [
+              {
+                "name": "ConsistencyLevel",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "group-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group (object ID)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+              }
+            ]
+          },
+          "docs": "Get the direct members of a group. A group can have users, devices, other groups, organizational contacts, and service principals as members."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Add Group Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/groups/:group-id/members/$ref",
+            "params": [
+              {
+                "name": "group-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group (object ID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a member to a Microsoft 365 group or a security group by posting a reference to the directory object to add."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Remove Group Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/groups/:group-id/members/:directoryObject-id/$ref",
+            "params": [
+              {
+                "name": "group-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group (object ID)"
+              },
+              {
+                "name": "directoryObject-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the directory object to remove"
+              }
+            ]
+          },
+          "docs": "Remove a member from a group via the members navigation property. Specify the member to remove by its directory object id."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Entra List Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/applications",
+            "headers": [
+              {
+                "name": "ConsistencyLevel",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$orderby",
+                "value": "displayName asc",
+                "type": "query",
+                "description": "Comma-separated list of properties to sort results by"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in the result set"
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$search",
+                "value": "\"displayName:John\"",
+                "type": "query",
+                "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+              }
+            ]
+          },
+          "docs": "Get the list of application registrations in the directory. Returns the application objects with their configuration properties including credentials, permissions, and sign-in settings."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Create Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new application registration in the directory. The application object represents the global definition of the app including its identity, access configuration, and settings."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Get Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/applications/:application-id",
+            "params": [
+              {
+                "name": "application-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the application (object ID, not appId)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Get the properties and relationships of an application object by its id (object id, not appId)."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Update Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/applications/:application-id",
+            "params": [
+              {
+                "name": "application-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the application (object ID, not appId)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of an application object."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Delete Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/applications/:application-id",
+            "params": [
+              {
+                "name": "application-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the application (object ID, not appId)"
+              }
+            ]
+          },
+          "docs": "Delete an application object. The application is moved to the deletedItems container and can be restored within 30 days."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Add Password Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/applications/:application-id/addPassword",
+            "params": [
+              {
+                "name": "application-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the application (object ID, not appId)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a strong password or secret to an application. The response includes the generated secretText which is only returned at creation time and cannot be retrieved later."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Remove Password Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/applications/:application-id/removePassword",
+            "params": [
+              {
+                "name": "application-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the application (object ID, not appId)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove a password credential from an application by specifying the keyId of the password to remove."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ServicePrincipals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Entra List Service Principals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals",
+            "headers": [
+              {
+                "name": "ConsistencyLevel",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$orderby",
+                "value": "displayName asc",
+                "type": "query",
+                "description": "Comma-separated list of properties to sort results by"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in the result set"
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$search",
+                "value": "\"displayName:John\"",
+                "type": "query",
+                "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of service principal objects in the directory. A service principal represents an instance of an application in a tenant and is the identity used for authentication and authorization."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Create Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new service principal in the directory. The appId property in the request body is required and must reference an existing application registration."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Get Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Retrieve the properties and relationships of a service principal object."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Update Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of a service principal object."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Delete Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              }
+            ]
+          },
+          "docs": "Delete a service principal object. This removes the application instance from the tenant but does not delete the application registration."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra List App Role Assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id/appRoleAssignments",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              }
+            ]
+          },
+          "docs": "Get the app role assignments granted to this service principal. App role assignments represent permissions granted to the service principal to call another application's API."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Grant App Role Assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id/appRoleAssignments",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grant an app role assignment to a service principal. App roles assigned to service principals are also known as application permissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
