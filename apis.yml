@@ -42,7 +42,7 @@ apis:
         url: https://learn.microsoft.com/en-us/entra/identity/
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
-      - type: SDK
+      - type: SDKs
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
       - type: Pricing
         url: https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing
@@ -277,51 +277,48 @@ apis:
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/microsoft-entra/overview
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-      - url: arazzo/microsoft-entra-audit-user-memberships-workflow.yml
-        name: Microsoft Entra Audit User Memberships
-        summary: Find a user by UPN, read its profile, and list its group memberships.
-      - url: arazzo/microsoft-entra-create-group-with-member-workflow.yml
-        name: Microsoft Entra Create Group With Member
-        summary: Create a security group, add a member, and list its members.
-      - url: arazzo/microsoft-entra-create-m365-group-with-owner-member-workflow.yml
-        name: Microsoft Entra Create Microsoft 365 Group With Member
-        summary: Create a Unified M365 group, add a member, and read the group back.
-      - url: arazzo/microsoft-entra-decommission-application-workflow.yml
-        name: Microsoft Entra Decommission Application
-        summary: Find a service principal by appId, delete it, then delete the app.
-      - url: arazzo/microsoft-entra-deprovision-user-workflow.yml
-        name: Microsoft Entra Deprovision User
-        summary: Disable a user account, then delete the user from the directory.
-      - url: arazzo/microsoft-entra-find-and-update-application-workflow.yml
-        name: Microsoft Entra Find And Update Application
-        summary: Find an app by appId, update its display name, and read it back.
-      - url: arazzo/microsoft-entra-find-and-update-group-workflow.yml
-        name: Microsoft Entra Find And Update Group
-        summary: Find a group by display name, update it, and read it back.
-      - url: arazzo/microsoft-entra-find-and-update-user-workflow.yml
-        name: Microsoft Entra Find And Update User
-        summary: Find a user by UPN, update its profile, and read the result.
-      - url: arazzo/microsoft-entra-grant-app-role-assignment-workflow.yml
-        name: Microsoft Entra Grant App Role Assignment
-        summary: Grant an app role to a service principal then list its assignments.
-      - url: arazzo/microsoft-entra-offboard-user-from-group-workflow.yml
-        name: Microsoft Entra Offboard User From Group
-        summary: Find a user by UPN, remove it from a group, and verify removal.
-      - url: arazzo/microsoft-entra-onboard-user-to-group-workflow.yml
-        name: Microsoft Entra Onboard User To Group
-        summary: Create a user, add it to an existing group, and confirm membership.
-      - url: arazzo/microsoft-entra-provision-user-workflow.yml
-        name: Microsoft Entra Provision User
-        summary: Create a new Entra ID user and read back the provisioned account.
-      - url: arazzo/microsoft-entra-register-app-with-service-principal-workflow.yml
-        name: Microsoft Entra Register Application With Service Principal
-        summary: Create an app registration then instantiate its service principal.
-      - url: arazzo/microsoft-entra-rotate-application-secret-workflow.yml
-        name: Microsoft Entra Rotate Application Secret
-        summary: Add a fresh client secret to an app, then remove the old one.
+  - type: Arazzo
+    url: arazzo/microsoft-entra-audit-user-memberships-workflow.yml
+    name: Microsoft Entra Audit User Memberships
+  - type: Arazzo
+    url: arazzo/microsoft-entra-create-group-with-member-workflow.yml
+    name: Microsoft Entra Create Group With Member
+  - type: Arazzo
+    url: arazzo/microsoft-entra-create-m365-group-with-owner-member-workflow.yml
+    name: Microsoft Entra Create Microsoft 365 Group With Member
+  - type: Arazzo
+    url: arazzo/microsoft-entra-decommission-application-workflow.yml
+    name: Microsoft Entra Decommission Application
+  - type: Arazzo
+    url: arazzo/microsoft-entra-deprovision-user-workflow.yml
+    name: Microsoft Entra Deprovision User
+  - type: Arazzo
+    url: arazzo/microsoft-entra-find-and-update-application-workflow.yml
+    name: Microsoft Entra Find And Update Application
+  - type: Arazzo
+    url: arazzo/microsoft-entra-find-and-update-group-workflow.yml
+    name: Microsoft Entra Find And Update Group
+  - type: Arazzo
+    url: arazzo/microsoft-entra-find-and-update-user-workflow.yml
+    name: Microsoft Entra Find And Update User
+  - type: Arazzo
+    url: arazzo/microsoft-entra-grant-app-role-assignment-workflow.yml
+    name: Microsoft Entra Grant App Role Assignment
+  - type: Arazzo
+    url: arazzo/microsoft-entra-offboard-user-from-group-workflow.yml
+    name: Microsoft Entra Offboard User From Group
+  - type: Arazzo
+    url: arazzo/microsoft-entra-onboard-user-to-group-workflow.yml
+    name: Microsoft Entra Onboard User To Group
+  - type: Arazzo
+    url: arazzo/microsoft-entra-provision-user-workflow.yml
+    name: Microsoft Entra Provision User
+  - type: Arazzo
+    url: arazzo/microsoft-entra-register-app-with-service-principal-workflow.yml
+    name: Microsoft Entra Register Application With Service Principal
+  - type: Arazzo
+    url: arazzo/microsoft-entra-rotate-application-secret-workflow.yml
+    name: Microsoft Entra Rotate Application Secret
   - type: Portal
     url: https://entra.microsoft.com/
   - type: GettingStarted
@@ -338,7 +335,7 @@ common:
     url: https://privacy.microsoft.com/
   - type: ChangeLog
     url: https://learn.microsoft.com/en-us/entra/fundamentals/whats-new
-  - type: SDK
+  - type: SDKs
     url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
   - type: GitHubOrganization
     url: https://github.com/microsoftgraph
