@@ -275,6 +275,8 @@ apis:
       - type: GettingStarted
         url: https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/interactive-agent-request-user-tokens
 common:
+  - type: OAuthScopes
+    url: scopes/microsoft-entra-scopes.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/microsoft-entra/overview
   - type: Arazzo
