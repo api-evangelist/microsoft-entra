@@ -1,0 +1,597 @@
+openapi: 3.1.0
+info:
+  title: Microsoft Entra Microsoft Graph Identity Applications Groups API
+  description: RESTful API for managing identity resources in Microsoft Entra ID (formerly Azure Active Directory) through Microsoft Graph. Provides CRUD operations for users, groups, applications, and service principals enabling directory management, identity governance, and application integration.
+  version: v1.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph
+  termsOfService: https://www.microsoft.com/licensing/terms/
+  license:
+    name: Microsoft API License
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+servers:
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+- url: https://graph.microsoft.com/beta
+  description: Microsoft Graph beta endpoint (preview features)
+security:
+- oauth2: []
+tags:
+- name: Groups
+  description: Manage groups for organizing users, devices, and other principals including Microsoft 365 groups, security groups, and distribution lists
+paths:
+  /groups:
+    get:
+      operationId: listGroups
+      summary: Microsoft Entra List Groups
+      description: List all groups in the directory including Microsoft 365 groups, security groups, mail-enabled security groups, and distribution groups. Returns a paged collection with OData query support.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/OrderBy'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Skip'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of group objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createGroup
+      summary: Microsoft Entra Create Group
+      description: Create a new group in the directory. You can create Microsoft 365 groups, security groups, or mail-enabled security groups. Specify the groupTypes, mailEnabled, and securityEnabled properties to determine the type of group.
+      tags:
+      - Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '201':
+          description: Group created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /groups/{group-id}:
+    get:
+      operationId: getGroup
+      summary: Microsoft Entra Get Group
+      description: Get the properties and relationships of a group object. Returns the default set of properties unless $select is specified.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Expand'
+      responses:
+        '200':
+          description: Group object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateGroup
+      summary: Microsoft Entra Update Group
+      description: Update the properties of a group object. Not all properties can be updated depending on the group type.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '204':
+          description: Group updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteGroup
+      summary: Microsoft Entra Delete Group
+      description: Delete a group. Deleting a Microsoft 365 group moves it to the deletedItems container where it can be restored within 30 days. Security groups are permanently deleted immediately.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupId'
+      responses:
+        '204':
+          description: Group deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /groups/{group-id}/members:
+    get:
+      operationId: listGroupMembers
+      summary: Microsoft Entra List Group Members
+      description: Get the direct members of a group. A group can have users, devices, other groups, organizational contacts, and service principals as members.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of directory objects that are members of the group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryObjectCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /groups/{group-id}/members/$ref:
+    post:
+      operationId: addGroupMember
+      summary: Microsoft Entra Add Group Member
+      description: Add a member to a Microsoft 365 group or a security group by posting a reference to the directory object to add.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ODataReference'
+      responses:
+        '204':
+          description: Member added successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /groups/{group-id}/members/{directoryObject-id}/$ref:
+    delete:
+      operationId: removeGroupMember
+      summary: Microsoft Entra Remove Group Member
+      description: Remove a member from a group via the members navigation property. Specify the member to remove by its directory object id.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupId'
+      - name: directoryObject-id
+        in: path
+        required: true
+        description: Unique identifier of the directory object to remove
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Member removed successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ODataError:
+      type: object
+      description: OData error response
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
+          example: example_value
+    ODataReference:
+      type: object
+      description: OData reference link used to add relationships
+      required:
+      - '@odata.id'
+      properties:
+        '@odata.id':
+          type: string
+          description: 'The full URL to the directory object to add as a member. Format: https://graph.microsoft.com/v1.0/directoryObjects/{id}'
+          format: uri
+          example: https://www.example.com
+    GroupCollectionResponse:
+      type: object
+      description: Paged collection of group objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          example: []
+    Group:
+      type: object
+      description: Represents a Microsoft Entra group. Groups can be Microsoft 365 groups, security groups, mail-enabled security groups, or distribution groups.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the group (GUID)
+          example: abc123
+        displayName:
+          type: string
+          description: The display name for the group. Required on create.
+          example: example_value
+        description:
+          type:
+          - string
+          - 'null'
+          description: An optional description for the group
+          example: A sample description.
+        mailEnabled:
+          type: boolean
+          description: Specifies whether the group is mail-enabled. Required on create. Set to true for Microsoft 365 groups.
+          example: true
+        mailNickname:
+          type: string
+          description: The mail alias for the group, unique for Microsoft 365 groups. Required on create.
+          example: example_value
+        securityEnabled:
+          type: boolean
+          description: Specifies whether the group is a security group. Required on create. Set to false for Microsoft 365 groups.
+          example: true
+        groupTypes:
+          type: array
+          description: Specifies the group type. Set to ["Unified"] for Microsoft 365 groups. Empty array or ["DynamicMembership"] for other types.
+          items:
+            type: string
+            enum:
+            - Unified
+            - DynamicMembership
+          example: []
+        visibility:
+          type:
+          - string
+          - 'null'
+          description: Specifies the group's join policy and content visibility for Microsoft 365 groups
+          enum:
+          - Public
+          - Private
+          - HiddenMembership
+          - null
+          example: Public
+        membershipRule:
+          type:
+          - string
+          - 'null'
+          description: 'The rule that determines members for this group if the group is a dynamic group. Example: user.department -eq "Marketing"'
+          example: example_value
+        membershipRuleProcessingState:
+          type:
+          - string
+          - 'null'
+          description: Indicates whether the dynamic membership processing is on or paused. Possible values are On or Paused.
+          enum:
+          - 'On'
+          - Paused
+          - null
+          example: 'On'
+        mail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The SMTP address for the group
+          example: example_value
+        proxyAddresses:
+          type: array
+          readOnly: true
+          description: Email addresses for the group that direct to the same inbox
+          items:
+            type: string
+          example: []
+        isAssignableToRole:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether this group can be assigned to a Microsoft Entra role. Can only be set at group creation time.
+          example: example_value
+        onPremisesSyncEnabled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: true if this group is synced from an on-premises directory
+          example: example_value
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp of when the group was created
+          example: '2026-01-15T10:30:00Z'
+        renewedDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          description: Timestamp of when the group was last renewed (activity that extends expiration)
+          example: '2026-01-15T10:30:00Z'
+        members:
+          type: array
+          readOnly: true
+          description: Direct members of this group. Returned only with $expand.
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+          example: []
+        owners:
+          type: array
+          readOnly: true
+          description: Owners of the group. Returned only with $expand.
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+          example: []
+    DirectoryObject:
+      type: object
+      description: Base type for many directory resources including users, groups, and service principals
+      properties:
+        '@odata.type':
+          type: string
+          description: The OData type string for the directory object
+          examples:
+          - '#microsoft.graph.user'
+          - '#microsoft.graph.group'
+          - '#microsoft.graph.servicePrincipal'
+        id:
+          type: string
+          description: Unique identifier for the directory object
+          example: abc123
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: The display name of the directory object
+          example: example_value
+    DirectoryObjectCollectionResponse:
+      type: object
+      description: Paged collection of directory objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+          example: []
+  responses:
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+  parameters:
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    GroupId:
+      name: group-id
+      in: path
+      required: true
+      description: Unique identifier of the group (object ID)
+      schema:
+        type: string
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization using Microsoft identity platform. Supports authorization code flow for delegated permissions and client credentials flow for application permissions.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            User.Read: Read the signed-in user's profile
+            User.ReadWrite: Read and update the signed-in user's profile
+            User.Read.All: Read all users' profiles
+            User.ReadWrite.All: Read and write all users' profiles
+            Group.Read.All: Read all groups
+            Group.ReadWrite.All: Read and write all groups
+            GroupMember.Read.All: Read all group memberships
+            GroupMember.ReadWrite.All: Read and write all group memberships
+            Application.Read.All: Read all applications
+            Application.ReadWrite.All: Read and write all applications
+            Directory.Read.All: Read directory data
+            Directory.ReadWrite.All: Read and write directory data
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token
+          scopes:
+            https://graph.microsoft.com/.default: Default scope for application permissions
+externalDocs:
+  description: Microsoft Graph Identity and Access Management Documentation
+  url: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview

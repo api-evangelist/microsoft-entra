@@ -1,0 +1,636 @@
+openapi: 3.1.0
+info:
+  title: Microsoft Entra Microsoft Graph Identity Applications Users API
+  description: RESTful API for managing identity resources in Microsoft Entra ID (formerly Azure Active Directory) through Microsoft Graph. Provides CRUD operations for users, groups, applications, and service principals enabling directory management, identity governance, and application integration.
+  version: v1.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph
+  termsOfService: https://www.microsoft.com/licensing/terms/
+  license:
+    name: Microsoft API License
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+servers:
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+- url: https://graph.microsoft.com/beta
+  description: Microsoft Graph beta endpoint (preview features)
+security:
+- oauth2: []
+tags:
+- name: Users
+  description: Manage user accounts in the directory including creation, updates, profile management, and lifecycle operations
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: Microsoft Entra List Users
+      description: Retrieve a list of user objects in the directory. Returns a paged collection of user resources with support for OData query parameters including $select, $filter, $orderby, $top, $skip, $count, $search, and $expand.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/OrderBy'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Skip'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/Expand'
+      - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of user objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createUser
+      summary: Microsoft Entra Create User
+      description: Create a new user in the directory. The request body must contain the required properties including displayName, accountEnabled, mailNickname, userPrincipalName, and passwordProfile.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /users/{user-id}:
+    get:
+      operationId: getUser
+      summary: Microsoft Entra Get User
+      description: Retrieve the properties and relationships of a user object. Specify the user by id or userPrincipalName.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Expand'
+      responses:
+        '200':
+          description: User object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateUser
+      summary: Microsoft Entra Update User
+      description: Update the properties of a user object. Not all properties can be updated by member or guest users with their default permissions without administrator roles.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '204':
+          description: User updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteUser
+      summary: Microsoft Entra Delete User
+      description: Delete a user object. The user is moved to the deletedItems container and can be restored within 30 days. After 30 days the user is permanently deleted.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '204':
+          description: User deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /users/{user-id}/memberOf:
+    get:
+      operationId: listUserMemberOf
+      summary: Microsoft Entra List User Group Memberships
+      description: Get the groups, directory roles, and administrative units that the user is a direct member of.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/Top'
+      responses:
+        '200':
+          description: Collection of directory objects the user is a member of
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectoryObjectCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ODataError:
+      type: object
+      description: OData error response
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
+          example: example_value
+    AssignedLicense:
+      type: object
+      description: Represents a license assigned to a user
+      properties:
+        disabledPlans:
+          type: array
+          description: Collection of unique identifiers for disabled service plans
+          items:
+            type: string
+            format: uuid
+          example: []
+        skuId:
+          type: string
+          format: uuid
+          description: Unique identifier for the SKU
+          example: '500123'
+    UserCollectionResponse:
+      type: object
+      description: Paged collection of user objects
+      properties:
+        '@odata.context':
+          type: string
+          description: OData context URL
+          example: example_value
+        '@odata.count':
+          type: integer
+          description: Total count of matching resources (if $count=true)
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          description: URL to retrieve the next page of results
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          example: []
+    PasswordProfile:
+      type: object
+      description: Contains the password profile associated with a user. The passwordProfile property of the user entity is a passwordProfile object.
+      properties:
+        password:
+          type: string
+          writeOnly: true
+          description: The password for the user. Must satisfy the password complexity requirements of the tenant. Required on create.
+          example: example_value
+        forceChangePasswordNextSignIn:
+          type: boolean
+          description: true if the user must change the password on the next sign-in; false otherwise
+          default: false
+          example: true
+        forceChangePasswordNextSignInWithMfa:
+          type: boolean
+          description: true if the user must perform multi-factor authentication before being forced to change the password
+          default: false
+          example: true
+    DirectoryObject:
+      type: object
+      description: Base type for many directory resources including users, groups, and service principals
+      properties:
+        '@odata.type':
+          type: string
+          description: The OData type string for the directory object
+          examples:
+          - '#microsoft.graph.user'
+          - '#microsoft.graph.group'
+          - '#microsoft.graph.servicePrincipal'
+        id:
+          type: string
+          description: Unique identifier for the directory object
+          example: abc123
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: The display name of the directory object
+          example: example_value
+    User:
+      type: object
+      description: Represents a Microsoft Entra ID user account. Contains identity, contact, organizational, and authentication properties.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the user (GUID). Assigned automatically by the directory.
+          example: abc123
+        displayName:
+          type: string
+          description: The name displayed in the address book for the user
+          example: example_value
+        givenName:
+          type:
+          - string
+          - 'null'
+          description: The given name (first name) of the user
+          example: example_value
+        surname:
+          type:
+          - string
+          - 'null'
+          description: The surname (family name) of the user
+          example: example_value
+        mail:
+          type:
+          - string
+          - 'null'
+          description: The SMTP address of the user. This property cannot be set during creation for cloud-only users.
+          example: example_value
+        userPrincipalName:
+          type: string
+          description: The user principal name (UPN) of the user in the format alias@domain. The domain must be present in the tenant's verified domains collection.
+          format: email
+          example: example_value
+        mailNickname:
+          type: string
+          description: The mail alias for the user. Must be specified when creating a new user.
+          example: example_value
+        accountEnabled:
+          type: boolean
+          description: true if the account is enabled; otherwise, false. Must be specified when creating a new user.
+          example: true
+        passwordProfile:
+          $ref: '#/components/schemas/PasswordProfile'
+        jobTitle:
+          type:
+          - string
+          - 'null'
+          description: The user's job title
+          example: example_value
+        department:
+          type:
+          - string
+          - 'null'
+          description: The department in which the user works
+          example: example_value
+        officeLocation:
+          type:
+          - string
+          - 'null'
+          description: The office location in the user's place of business
+          example: example_value
+        companyName:
+          type:
+          - string
+          - 'null'
+          description: The company name associated with the user
+          example: example_value
+        mobilePhone:
+          type:
+          - string
+          - 'null'
+          description: The primary cellular telephone number for the user
+          example: example_value
+        businessPhones:
+          type: array
+          description: The telephone numbers for the user's business
+          items:
+            type: string
+          example: []
+        streetAddress:
+          type:
+          - string
+          - 'null'
+          description: The street address of the user's place of business
+          example: example_value
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city in which the user is located
+          example: example_value
+        state:
+          type:
+          - string
+          - 'null'
+          description: The state or province in the user's address
+          example: example_value
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: The postal code for the user's postal address
+          example: example_value
+        country:
+          type:
+          - string
+          - 'null'
+          description: The country or region in which the user is located (ISO 3166 two-letter code)
+          example: example_value
+        usageLocation:
+          type:
+          - string
+          - 'null'
+          description: Two-letter country code (ISO 3166). Required for users assigned licenses due to legal requirements for checking service availability.
+          example: example_value
+        preferredLanguage:
+          type:
+          - string
+          - 'null'
+          description: The preferred language for the user in ISO 639-1 code format (e.g., en-US)
+          example: example_value
+        userType:
+          type: string
+          description: Classification of the user type relative to the tenant
+          enum:
+          - Member
+          - Guest
+          example: Member
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: The employee identifier assigned by the organization
+          example: '500123'
+        employeeType:
+          type:
+          - string
+          - 'null'
+          description: Captures the type of worker (e.g., Employee, Contractor, Consultant, Vendor)
+          example: example_value
+        employeeHireDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date and time when the user was hired
+          example: '2026-01-15T10:30:00Z'
+        onPremisesSyncEnabled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: true if this user is synced from an on-premises directory; false if originally created in Azure AD; null if never synced
+          example: example_value
+        onPremisesSamAccountName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The on-premises SAM account name synchronized from the on-premises directory
+          example: example_value
+        proxyAddresses:
+          type: array
+          readOnly: true
+          description: List of proxy addresses for the user including SMTP and smtp prefixed addresses
+          items:
+            type: string
+          example: []
+        assignedLicenses:
+          type: array
+          readOnly: true
+          description: Licenses assigned to the user
+          items:
+            $ref: '#/components/schemas/AssignedLicense'
+          example: []
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date and time the user was created
+          example: '2026-01-15T10:30:00Z'
+        lastSignInDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          description: The date and time of the user's most recent interactive sign-in activity
+          example: '2026-01-15T10:30:00Z'
+    DirectoryObjectCollectionResponse:
+      type: object
+      description: Paged collection of directory objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+          example: []
+  responses:
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+  parameters:
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
+    UserId:
+      name: user-id
+      in: path
+      required: true
+      description: Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)
+      schema:
+        type: string
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization using Microsoft identity platform. Supports authorization code flow for delegated permissions and client credentials flow for application permissions.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            User.Read: Read the signed-in user's profile
+            User.ReadWrite: Read and update the signed-in user's profile
+            User.Read.All: Read all users' profiles
+            User.ReadWrite.All: Read and write all users' profiles
+            Group.Read.All: Read all groups
+            Group.ReadWrite.All: Read and write all groups
+            GroupMember.Read.All: Read all group memberships
+            GroupMember.ReadWrite.All: Read and write all group memberships
+            Application.Read.All: Read all applications
+            Application.ReadWrite.All: Read and write all applications
+            Directory.Read.All: Read directory data
+            Directory.ReadWrite.All: Read and write directory data
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token
+          scopes:
+            https://graph.microsoft.com/.default: Default scope for application permissions
+externalDocs:
+  description: Microsoft Graph Identity and Access Management Documentation
+  url: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview

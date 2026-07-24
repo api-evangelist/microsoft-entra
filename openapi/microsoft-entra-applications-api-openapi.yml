@@ -1,0 +1,779 @@
+openapi: 3.1.0
+info:
+  title: Microsoft Entra Microsoft Graph Identity Applications API
+  description: RESTful API for managing identity resources in Microsoft Entra ID (formerly Azure Active Directory) through Microsoft Graph. Provides CRUD operations for users, groups, applications, and service principals enabling directory management, identity governance, and application integration.
+  version: v1.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph
+  termsOfService: https://www.microsoft.com/licensing/terms/
+  license:
+    name: Microsoft API License
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+servers:
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+- url: https://graph.microsoft.com/beta
+  description: Microsoft Graph beta endpoint (preview features)
+security:
+- oauth2: []
+tags:
+- name: Applications
+  description: Register and manage application objects that define application configuration including credentials, permissions, and sign-in settings
+paths:
+  /applications:
+    get:
+      operationId: listApplications
+      summary: Microsoft Entra List Applications
+      description: Get the list of application registrations in the directory. Returns the application objects with their configuration properties including credentials, permissions, and sign-in settings.
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/OrderBy'
+      - $ref: '#/components/parameters/Top'
+      - $ref: '#/components/parameters/Skip'
+      - $ref: '#/components/parameters/Count'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/ConsistencyLevel'
+      responses:
+        '200':
+          description: Collection of application objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createApplication
+      summary: Microsoft Entra Create Application
+      description: Create a new application registration in the directory. The application object represents the global definition of the app including its identity, access configuration, and settings.
+      tags:
+      - Applications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '201':
+          description: Application created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /applications/{application-id}:
+    get:
+      operationId: getApplication
+      summary: Microsoft Entra Get Application
+      description: Get the properties and relationships of an application object by its id (object id, not appId).
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/Select'
+      - $ref: '#/components/parameters/Expand'
+      responses:
+        '200':
+          description: Application object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateApplication
+      summary: Microsoft Entra Update Application
+      description: Update the properties of an application object.
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Application'
+      responses:
+        '204':
+          description: Application updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteApplication
+      summary: Microsoft Entra Delete Application
+      description: Delete an application object. The application is moved to the deletedItems container and can be restored within 30 days.
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      responses:
+        '204':
+          description: Application deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /applications/{application-id}/addPassword:
+    post:
+      operationId: addApplicationPassword
+      summary: Microsoft Entra Add Password Credential
+      description: Add a strong password or secret to an application. The response includes the generated secretText which is only returned at creation time and cannot be retrieved later.
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordCredential'
+      responses:
+        '200':
+          description: Password credential created with secretText
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordCredential'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /applications/{application-id}/removePassword:
+    post:
+      operationId: removeApplicationPassword
+      summary: Microsoft Entra Remove Password Credential
+      description: Remove a password credential from an application by specifying the keyId of the password to remove.
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - keyId
+              properties:
+                keyId:
+                  type: string
+                  format: uuid
+                  description: The unique identifier for the password to remove
+      responses:
+        '204':
+          description: Password credential removed successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ODataError:
+      type: object
+      description: OData error response
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
+          example: example_value
+    RequiredResourceAccess:
+      type: object
+      description: Specifies the set of OAuth 2.0 permission scopes and app roles under a specified resource that an application requires access to
+      properties:
+        resourceAppId:
+          type: string
+          description: The unique identifier for the resource that the application requires access to (the appId of the target application)
+          example: '500123'
+        resourceAccess:
+          type: array
+          description: The list of OAuth 2.0 permission scopes and app roles required from the specified resource
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: Unique identifier for the app role or OAuth 2.0 permission scope
+              type:
+                type: string
+                description: Specifies whether the id property references a Scope (delegated permission) or a Role (application permission)
+                enum:
+                - Scope
+                - Role
+          example: []
+    KeyCredential:
+      type: object
+      description: Contains a key credential (certificate) associated with an application or service principal
+      properties:
+        keyId:
+          type: string
+          format: uuid
+          description: Unique identifier for the key
+          example: '500123'
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Friendly name for the key
+          example: example_value
+        type:
+          type: string
+          description: Type of key credential
+          enum:
+          - AsymmetricX509Cert
+          - X509CertAndPassword
+          example: AsymmetricX509Cert
+        usage:
+          type: string
+          description: Describes the purpose of the key
+          enum:
+          - Sign
+          - Verify
+          example: Sign
+        key:
+          type: string
+          format: byte
+          description: The certificate's raw data in byte array converted to Base64 string
+          example: example_value
+        startDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the credential becomes valid
+          example: '2026-01-15T10:30:00Z'
+        endDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the credential expires
+          example: '2026-01-15T10:30:00Z'
+    PermissionScope:
+      type: object
+      description: Defines an OAuth 2.0 delegated permission scope exposed by a web API application
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the scope
+          example: abc123
+        value:
+          type: string
+          description: The value that identifies the scope in OAuth 2.0 authorization requests
+          example: example_value
+        type:
+          type: string
+          description: Whether the scope can be consented to by a user or requires admin consent
+          enum:
+          - User
+          - Admin
+          example: User
+        adminConsentDisplayName:
+          type: string
+          description: Display name shown on the admin consent experience
+          example: example_value
+        adminConsentDescription:
+          type: string
+          description: Description shown on the admin consent experience
+          example: example_value
+        userConsentDisplayName:
+          type:
+          - string
+          - 'null'
+          description: Display name shown on the user consent experience
+          example: example_value
+        userConsentDescription:
+          type:
+          - string
+          - 'null'
+          description: Description shown on the user consent experience
+          example: example_value
+        isEnabled:
+          type: boolean
+          description: Whether the scope is enabled and can be requested
+          example: true
+    AppRole:
+      type: object
+      description: Represents a role defined by an application that can be assigned to users, groups, or service principals
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the app role
+          example: abc123
+        allowedMemberTypes:
+          type: array
+          description: Specifies whether the role can be assigned to users/groups, applications, or both
+          items:
+            type: string
+            enum:
+            - User
+            - Application
+          example: []
+        displayName:
+          type: string
+          description: Display name for the app role
+          example: example_value
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the app role
+          example: A sample description.
+        value:
+          type:
+          - string
+          - 'null'
+          description: Value that is included in the roles claim in authentication tokens
+          example: example_value
+        isEnabled:
+          type: boolean
+          description: Whether the app role is enabled
+          example: true
+    PasswordCredential:
+      type: object
+      description: Represents a password credential (client secret) associated with an application or service principal
+      properties:
+        keyId:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the password
+          example: '500123'
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Friendly name for the password credential
+          example: example_value
+        hint:
+          type: string
+          readOnly: true
+          description: Contains the first three characters of the password (returned on read operations)
+          example: example_value
+        secretText:
+          type: string
+          readOnly: true
+          description: The generated password value. Only returned at creation time and cannot be retrieved later.
+          example: example_value
+        startDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the password becomes valid
+          example: '2026-01-15T10:30:00Z'
+        endDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the password expires. Maximum lifetime varies by policy.
+          example: '2026-01-15T10:30:00Z'
+    SpaApplication:
+      type: object
+      description: Single-page application configuration
+      properties:
+        redirectUris:
+          type: array
+          description: Redirect URIs for single-page application authentication
+          items:
+            type: string
+            format: uri
+          example: []
+    ApiApplication:
+      type: object
+      description: Settings for an application that implements a web API
+      properties:
+        acceptMappedClaims:
+          type:
+          - boolean
+          - 'null'
+          description: Allows an application to use claims mapping without specifying a custom signing key
+          example: example_value
+        knownClientApplications:
+          type: array
+          description: Used for bundling consent. Lists client app IDs that are considered known clients of this API
+          items:
+            type: string
+            format: uuid
+          example: []
+        oauth2PermissionScopes:
+          type: array
+          description: OAuth 2.0 permission scopes exposed by the web API to client applications
+          items:
+            $ref: '#/components/schemas/PermissionScope'
+          example: []
+        preAuthorizedApplications:
+          type: array
+          description: Lists client applications pre-authorized with specified delegated permissions that do not require user consent
+          items:
+            type: object
+            properties:
+              appId:
+                type: string
+              delegatedPermissionIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+          example: []
+        requestedAccessTokenVersion:
+          type:
+          - integer
+          - 'null'
+          description: Specifies the access token version expected by the resource. Possible values are 1 or 2.
+          enum:
+          - 1
+          - 2
+          - null
+          example: 1
+    WebApplication:
+      type: object
+      description: Web application configuration including redirect URIs
+      properties:
+        redirectUris:
+          type: array
+          description: URIs to which Microsoft Entra ID will redirect after authentication
+          items:
+            type: string
+            format: uri
+          example: []
+        homePageUrl:
+          type:
+          - string
+          - 'null'
+          description: Home page URL of the application
+          format: uri
+          example: https://www.example.com
+        logoutUrl:
+          type:
+          - string
+          - 'null'
+          description: URL used by the authorization service to sign out the user
+          format: uri
+          example: https://www.example.com
+        implicitGrantSettings:
+          type: object
+          description: Settings for implicit grant flow tokens
+          properties:
+            enableIdTokenIssuance:
+              type: boolean
+              description: Whether ID tokens can be issued using the implicit flow
+              default: false
+            enableAccessTokenIssuance:
+              type: boolean
+              description: Whether access tokens can be issued using the implicit flow
+              default: false
+          example: example_value
+    Application:
+      type: object
+      description: Represents an application registration in Microsoft Entra ID. Defines the app's identity configuration, credentials, permissions requested, and reply URLs.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the application object (GUID). This is the object ID, not the appId.
+          example: abc123
+        appId:
+          type: string
+          readOnly: true
+          description: The unique application identifier assigned by Microsoft Entra ID (also known as the client ID)
+          example: '500123'
+        displayName:
+          type: string
+          description: The display name for the application
+          example: example_value
+        description:
+          type:
+          - string
+          - 'null'
+          description: An optional description of the application
+          example: A sample description.
+        signInAudience:
+          type: string
+          description: Specifies which Microsoft accounts are supported for the application
+          enum:
+          - AzureADMyOrg
+          - AzureADMultipleOrgs
+          - AzureADandPersonalMicrosoftAccount
+          - PersonalMicrosoftAccount
+          example: AzureADMyOrg
+        identifierUris:
+          type: array
+          description: URIs that uniquely identify the application within its Azure AD tenant or verified custom domain
+          items:
+            type: string
+          example: []
+        web:
+          $ref: '#/components/schemas/WebApplication'
+        spa:
+          $ref: '#/components/schemas/SpaApplication'
+        api:
+          $ref: '#/components/schemas/ApiApplication'
+        requiredResourceAccess:
+          type: array
+          description: Specifies the resources that the application needs access to and the set of OAuth permission scopes and app roles needed under each resource
+          items:
+            $ref: '#/components/schemas/RequiredResourceAccess'
+          example: []
+        appRoles:
+          type: array
+          description: Collection of roles defined for the application that can be assigned to users, groups, or service principals
+          items:
+            $ref: '#/components/schemas/AppRole'
+          example: []
+        keyCredentials:
+          type: array
+          description: Collection of certificate credentials associated with the app
+          items:
+            $ref: '#/components/schemas/KeyCredential'
+          example: []
+        passwordCredentials:
+          type: array
+          description: Collection of password credentials (client secrets)
+          items:
+            $ref: '#/components/schemas/PasswordCredential'
+          example: []
+        publicClient:
+          type: object
+          description: Public client settings for mobile and desktop apps
+          properties:
+            redirectUris:
+              type: array
+              items:
+                type: string
+          example: example_value
+        tags:
+          type: array
+          description: Custom strings used to categorize and identify the application
+          items:
+            type: string
+          example: []
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date and time the application was registered
+          example: '2026-01-15T10:30:00Z'
+    ApplicationCollectionResponse:
+      type: object
+      description: Paged collection of application objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+          example: []
+  responses:
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+  parameters:
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
+    ApplicationId:
+      name: application-id
+      in: path
+      required: true
+      description: Unique identifier of the application (object ID, not appId)
+      schema:
+        type: string
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization using Microsoft identity platform. Supports authorization code flow for delegated permissions and client credentials flow for application permissions.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            User.Read: Read the signed-in user's profile
+            User.ReadWrite: Read and update the signed-in user's profile
+            User.Read.All: Read all users' profiles
+            User.ReadWrite.All: Read and write all users' profiles
+            Group.Read.All: Read all groups
+            Group.ReadWrite.All: Read and write all groups
+            GroupMember.Read.All: Read all group memberships
+            GroupMember.ReadWrite.All: Read and write all group memberships
+            Application.Read.All: Read all applications
+            Application.ReadWrite.All: Read and write all applications
+            Directory.Read.All: Read directory data
+            Directory.ReadWrite.All: Read and write directory data
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token
+          scopes:
+            https://graph.microsoft.com/.default: Default scope for application permissions
+externalDocs:
+  description: Microsoft Graph Identity and Access Management Documentation
+  url: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
