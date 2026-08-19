@@ -20,7 +20,7 @@ accessModel:
 image: https://www.microsoft.com/en-us/security/content/dam/microsoft/final/security/includes/microsoft-entra-logo.svg
 created: '2024-01-01'
 modified: '2026-05-19'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 type: Index
 access: 3rd-Party
 tags:
