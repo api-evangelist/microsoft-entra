@@ -1,0 +1,2586 @@
+{
+  "item": [
+    {
+      "id": "d4a0b97f-e29f-4282-9bf4-e84aac978769",
+      "name": "Groups",
+      "description": {
+        "content": "Manage groups for organizing users, devices, and other principals including Microsoft 365 groups, security groups, and distribution lists",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a140c1c2-8872-4431-a545-c8dc59ee9fa4",
+          "name": "Microsoft Entra List Groups",
+          "request": {
+            "name": "Microsoft Entra List Groups",
+            "description": {
+              "content": "List all groups in the directory including Microsoft 365 groups, security groups, mail-enabled security groups, and distribution groups. Returns a paged collection with OData query support.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "OData filter expression to restrict the returned collection"
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to sort results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of items to skip in the result set"
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+                },
+                {
+                  "disabled": false,
+                  "key": "$search",
+                  "value": "<string>",
+                  "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Comma-separated list of relationships to expand and include"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                "key": "ConsistencyLevel",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2240f146-9ad8-4d20-8da1-2cb1936f440d",
+              "name": "Collection of group objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.count\": 10,\n  \"@odata.nextLink\": \"https://www.example.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "832799f4-257d-4209-9783-b0dade51ad91",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb918db2-858c-4e9e-9d29-614e99f34467",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73803deb-590b-462c-88ba-3ceaf8c5f886",
+          "name": "Microsoft Entra Create Group",
+          "request": {
+            "name": "Microsoft Entra Create Group",
+            "description": {
+              "content": "Create a new group in the directory. You can create Microsoft 365 groups, security groups, or mail-enabled security groups. Specify the groupTypes, mailEnabled, and securityEnabled properties to determine the type of group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"mailEnabled\": \"<boolean>\",\n  \"mailNickname\": \"<string>\",\n  \"securityEnabled\": \"<boolean>\",\n  \"groupTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"visibility\": \"<string,null>\",\n  \"membershipRule\": \"<string,null>\",\n  \"membershipRuleProcessingState\": \"<string,null>\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1bb5d1f5-28f2-4968-9970-7219f6e24629",
+              "name": "Group created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"mail\": \"example_value\",\n  \"isAssignableToRole\": false,\n  \"onPremisesSyncEnabled\": true,\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"renewedDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85c471c3-af49-457f-ac3c-5451390a3ae8",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14524c51-b5dd-4063-989c-aeaeb863d71e",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6e40e44-631a-4d4b-8fda-69626fddefab",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d97ccd93-6efe-4c58-afc9-c3450f41a922",
+          "name": "Microsoft Entra Get Group",
+          "request": {
+            "name": "Microsoft Entra Get Group",
+            "description": {
+              "content": "Get the properties and relationships of a group object. Returns the default set of properties unless $select is specified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":group-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Comma-separated list of relationships to expand and include"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group-id",
+                  "description": "(Required) Unique identifier of the group (object ID)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "43b0a729-77b3-4c13-82c6-4db8bf582d16",
+              "name": "Group object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"mail\": \"example_value\",\n  \"isAssignableToRole\": false,\n  \"onPremisesSyncEnabled\": true,\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"renewedDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5359f73b-af00-454b-94f9-d89b72742990",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "413a2374-c993-4b33-a131-8182341ef858",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1db6161-5048-4583-980b-543a7d0ed52d",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d239a886-67d2-4d93-9374-fb0a926b77b6",
+          "name": "Microsoft Entra Update Group",
+          "request": {
+            "name": "Microsoft Entra Update Group",
+            "description": {
+              "content": "Update the properties of a group object. Not all properties can be updated depending on the group type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":group-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group-id",
+                  "description": "(Required) Unique identifier of the group (object ID)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"mailEnabled\": \"<boolean>\",\n  \"mailNickname\": \"<string>\",\n  \"securityEnabled\": \"<boolean>\",\n  \"groupTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"visibility\": \"<string,null>\",\n  \"membershipRule\": \"<string,null>\",\n  \"membershipRuleProcessingState\": \"<string,null>\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9aaad407-0e3f-48f0-ae37-a47b4e0231ed",
+              "name": "Group updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bfb0ef1e-d643-42c3-a3d9-0021618cc160",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8da382e9-2e95-4187-a0f1-64657bdbda76",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd8f4160-eda4-4daf-86d1-4e563de3661a",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff77c4f3-231d-4f69-a60a-3a71e7935953",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"example_value\",\n  \"securityEnabled\": true,\n  \"visibility\": \"Public\",\n  \"membershipRule\": \"example_value\",\n  \"membershipRuleProcessingState\": \"On\",\n  \"isAssignableToRole\": \"<boolean,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "496740ad-e43a-4a67-861e-5194c89fd88d",
+          "name": "Microsoft Entra Delete Group",
+          "request": {
+            "name": "Microsoft Entra Delete Group",
+            "description": {
+              "content": "Delete a group. Deleting a Microsoft 365 group moves it to the deletedItems container where it can be restored within 30 days. Security groups are permanently deleted immediately.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":group-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group-id",
+                  "description": "(Required) Unique identifier of the group (object ID)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ce7d1f7-3306-4ab2-936a-6ada3ab38b69",
+              "name": "Group deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea109cb5-8e0b-44ec-831e-88e372799223",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "396f1f9c-3598-45c3-9364-158cc40ebb24",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20cad391-7f49-4091-af76-9e5b358c9080",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f4c54d8-6d86-4e22-ac70-a08756c32c36",
+          "name": "Microsoft Entra List Group Members",
+          "request": {
+            "name": "Microsoft Entra List Group Members",
+            "description": {
+              "content": "Get the direct members of a group. A group can have users, devices, other groups, organizational contacts, and service principals as members.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":group-id",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "OData filter expression to restrict the returned collection"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group-id",
+                  "description": "(Required) Unique identifier of the group (object ID)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                "key": "ConsistencyLevel",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4213c5af-b657-4db5-9cd0-309abcf87609",
+              "name": "Collection of directory objects that are members of the group",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.count\": 10,\n  \"@odata.nextLink\": \"https://www.example.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bdd45f7-37d7-41a1-8424-1e8d0d5e0041",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f80a4ce-d608-441d-9ec3-e41f6f4cd658",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe0101e6-e8b5-4e41-8a6d-527f6845cd9b",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d20cee81-3e45-47d1-8edf-40236fe89bb3",
+          "name": "Microsoft Entra Add Group Member",
+          "request": {
+            "name": "Microsoft Entra Add Group Member",
+            "description": {
+              "content": "Add a member to a Microsoft 365 group or a security group by posting a reference to the directory object to add.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":group-id",
+                "members",
+                "$ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group-id",
+                  "description": "(Required) Unique identifier of the group (object ID)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"@odata.id\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d15be21d-134f-44c6-892e-92a63f03be63",
+              "name": "Member added successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"@odata.id\": \"https://www.example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "68e3da08-e6c0-4832-ad1c-78d0aff00bfc",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"@odata.id\": \"https://www.example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f75fc2f0-ba37-4309-88ae-41d5ccddb367",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"@odata.id\": \"https://www.example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ddbafe4-4568-4bab-a027-8b480a8b2063",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"@odata.id\": \"https://www.example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "832317d4-3a50-4a96-8d0a-47e8a6001c9d",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"@odata.id\": \"https://www.example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7ef0fd1-1288-449d-8bcd-d7eeaaed7b50",
+          "name": "Microsoft Entra Remove Group Member",
+          "request": {
+            "name": "Microsoft Entra Remove Group Member",
+            "description": {
+              "content": "Remove a member from a group via the members navigation property. Specify the member to remove by its directory object id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":group-id",
+                "members",
+                ":directoryObject-id",
+                "$ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group-id",
+                  "description": "(Required) Unique identifier of the group (object ID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "directoryObject-id",
+                  "description": "(Required) Unique identifier of the directory object to remove"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2aaf9aa-32b5-498a-99d1-bd6ea4486c26",
+              "name": "Member removed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    ":directoryObject-id",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "directoryObject-id",
+                      "description": "(Required) Unique identifier of the directory object to remove"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef65560e-cce1-4f74-b9b2-befceae9d12b",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    ":directoryObject-id",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "directoryObject-id",
+                      "description": "(Required) Unique identifier of the directory object to remove"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b31e049-f6f1-4c63-adf7-99b42d6d1f85",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    ":directoryObject-id",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "directoryObject-id",
+                      "description": "(Required) Unique identifier of the directory object to remove"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e571b3c2-a5aa-4af5-ac7c-a8a07d84a56a",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":group-id",
+                    "members",
+                    ":directoryObject-id",
+                    "$ref"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group-id",
+                      "description": "(Required) Unique identifier of the group (object ID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "directoryObject-id",
+                      "description": "(Required) Unique identifier of the directory object to remove"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"2007-09-06T08:47:03.911Z\",\n      \"request-id\": \"41c72866-52a0-72c4-bdbb-7175346e0475\",\n      \"client-request-id\": \"247a3943-f383-2f2b-fb8c-004fce53084e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://graph.microsoft.com/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "User.Read User.ReadWrite User.Read.All User.ReadWrite.All Group.Read.All Group.ReadWrite.All GroupMember.Read.All GroupMember.ReadWrite.All Application.Read.All Application.ReadWrite.All Directory.Read.All Directory.ReadWrite.All"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1e3826c6-83f3-4b9d-9e07-469f1554e441",
+    "name": "Microsoft Entra Microsoft Graph Identity Applications Groups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for managing identity resources in Microsoft Entra ID (formerly Azure Active Directory) through Microsoft Graph. Provides CRUD operations for users, groups, applications, and service principals enabling directory management, identity governance, and application integration.\n\nContact Support:\n Name: Microsoft Graph Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Entra Microsoft Graph Identity Applications ServicePrincipals API",
+    "version": "v1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ServicePrincipals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Entra List Service Principals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals",
+            "headers": [
+              {
+                "name": "ConsistencyLevel",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$orderby",
+                "value": "displayName asc",
+                "type": "query",
+                "description": "Comma-separated list of properties to sort results by"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in the result set"
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$search",
+                "value": "\"displayName:John\"",
+                "type": "query",
+                "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of service principal objects in the directory. A service principal represents an instance of an application in a tenant and is the identity used for authentication and authorization."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Create Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new service principal in the directory. The appId property in the request body is required and must reference an existing application registration."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Get Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Retrieve the properties and relationships of a service principal object."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Update Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of a service principal object."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Delete Service Principal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              }
+            ]
+          },
+          "docs": "Delete a service principal object. This removes the application instance from the tenant but does not delete the application registration."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra List App Role Assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id/appRoleAssignments",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              }
+            ]
+          },
+          "docs": "Get the app role assignments granted to this service principal. App role assignments represent permissions granted to the service principal to call another application's API."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Grant App Role Assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/servicePrincipals/:servicePrincipal-id/appRoleAssignments",
+            "params": [
+              {
+                "name": "servicePrincipal-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the service principal (object ID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grant an app role assignment to a service principal. App roles assigned to service principals are also known as application permissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

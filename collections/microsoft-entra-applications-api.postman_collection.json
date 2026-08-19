@@ -1,0 +1,2247 @@
+{
+  "item": [
+    {
+      "id": "6c57e7b7-53c5-474e-9857-221a879038bd",
+      "name": "Applications",
+      "description": {
+        "content": "Register and manage application objects that define application configuration including credentials, permissions, and sign-in settings",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "155b2725-5a35-45e9-9192-6aa94f56711c",
+          "name": "Microsoft Entra List Applications",
+          "request": {
+            "name": "Microsoft Entra List Applications",
+            "description": {
+              "content": "Get the list of application registrations in the directory. Returns the application objects with their configuration properties including credentials, permissions, and sign-in settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "OData filter expression to restrict the returned collection"
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to sort results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of items to skip in the result set"
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+                },
+                {
+                  "disabled": false,
+                  "key": "$search",
+                  "value": "<string>",
+                  "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                "key": "ConsistencyLevel",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c691789c-ee2a-424a-9564-f2414c3fa02f",
+              "name": "Collection of application objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.count\": 10,\n  \"@odata.nextLink\": \"https://www.example.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52f73c0b-42ef-4572-afed-6e3c30280d20",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5df13a0e-7e83-4a15-852c-33fab96deb9f",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6af473f2-84ed-42e8-9350-c02353c9594e",
+          "name": "Microsoft Entra Create Application",
+          "request": {
+            "name": "Microsoft Entra Create Application",
+            "description": {
+              "content": "Create a new application registration in the directory. The application object represents the global definition of the app including its identity, access configuration, and settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"signInAudience\": \"<string>\",\n  \"identifierUris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"web\": {\n    \"redirectUris\": [\n      \"<uri>\",\n      \"<uri>\"\n    ],\n    \"homePageUrl\": \"<string,null-uri>\",\n    \"logoutUrl\": \"<string,null-uri>\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {\n    \"redirectUris\": [\n      \"<uri>\",\n      \"<uri>\"\n    ]\n  },\n  \"api\": {\n    \"acceptMappedClaims\": \"<boolean,null>\",\n    \"knownClientApplications\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"oauth2PermissionScopes\": [\n      {\n        \"id\": \"<uuid>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"adminConsentDisplayName\": \"<string>\",\n        \"adminConsentDescription\": \"<string>\",\n        \"userConsentDisplayName\": \"<string,null>\",\n        \"userConsentDescription\": \"<string,null>\",\n        \"isEnabled\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"adminConsentDisplayName\": \"<string>\",\n        \"adminConsentDescription\": \"<string>\",\n        \"userConsentDisplayName\": \"<string,null>\",\n        \"userConsentDescription\": \"<string,null>\",\n        \"isEnabled\": \"<boolean>\"\n      }\n    ],\n    \"preAuthorizedApplications\": [\n      {\n        \"appId\": \"<string>\",\n        \"delegatedPermissionIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      },\n      {\n        \"appId\": \"<string>\",\n        \"delegatedPermissionIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      }\n    ],\n    \"requestedAccessTokenVersion\": \"<integer,null>\"\n  },\n  \"requiredResourceAccess\": [\n    {\n      \"resourceAppId\": \"<string>\",\n      \"resourceAccess\": [\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"resourceAppId\": \"<string>\",\n      \"resourceAccess\": [\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"appRoles\": [\n    {\n      \"id\": \"<uuid>\",\n      \"allowedMemberTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"displayName\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"value\": \"<string,null>\",\n      \"isEnabled\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"allowedMemberTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"displayName\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"value\": \"<string,null>\",\n      \"isEnabled\": \"<boolean>\"\n    }\n  ],\n  \"keyCredentials\": [\n    {\n      \"keyId\": \"<uuid>\",\n      \"displayName\": \"<string,null>\",\n      \"type\": \"<string>\",\n      \"usage\": \"<string>\",\n      \"key\": \"<byte>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    },\n    {\n      \"keyId\": \"<uuid>\",\n      \"displayName\": \"<string,null>\",\n      \"type\": \"<string>\",\n      \"usage\": \"<string>\",\n      \"key\": \"<byte>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    }\n  ],\n  \"passwordCredentials\": [\n    {\n      \"displayName\": \"<string,null>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    },\n    {\n      \"displayName\": \"<string,null>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    }\n  ],\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4c64d099-f6ed-4225-b4a0-d84063250ef6",
+              "name": "Application created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"appId\": \"500123\",\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": true,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a944d116-5924-4077-8fd7-553f6dd2a1d0",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99fd88f1-c62a-4f32-ab67-ceb9b456af0e",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13c3eb54-d1f0-48c4-8fa1-44ef3e3ba4fc",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "939f3774-6a8d-49fa-9418-65c03c730dad",
+          "name": "Microsoft Entra Get Application",
+          "request": {
+            "name": "Microsoft Entra Get Application",
+            "description": {
+              "content": "Get the properties and relationships of an application object by its id (object id, not appId).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":application-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Comma-separated list of relationships to expand and include"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application-id",
+                  "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5c26579c-560a-4beb-9bed-1d8b6585c1f6",
+              "name": "Application object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"appId\": \"500123\",\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": true,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd92527d-9b10-4fe4-963d-abd9f88b2422",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a7f9d37-da80-42cb-a04b-adfd9328887d",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "744888f5-f92c-4bf5-8161-af5657906843",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc90c1d5-fbe9-4050-8d15-28904e544544",
+          "name": "Microsoft Entra Update Application",
+          "request": {
+            "name": "Microsoft Entra Update Application",
+            "description": {
+              "content": "Update the properties of an application object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":application-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application-id",
+                  "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"signInAudience\": \"<string>\",\n  \"identifierUris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"web\": {\n    \"redirectUris\": [\n      \"<uri>\",\n      \"<uri>\"\n    ],\n    \"homePageUrl\": \"<string,null-uri>\",\n    \"logoutUrl\": \"<string,null-uri>\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {\n    \"redirectUris\": [\n      \"<uri>\",\n      \"<uri>\"\n    ]\n  },\n  \"api\": {\n    \"acceptMappedClaims\": \"<boolean,null>\",\n    \"knownClientApplications\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"oauth2PermissionScopes\": [\n      {\n        \"id\": \"<uuid>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"adminConsentDisplayName\": \"<string>\",\n        \"adminConsentDescription\": \"<string>\",\n        \"userConsentDisplayName\": \"<string,null>\",\n        \"userConsentDescription\": \"<string,null>\",\n        \"isEnabled\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"value\": \"<string>\",\n        \"type\": \"<string>\",\n        \"adminConsentDisplayName\": \"<string>\",\n        \"adminConsentDescription\": \"<string>\",\n        \"userConsentDisplayName\": \"<string,null>\",\n        \"userConsentDescription\": \"<string,null>\",\n        \"isEnabled\": \"<boolean>\"\n      }\n    ],\n    \"preAuthorizedApplications\": [\n      {\n        \"appId\": \"<string>\",\n        \"delegatedPermissionIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      },\n      {\n        \"appId\": \"<string>\",\n        \"delegatedPermissionIds\": [\n          \"<uuid>\",\n          \"<uuid>\"\n        ]\n      }\n    ],\n    \"requestedAccessTokenVersion\": \"<integer,null>\"\n  },\n  \"requiredResourceAccess\": [\n    {\n      \"resourceAppId\": \"<string>\",\n      \"resourceAccess\": [\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"resourceAppId\": \"<string>\",\n      \"resourceAccess\": [\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"appRoles\": [\n    {\n      \"id\": \"<uuid>\",\n      \"allowedMemberTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"displayName\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"value\": \"<string,null>\",\n      \"isEnabled\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"allowedMemberTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"displayName\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"value\": \"<string,null>\",\n      \"isEnabled\": \"<boolean>\"\n    }\n  ],\n  \"keyCredentials\": [\n    {\n      \"keyId\": \"<uuid>\",\n      \"displayName\": \"<string,null>\",\n      \"type\": \"<string>\",\n      \"usage\": \"<string>\",\n      \"key\": \"<byte>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    },\n    {\n      \"keyId\": \"<uuid>\",\n      \"displayName\": \"<string,null>\",\n      \"type\": \"<string>\",\n      \"usage\": \"<string>\",\n      \"key\": \"<byte>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    }\n  ],\n  \"passwordCredentials\": [\n    {\n      \"displayName\": \"<string,null>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    },\n    {\n      \"displayName\": \"<string,null>\",\n      \"startDateTime\": \"<dateTime>\",\n      \"endDateTime\": \"<dateTime>\"\n    }\n  ],\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7eb8cc99-7493-41f2-b94f-26ca6b5dc2fa",
+              "name": "Application updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8685d045-bcb5-4d2e-b75f-ece19d230bb7",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43aa2d6a-76bc-4d91-a6a4-3c3726feb5aa",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bfa1cef-a721-4e50-a6df-83557a119341",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1372acb-1ba9-4ed5-9db9-556a67e9f10d",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"description\": \"A sample description.\",\n  \"signInAudience\": \"AzureADMyOrg\",\n  \"web\": {\n    \"homePageUrl\": \"https://www.example.com\",\n    \"logoutUrl\": \"https://www.example.com\",\n    \"implicitGrantSettings\": {\n      \"enableIdTokenIssuance\": false,\n      \"enableAccessTokenIssuance\": false\n    }\n  },\n  \"spa\": {},\n  \"api\": {\n    \"acceptMappedClaims\": false,\n    \"requestedAccessTokenVersion\": 1\n  },\n  \"publicClient\": {\n    \"redirectUris\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03624d4a-cbf0-498a-b42f-1293431168cb",
+          "name": "Microsoft Entra Delete Application",
+          "request": {
+            "name": "Microsoft Entra Delete Application",
+            "description": {
+              "content": "Delete an application object. The application is moved to the deletedItems container and can be restored within 30 days.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":application-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application-id",
+                  "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3bc794e1-0261-4ea7-9a44-4377cbce445f",
+              "name": "Application deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "90956b6f-6a20-4810-8440-b19ff5873db2",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "568a5b9d-b439-4e72-a847-b7ddf7a6f4b2",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0836a3f7-9606-40c3-8b1c-6f263cd7f725",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b2d925b-7635-4ba3-86b0-13287853c15e",
+          "name": "Microsoft Entra Add Password Credential",
+          "request": {
+            "name": "Microsoft Entra Add Password Credential",
+            "description": {
+              "content": "Add a strong password or secret to an application. The response includes the generated secretText which is only returned at creation time and cannot be retrieved later.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":application-id",
+                "addPassword"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application-id",
+                  "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string,null>\",\n  \"startDateTime\": \"<dateTime>\",\n  \"endDateTime\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "58b2fa5a-a225-44f2-a57b-09d5255cc505",
+              "name": "Password credential created with secretText",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "addPassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"startDateTime\": \"2026-01-15T10:30:00Z\",\n  \"endDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keyId\": \"41ae7688-7b35-757e-f1d7-bd23d912dc1a\",\n  \"displayName\": \"example_value\",\n  \"hint\": \"example_value\",\n  \"secretText\": \"example_value\",\n  \"startDateTime\": \"2026-01-15T10:30:00Z\",\n  \"endDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db372cea-56bb-4fb3-ae20-d8c548e291e0",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "addPassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"startDateTime\": \"2026-01-15T10:30:00Z\",\n  \"endDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e2d59d4-7aeb-4e9d-920f-775958924481",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "addPassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"startDateTime\": \"2026-01-15T10:30:00Z\",\n  \"endDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c482b4e-6fc3-4b86-81a9-67dd06392abc",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "addPassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"startDateTime\": \"2026-01-15T10:30:00Z\",\n  \"endDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92c99e27-ffd7-4884-b4c2-ad2f4748c52a",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "addPassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"startDateTime\": \"2026-01-15T10:30:00Z\",\n  \"endDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d483174-2f7c-4e06-8825-a13bab891f5a",
+          "name": "Microsoft Entra Remove Password Credential",
+          "request": {
+            "name": "Microsoft Entra Remove Password Credential",
+            "description": {
+              "content": "Remove a password credential from an application by specifying the keyId of the password to remove.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":application-id",
+                "removePassword"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application-id",
+                  "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keyId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ca343747-2f1e-4142-93b4-2c1aeea35289",
+              "name": "Password credential removed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "removePassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b377a1a3-46c4-42df-bb1a-256605b3dc0d",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "removePassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "841a6405-9c1a-435c-919a-0e6ff7482226",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "removePassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df0a712a-62e9-4380-84a3-ecd2df9df085",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "removePassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cfb475f-0907-43e8-892c-b8fd1dd98de4",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application-id",
+                    "removePassword"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application-id",
+                      "description": "(Required) Unique identifier of the application (object ID, not appId)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1984-08-30T07:57:05.876Z\",\n      \"request-id\": \"1cbccebe-d166-a970-2327-4d058d7dc448\",\n      \"client-request-id\": \"340ca7c3-7776-b911-6d53-d2ddd36b81ec\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://graph.microsoft.com/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "User.Read User.ReadWrite User.Read.All User.ReadWrite.All Group.Read.All Group.ReadWrite.All GroupMember.Read.All GroupMember.ReadWrite.All Application.Read.All Application.ReadWrite.All Directory.Read.All Directory.ReadWrite.All"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e4983813-a925-41a7-8869-5b8a9d474b89",
+    "name": "Microsoft Entra Microsoft Graph Identity Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for managing identity resources in Microsoft Entra ID (formerly Azure Active Directory) through Microsoft Graph. Provides CRUD operations for users, groups, applications, and service principals enabling directory management, identity governance, and application integration.\n\nContact Support:\n Name: Microsoft Graph Support",
+      "type": "text/plain"
+    }
+  }
+}

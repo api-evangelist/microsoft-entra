@@ -1,0 +1,221 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Entra Microsoft Graph Identity Applications Users API",
+    "version": "v1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Entra List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/users",
+            "headers": [
+              {
+                "name": "ConsistencyLevel",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$orderby",
+                "value": "displayName asc",
+                "type": "query",
+                "description": "Comma-separated list of properties to sort results by"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in the result set"
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$search",
+                "value": "\"displayName:John\"",
+                "type": "query",
+                "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of user objects in the directory. Returns a paged collection of user resources with support for OData query parameters including $select, $filter, $orderby, $top, $skip, $count, $search, and $expand."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user in the directory. The request body must contain the required properties including displayName, accountEnabled, mailNickname, userPrincipalName, and passwordProfile."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$expand",
+                "value": "memberOf",
+                "type": "query",
+                "description": "Comma-separated list of relationships to expand and include"
+              }
+            ]
+          },
+          "docs": "Retrieve the properties and relationships of a user object. Specify the user by id or userPrincipalName."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of a user object. Not all properties can be updated by member or guest users with their default permissions without administrator roles."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              }
+            ]
+          },
+          "docs": "Delete a user object. The user is moved to the deletedItems container and can be restored within 30 days. After 30 days the user is permanently deleted."
+        },
+        {
+          "info": {
+            "name": "Microsoft Entra List User Group Memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/users/:user-id/memberOf",
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+              },
+              {
+                "name": "$select",
+                "value": "id,displayName,mail",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+              },
+              {
+                "name": "$filter",
+                "value": "startswith(displayName,'J')",
+                "type": "query",
+                "description": "OData filter expression to restrict the returned collection"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in the response"
+              }
+            ]
+          },
+          "docs": "Get the groups, directory roles, and administrative units that the user is a direct member of."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

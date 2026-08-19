@@ -1,0 +1,1871 @@
+{
+  "item": [
+    {
+      "id": "be0a842c-84e1-439b-affb-bd7d1c94eb09",
+      "name": "Users",
+      "description": {
+        "content": "Manage user accounts in the directory including creation, updates, profile management, and lifecycle operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b24b411e-aea4-4635-b2a5-f6e504fd9b90",
+          "name": "Microsoft Entra List Users",
+          "request": {
+            "name": "Microsoft Entra List Users",
+            "description": {
+              "content": "Retrieve a list of user objects in the directory. Returns a paged collection of user resources with support for OData query parameters including $select, $filter, $orderby, $top, $skip, $count, $search, and $expand.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "OData filter expression to restrict the returned collection"
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to sort results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of items to skip in the result set"
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual."
+                },
+                {
+                  "disabled": false,
+                  "key": "$search",
+                  "value": "<string>",
+                  "description": "Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual."
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Comma-separated list of relationships to expand and include"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                "key": "ConsistencyLevel",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b67cb4a0-8b0b-491d-8732-b45590d9d42e",
+              "name": "Collection of user objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.count\": 10,\n  \"@odata.nextLink\": \"https://www.example.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2153807-2e6d-4eb8-9d12-12ac6ea7850e",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b34840a-d513-4749-913a-201518717603",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "displayName asc"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$search",
+                      "value": "\"displayName:John\""
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.",
+                    "key": "ConsistencyLevel",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3862673-421f-44f8-b704-8d65b4015972",
+          "name": "Microsoft Entra Create User",
+          "request": {
+            "name": "Microsoft Entra Create User",
+            "description": {
+              "content": "Create a new user in the directory. The request body must contain the required properties including displayName, accountEnabled, mailNickname, userPrincipalName, and passwordProfile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"givenName\": \"<string,null>\",\n  \"surname\": \"<string,null>\",\n  \"mail\": \"<string,null>\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"<string>\",\n  \"accountEnabled\": \"<boolean>\",\n  \"passwordProfile\": {\n    \"password\": \"<string>\",\n    \"forceChangePasswordNextSignIn\": false,\n    \"forceChangePasswordNextSignInWithMfa\": false\n  },\n  \"jobTitle\": \"<string,null>\",\n  \"department\": \"<string,null>\",\n  \"officeLocation\": \"<string,null>\",\n  \"companyName\": \"<string,null>\",\n  \"mobilePhone\": \"<string,null>\",\n  \"businessPhones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"streetAddress\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"state\": \"<string,null>\",\n  \"postalCode\": \"<string,null>\",\n  \"country\": \"<string,null>\",\n  \"usageLocation\": \"<string,null>\",\n  \"preferredLanguage\": \"<string,null>\",\n  \"userType\": \"<string>\",\n  \"employeeId\": \"<string,null>\",\n  \"employeeType\": \"<string,null>\",\n  \"employeeHireDate\": \"<string,null-date-time>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1f80b42-1839-4075-86bb-1ccb45b23b8b",
+              "name": "User created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"yXpVElEbr0qSd@BKEKOqIrkHuRKNaDJOnj.pbih\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\",\n  \"onPremisesSyncEnabled\": true,\n  \"onPremisesSamAccountName\": \"example_value\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastSignInDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb24e50d-078f-4c50-96b3-3cbdcf0613e0",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dee5fa2-e59e-4775-a09e-8e7db615c9d6",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "637059e6-4013-4b2c-8082-40577ce750c3",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38a4dac8-ad5f-4eb2-887f-c0a73709bc33",
+          "name": "Microsoft Entra Get User",
+          "request": {
+            "name": "Microsoft Entra Get User",
+            "description": {
+              "content": "Retrieve the properties and relationships of a user object. Specify the user by id or userPrincipalName.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":user-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Comma-separated list of relationships to expand and include"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user-id",
+                  "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "373d385c-b221-406d-b8e5-a15908294119",
+              "name": "User object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"yXpVElEbr0qSd@BKEKOqIrkHuRKNaDJOnj.pbih\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\",\n  \"onPremisesSyncEnabled\": true,\n  \"onPremisesSamAccountName\": \"example_value\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastSignInDateTime\": \"2026-01-15T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e57c472f-1450-401e-99d0-f4f7992f5155",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "829fbb3f-02db-48f4-a7b4-79dae81d4302",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec6e6247-b900-4ff3-ba7f-675dfa4678a3",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "memberOf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1485f47d-328e-4e93-8547-e9b6f5c7a00d",
+          "name": "Microsoft Entra Update User",
+          "request": {
+            "name": "Microsoft Entra Update User",
+            "description": {
+              "content": "Update the properties of a user object. Not all properties can be updated by member or guest users with their default permissions without administrator roles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":user-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user-id",
+                  "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"givenName\": \"<string,null>\",\n  \"surname\": \"<string,null>\",\n  \"mail\": \"<string,null>\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"<string>\",\n  \"accountEnabled\": \"<boolean>\",\n  \"passwordProfile\": {\n    \"password\": \"<string>\",\n    \"forceChangePasswordNextSignIn\": false,\n    \"forceChangePasswordNextSignInWithMfa\": false\n  },\n  \"jobTitle\": \"<string,null>\",\n  \"department\": \"<string,null>\",\n  \"officeLocation\": \"<string,null>\",\n  \"companyName\": \"<string,null>\",\n  \"mobilePhone\": \"<string,null>\",\n  \"businessPhones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"streetAddress\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"state\": \"<string,null>\",\n  \"postalCode\": \"<string,null>\",\n  \"country\": \"<string,null>\",\n  \"usageLocation\": \"<string,null>\",\n  \"preferredLanguage\": \"<string,null>\",\n  \"userType\": \"<string>\",\n  \"employeeId\": \"<string,null>\",\n  \"employeeType\": \"<string,null>\",\n  \"employeeHireDate\": \"<string,null-date-time>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8e31694b-5eea-4e13-a811-9186ad8eb296",
+              "name": "User updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5968fdd3-b538-431b-8d0d-a09d1d63ffbc",
+              "name": "Bad request - invalid input or malformed request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6505ffac-25be-416d-9729-22ccbff08ed8",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b0de26d-4134-41b3-beb5-f79efee76aae",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8ecf79a-9281-4f12-873f-ef6bdad9100e",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"example_value\",\n  \"givenName\": \"example_value\",\n  \"surname\": \"example_value\",\n  \"mail\": \"example_value\",\n  \"userPrincipalName\": \"<email>\",\n  \"mailNickname\": \"example_value\",\n  \"accountEnabled\": true,\n  \"passwordProfile\": {\n    \"password\": \"example_value\",\n    \"forceChangePasswordNextSignIn\": true,\n    \"forceChangePasswordNextSignInWithMfa\": true\n  },\n  \"jobTitle\": \"example_value\",\n  \"department\": \"example_value\",\n  \"officeLocation\": \"example_value\",\n  \"companyName\": \"example_value\",\n  \"mobilePhone\": \"example_value\",\n  \"streetAddress\": \"example_value\",\n  \"city\": \"example_value\",\n  \"state\": \"example_value\",\n  \"postalCode\": \"example_value\",\n  \"country\": \"example_value\",\n  \"usageLocation\": \"example_value\",\n  \"preferredLanguage\": \"example_value\",\n  \"userType\": \"Member\",\n  \"employeeId\": \"500123\",\n  \"employeeType\": \"example_value\",\n  \"employeeHireDate\": \"2026-01-15T10:30:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a99dede4-334f-4896-b6b4-c8e0554c917c",
+          "name": "Microsoft Entra Delete User",
+          "request": {
+            "name": "Microsoft Entra Delete User",
+            "description": {
+              "content": "Delete a user object. The user is moved to the deletedItems container and can be restored within 30 days. After 30 days the user is permanently deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":user-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user-id",
+                  "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "633e49ac-8cee-437a-8604-8450dd599a25",
+              "name": "User deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e160a8c6-fd44-4aaa-b1f8-80547b022303",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4944dae9-2ff5-45d2-8eac-15ea48f30158",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08164a60-2dca-4fdf-82f7-e275cac2e12b",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc2644bf-8432-44a4-b721-0f9c433c3d9e",
+          "name": "Microsoft Entra List User Group Memberships",
+          "request": {
+            "name": "Microsoft Entra List User Group Memberships",
+            "description": {
+              "content": "Get the groups, directory roles, and administrative units that the user is a direct member of.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":user-id",
+                "memberOf"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "OData filter expression to restrict the returned collection"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user-id",
+                  "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "87afe594-2e8f-43b6-9e7a-9f148be36f3a",
+              "name": "Collection of directory objects the user is a member of",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id",
+                    "memberOf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.count\": 10,\n  \"@odata.nextLink\": \"https://www.example.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0de0b3a2-838b-49d0-a22f-02dd0c9ca2e7",
+              "name": "Unauthorized - missing or invalid authentication token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id",
+                    "memberOf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e74fc79b-e6f0-4d19-ba38-7277c75b53e3",
+              "name": "Forbidden - insufficient permissions for the requested operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id",
+                    "memberOf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c81a3bd-1d8d-46bf-a565-f272195e3c08",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user-id",
+                    "memberOf"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "id,displayName,mail"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "startswith(displayName,'J')"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user-id",
+                      "description": "(Required) Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"date\": \"1956-12-14T18:14:45.608Z\",\n      \"request-id\": \"dd163ada-b6fd-0791-3c98-658e3dc10805\",\n      \"client-request-id\": \"84c6c34d-e009-c922-443c-ffe06909f18e\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://graph.microsoft.com/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "User.Read User.ReadWrite User.Read.All User.ReadWrite.All Group.Read.All Group.ReadWrite.All GroupMember.Read.All GroupMember.ReadWrite.All Application.Read.All Application.ReadWrite.All Directory.Read.All Directory.ReadWrite.All"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cb6f0566-84c6-4885-9577-84f3d86795b8",
+    "name": "Microsoft Entra Microsoft Graph Identity Applications Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for managing identity resources in Microsoft Entra ID (formerly Azure Active Directory) through Microsoft Graph. Provides CRUD operations for users, groups, applications, and service principals enabling directory management, identity governance, and application integration.\n\nContact Support:\n Name: Microsoft Graph Support",
+      "type": "text/plain"
+    }
+  }
+}
