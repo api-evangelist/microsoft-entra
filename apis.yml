@@ -142,6 +142,12 @@ apis:
   baseURL: https://graph.microsoft.com/v1.0
   tags:
   - App Registration
+  - Application
+  - Credentials
+  - Authentication
+  - Service Principals
+  tags_raw:
+  - App Registration
   - Applications
   - Credentials
   - OAuth
@@ -243,6 +249,12 @@ apis:
   baseURL: https://login.microsoftonline.com
   tags:
   - Identity Platform
+  - Authentication
+  - OpenID Connect
+  - SAML
+  - Token Service
+  tags_raw:
+  - Identity Platform
   - OAuth 2.0
   - OpenID Connect
   - SAML
@@ -279,6 +291,8 @@ apis:
     https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -304,6 +318,8 @@ apis:
     https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -329,6 +345,8 @@ apis:
     https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - Service Principals
+  tags_raw:
   - ServicePrincipals
   properties:
   - type: OpenAPI
@@ -354,6 +372,8 @@ apis:
     https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
