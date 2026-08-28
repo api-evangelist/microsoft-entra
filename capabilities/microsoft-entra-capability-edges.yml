@@ -1,0 +1,54 @@
+slug: microsoft-entra
+provider: Microsoft Entra
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: ServicePrincipals
+  spec_file: microsoft-entra-serviceprincipals-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.88
+  evidence: POST /servicePrincipals/{servicePrincipal-id}/appRoleAssignments  grantServicePrincipalAppRoleAssignment  Microsoft
+    Entra Grant App Role Assignment
+  reason: Granting app role assignments to service principals is authorization/access management in the
+    identity platform.
+- tag: Applications
+  spec_file: microsoft-entra-applications-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /applications/{application-id}/addPassword  addApplicationPassword  Microsoft Entra Add
+    Password Credential
+  reason: Registering applications and managing their credentials in the identity directory is core Identity
+    & Access Management.
+- tag: Groups
+  spec_file: microsoft-entra-groups-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /groups/{group-id}/members/$ref  addGroupMember  Microsoft Entra Add Group Member
+  reason: Directory group and membership management underpins access provisioning — Identity & Access
+    Management.
+- tag: Users
+  spec_file: microsoft-entra-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /users/{user-id}/memberOf  listUserMemberOf  Microsoft Entra List User Group Memberships
+  reason: Directory user lifecycle (create/update/delete, group membership, PasswordProfile, AssignedLicense)
+    is IAM, not HR employee records.

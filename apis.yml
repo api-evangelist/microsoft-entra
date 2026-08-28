@@ -4,6 +4,18 @@ description: >-
   Microsoft Entra (formerly Azure Active Directory) provides identity and access management services including
   authentication, authorization, and directory services.
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-entra/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -391,6 +403,9 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
 common:
+  - type: CapabilityMap
+    url: capabilities/microsoft-entra-capability-edges.yml
+    name: Microsoft Entra Business Capability Map
   - type: AgenticAccess
     url: agentic-access/microsoft-entra-agentic-access.yml
   - type: VulnerabilityDisclosure
