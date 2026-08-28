@@ -13,8 +13,8 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: graphIdentityApi
-  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+- name: usersApi
+  url: ../openapi/microsoft-entra-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-user

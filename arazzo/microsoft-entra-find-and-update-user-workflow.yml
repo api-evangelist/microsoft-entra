@@ -10,8 +10,8 @@ info:
     refreshed object. Every request is inlined so the chain reads end to end.
   version: 1.0.0
 sourceDescriptions:
-- name: graphIdentityApi
-  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+- name: usersApi
+  url: ../openapi/microsoft-entra-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: find-and-update-user

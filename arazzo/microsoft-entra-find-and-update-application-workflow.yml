@@ -11,8 +11,8 @@ info:
     end to end.
   version: 1.0.0
 sourceDescriptions:
-- name: graphIdentityApi
-  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+- name: applicationsApi
+  url: ../openapi/microsoft-entra-applications-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: find-and-update-application

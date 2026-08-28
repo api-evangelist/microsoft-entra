@@ -11,8 +11,11 @@ info:
     instance. Every request is written inline so the chain reads end to end.
   version: 1.0.0
 sourceDescriptions:
-- name: graphIdentityApi
-  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+- name: applicationsApi
+  url: ../openapi/microsoft-entra-applications-api-openapi.yml
+  type: openapi
+- name: serviceprincipalsApi
+  url: ../openapi/microsoft-entra-serviceprincipals-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: register-app-with-service-principal

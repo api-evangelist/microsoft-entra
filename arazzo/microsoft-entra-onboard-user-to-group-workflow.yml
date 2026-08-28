@@ -12,8 +12,11 @@ info:
     source OpenAPI.
   version: 1.0.0
 sourceDescriptions:
-- name: graphIdentityApi
-  url: ../openapi/microsoft-entra-graph-identity-openapi.yml
+- name: groupsApi
+  url: ../openapi/microsoft-entra-groups-api-openapi.yml
+  type: openapi
+- name: usersApi
+  url: ../openapi/microsoft-entra-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: onboard-user-to-group
