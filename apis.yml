@@ -357,7 +357,7 @@ apis:
     https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
-  - ServicePrincipals
+  - Service Principals
   tags_raw:
   - ServicePrincipals
   properties:
