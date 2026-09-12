@@ -3,7 +3,7 @@ name: Microsoft Entra
 description: >-
   Microsoft Entra (formerly Azure Active Directory) provides identity and access management services including
   authentication, authorization, and directory services.
-url: https://raw.githubusercontent.com/api-evangelist/microsoft-entra/refs/heads/main/apis.yml
+url: https://learn.microsoft.com/en-us/entra/fundamentals/
 deliveryModel:
   model: saas
   open_source: false
