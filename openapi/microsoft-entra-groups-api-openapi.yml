@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Microsoft Entra Microsoft Graph Identity Applications Groups API
   description: RESTful API for managing identity resources in Microsoft Entra ID (formerly Azure Active Directory) through Microsoft Graph. Provides CRUD operations for users, groups, applications, and service principals enabling directory management, identity governance, and application integration.
@@ -243,32 +243,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ODataError:
-      type: object
-      description: OData error response
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code
-            message:
-              type: string
-              description: Human-readable error message
-            innerError:
-              type: object
-              properties:
-                date:
-                  type: string
-                  format: date-time
-                request-id:
-                  type: string
-                  format: uuid
-                client-request-id:
-                  type: string
-                  format: uuid
-          example: example_value
     ODataReference:
       type: object
       description: OData reference link used to add relationships
@@ -280,25 +254,6 @@ components:
           description: 'The full URL to the directory object to add as a member. Format: https://graph.microsoft.com/v1.0/directoryObjects/{id}'
           format: uri
           example: https://www.example.com
-    GroupCollectionResponse:
-      type: object
-      description: Paged collection of group objects
-      properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        '@odata.count':
-          type: integer
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
-          example: []
     Group:
       type: object
       description: Represents a Microsoft Entra group. Groups can be Microsoft 365 groups, security groups, mail-enabled security groups, or distribution groups.
@@ -421,6 +376,70 @@ components:
           items:
             $ref: '#/components/schemas/DirectoryObject'
           example: []
+    ODataError:
+      type: object
+      description: OData error response
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
+          example: example_value
+    GroupCollectionResponse:
+      type: object
+      description: Paged collection of group objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          example: []
+    DirectoryObjectCollectionResponse:
+      type: object
+      description: Paged collection of directory objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+          example: []
     DirectoryObject:
       type: object
       description: Base type for many directory resources including users, groups, and service principals
@@ -442,51 +461,45 @@ components:
           - 'null'
           description: The display name of the directory object
           example: example_value
-    DirectoryObjectCollectionResponse:
-      type: object
-      description: Paged collection of directory objects
-      properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        '@odata.count':
-          type: integer
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/DirectoryObject'
-          example: []
-  responses:
-    BadRequest:
-      description: Bad request - invalid input or malformed request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Forbidden:
-      description: Forbidden - insufficient permissions for the requested operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
   parameters:
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    GroupId:
+      name: group-id
+      in: path
+      required: true
+      description: Unique identifier of the group (object ID)
+      schema:
+        type: string
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
     Select:
       name: $select
       in: query
@@ -495,6 +508,15 @@ components:
       schema:
         type: string
       example: id,displayName,mail
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
     Top:
       name: $top
       in: query
@@ -512,53 +534,6 @@ components:
       schema:
         type: string
       example: startswith(displayName,'J')
-    Count:
-      name: $count
-      in: query
-      required: false
-      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: boolean
-    ConsistencyLevel:
-      name: ConsistencyLevel
-      in: header
-      required: false
-      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
-      schema:
-        type: string
-        enum:
-        - eventual
-    Skip:
-      name: $skip
-      in: query
-      required: false
-      description: Number of items to skip in the result set
-      schema:
-        type: integer
-        minimum: 0
-    GroupId:
-      name: group-id
-      in: path
-      required: true
-      description: Unique identifier of the group (object ID)
-      schema:
-        type: string
-    OrderBy:
-      name: $orderby
-      in: query
-      required: false
-      description: Comma-separated list of properties to sort results by
-      schema:
-        type: string
-      example: displayName asc
-    Expand:
-      name: $expand
-      in: query
-      required: false
-      description: Comma-separated list of relationships to expand and include
-      schema:
-        type: string
-      example: memberOf
     Search:
       name: $search
       in: query
@@ -567,6 +542,31 @@ components:
       schema:
         type: string
       example: '"displayName:John"'
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
   securitySchemes:
     oauth2:
       type: oauth2
