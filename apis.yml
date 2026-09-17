@@ -80,7 +80,8 @@ apis:
 - aid: microsoft-entra:pim
   name: Microsoft Entra Privileged Identity Management API
   description: API for managing privileged access and just-in-time administration.
-  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview
+  humanURL: >-
+    https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
   - Just-In-Time
@@ -96,7 +97,8 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/
   - type: APIReference
-    url: https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview
+    url: >-
+      https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview
 - aid: microsoft-entra:verified-id
   name: Microsoft Entra Verified ID API
   description: API for issuing and verifying decentralized identity credentials.
@@ -109,7 +111,8 @@ apis:
   - Verifiable Credentials
   properties:
   - type: Documentation
-    url: https://learn.microsoft.com/en-us/entra/verified-id/verifiable-credentials-configure-tenant
+    url: >-
+      https://learn.microsoft.com/en-us/entra/verified-id/verifiable-credentials-configure-tenant
   - type: APIReference
     url: https://learn.microsoft.com/en-us/entra/verified-id/get-started-request-api
 - aid: microsoft-entra:external-id
@@ -129,8 +132,9 @@ apis:
     url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
 - aid: microsoft-entra:id-governance
   name: Microsoft Entra ID Governance API
-  description: API for managing identity governance including access reviews, entitlement management,
-    and lifecycle workflows to ensure the right people have the right access at the right time.
+  description: >-
+    API for managing identity governance including access reviews, entitlement management, and lifecycle
+    workflows to ensure the right people have the right access at the right time.
   humanURL: https://learn.microsoft.com/en-us/graph/api/resources/identitygovernance-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
@@ -148,8 +152,9 @@ apis:
     url: https://learn.microsoft.com/en-us/graph/tutorial-access-package-api
 - aid: microsoft-entra:application-management
   name: Microsoft Entra Application Management API
-  description: API for registering, configuring, and managing applications and service principals in Microsoft
-    Entra ID.
+  description: >-
+    API for registering, configuring, and managing applications and service principals in Microsoft Entra
+    ID.
   humanURL: https://learn.microsoft.com/en-us/graph/applications-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
@@ -173,8 +178,9 @@ apis:
     url: https://learn.microsoft.com/en-us/graph/tutorial-applications-basics
 - aid: microsoft-entra:authentication-methods
   name: Microsoft Entra Authentication Methods API
-  description: API for managing user authentication methods including FIDO2 security keys, passwordless
-    phone sign-in, Microsoft Authenticator, and MFA registration.
+  description: >-
+    API for managing user authentication methods including FIDO2 security keys, passwordless phone sign-in,
+    Microsoft Authenticator, and MFA registration.
   humanURL: https://learn.microsoft.com/en-us/graph/api/resources/authenticationmethods-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
@@ -185,15 +191,17 @@ apis:
   - Passwordless
   properties:
   - type: Documentation
-    url: https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods
+    url: >-
+      https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/authenticationmethods-overview
   - type: GettingStarted
     url: https://learn.microsoft.com/en-us/graph/authenticationmethods-get-started
 - aid: microsoft-entra:workload-id
   name: Microsoft Entra Workload ID API
-  description: API for managing and securing identities for software workloads such as applications, services,
-    scripts, and containers.
+  description: >-
+    API for managing and securing identities for software workloads such as applications, services, scripts,
+    and containers.
   humanURL: https://learn.microsoft.com/en-us/entra/workload-id/
   baseURL: https://graph.microsoft.com/v1.0
   tags:
@@ -206,9 +214,11 @@ apis:
     url: https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-overview
 - aid: microsoft-entra:provisioning
   name: Microsoft Entra Provisioning API
-  description: API for automating user provisioning and deprovisioning using SCIM protocol, including
-    API-driven inbound provisioning from any system of record.
-  humanURL: https://learn.microsoft.com/en-us/entra/identity/app-provisioning/inbound-provisioning-api-concepts
+  description: >-
+    API for automating user provisioning and deprovisioning using SCIM protocol, including API-driven
+    inbound provisioning from any system of record.
+  humanURL: >-
+    https://learn.microsoft.com/en-us/entra/identity/app-provisioning/inbound-provisioning-api-concepts
   baseURL: https://graph.microsoft.com/v1.0
   tags:
   - Inbound Provisioning
@@ -222,12 +232,15 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/synchronization-overview
   - type: GettingStarted
-    url: https://learn.microsoft.com/en-us/entra/identity/app-provisioning/inbound-provisioning-api-configure-app
+    url: >-
+      https://learn.microsoft.com/en-us/entra/identity/app-provisioning/inbound-provisioning-api-configure-app
 - aid: microsoft-entra:global-secure-access
   name: Microsoft Entra Global Secure Access API
-  description: API for managing Microsoft Entra Internet Access and Microsoft Entra Private Access, providing
-    identity-centric secure web gateway and zero-trust network access.
-  humanURL: https://learn.microsoft.com/en-us/entra/global-secure-access/overview-what-is-global-secure-access
+  description: >-
+    API for managing Microsoft Entra Internet Access and Microsoft Entra Private Access, providing identity-centric
+    secure web gateway and zero-trust network access.
+  humanURL: >-
+    https://learn.microsoft.com/en-us/entra/global-secure-access/overview-what-is-global-secure-access
   baseURL: https://graph.microsoft.com/beta
   tags:
   - Internet Access
@@ -240,13 +253,15 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/entra/global-secure-access/
   - type: APIReference
-    url: https://learn.microsoft.com/en-us/graph/api/resources/networkaccess-global-secure-access-api-overview
+    url: >-
+      https://learn.microsoft.com/en-us/graph/api/resources/networkaccess-global-secure-access-api-overview
   - type: GettingStarted
     url: https://learn.microsoft.com/en-us/graph/tutorial-entra-private-access
 - aid: microsoft-entra:identity-platform
   name: Microsoft Identity Platform API
-  description: API endpoints for OAuth 2.0, OpenID Connect, and SAML authentication protocols enabling
-    application integration with Microsoft Entra ID.
+  description: >-
+    API endpoints for OAuth 2.0, OpenID Connect, and SAML authentication protocols enabling application
+    integration with Microsoft Entra ID.
   humanURL: https://learn.microsoft.com/en-us/entra/identity-platform/
   baseURL: https://login.microsoftonline.com
   tags:
@@ -268,8 +283,9 @@ apis:
     url: https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols
 - aid: microsoft-entra:agent-id
   name: Microsoft Entra Agent ID API
-  description: API for creating, securing, and monitoring AI agent identities, providing authentication,
-    authorization, and lifecycle management for AI agents.
+  description: >-
+    API for creating, securing, and monitoring AI agent identities, providing authentication, authorization,
+    and lifecycle management for AI agents.
   humanURL: https://learn.microsoft.com/en-us/graph/api/resources/agentid-platform-overview
   baseURL: https://graph.microsoft.com/beta
   tags:
@@ -281,12 +297,15 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/graph/api/resources/agentid-platform-overview
   - type: GettingStarted
-    url: https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/interactive-agent-request-user-tokens
+    url: >-
+      https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/interactive-agent-request-user-tokens
 - aid: microsoft-entra:microsoft-entra-applications-api
   name: Microsoft Entra Applications API
-  description: Register and manage application objects that define application configuration including
-    credentials, permissions, and sign-in settings
-  humanURL: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
+  description: >-
+    Register and manage application objects that define application configuration including credentials,
+    permissions, and sign-in settings
+  humanURL: >-
+    https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
   - Application
@@ -309,9 +328,11 @@ apis:
     url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
 - aid: microsoft-entra:microsoft-entra-groups-api
   name: Microsoft Entra Groups API
-  description: Manage groups for organizing users, devices, and other principals including Microsoft 365
-    groups, security groups, and distribution lists
-  humanURL: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
+  description: >-
+    Manage groups for organizing users, devices, and other principals including Microsoft 365 groups,
+    security groups, and distribution lists
+  humanURL: >-
+    https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
   - Group
@@ -332,19 +353,21 @@ apis:
     url: https://learn.microsoft.com/en-us/graph/tutorial-applications-basics
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
-- aid: microsoft-entra:microsoft-entra-serviceprincipals-api
-  name: Microsoft Entra ServicePrincipals API
-  description: Manage service principal objects that represent application instances in a tenant for authentication
-    and authorization
-  humanURL: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
+- aid: microsoft-entra:microsoft-entra-users-api
+  name: Microsoft Entra Users API
+  description: >-
+    Manage user accounts in the directory including creation, updates, profile management, and lifecycle
+    operations
+  humanURL: >-
+    https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
-  - Service Principals
+  - User
   tags_raw:
-  - ServicePrincipals
+  - Users
   properties:
   - type: OpenAPI
-    url: openapi/microsoft-entra-serviceprincipals-api-openapi.yml
+    url: openapi/microsoft-entra-users-api-openapi.yml
   - type: Documentation
     url: https://learn.microsoft.com/en-us/entra/identity/
   - type: Authentication
@@ -357,19 +380,18 @@ apis:
     url: https://learn.microsoft.com/en-us/graph/tutorial-applications-basics
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
-- aid: microsoft-entra:microsoft-entra-users-api
-  name: Microsoft Entra Users API
-  description: Manage user accounts in the directory including creation, updates, profile management,
-    and lifecycle operations
-  humanURL: https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview
+- aid: microsoft-entra:microsoft-entra-service-principals-api
+  name: Microsoft Entra Service Principals API
+  description: >-
+    Manage service principal objects that represent application instances in a tenant for authentication
+    and authorization
+  humanURL: https://learn.microsoft.com/en-us/graph/api/resources/identityprotection-overview
   baseURL: https://graph.microsoft.com/v1.0
   tags:
-  - User
-  tags_raw:
-  - Users
+  - Service Principals
   properties:
   - type: OpenAPI
-    url: openapi/microsoft-entra-users-api-openapi.yml
+    url: openapi/microsoft-entra-service-principals-api-openapi.yml
   - type: Documentation
     url: https://learn.microsoft.com/en-us/entra/identity/
   - type: Authentication
