@@ -1,97 +1,19 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: Microsoft Entra
-providerId: microsoft-entra
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: true
-tags:
-  - Rate Limiting
-  - Identity
-  - Access Management
-  - Microsoft Graph
-  - Microsoft
-description: Microsoft Entra (Azure AD) administration is performed primarily through Microsoft Graph.
-  Throttling for the directory/identity service uses a ResourceUnit token-bucket model scoped per (application,
-  tenant) pair, with separate write quotas. Limits scale with tenant size (Small <50 users, Medium 50-500,
-  Large >500). Returns 429 Too Many Requests with a Retry-After header.
+# Rate limits transcribed from the provider's own documentation — see provenance. Quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://learn.microsoft.com/en-us/dotnet/core/extensions/http-ratelimiter
 sources:
-  - https://learn.microsoft.com/en-us/graph/throttling-limits#identity-and-access-service-limits
-  - https://learn.microsoft.com/en-us/graph/throttling
+- https://learn.microsoft.com/en-us/dotnet/core/extensions/http-ratelimiter
+provenance:
+  tool: planning/api-economics/harvest_ratelimits.py
+  run: 20260920T133210
+  grounding: every limit_text was found verbatim in the fetched page text
+published: false
+note: Developer tutorial on implementing client-side rate limiting in .NET; no provider API rate limits
+  are stated (numbers shown, e.g. 1,000 requests per minute, are hypothetical example/code configuration
+  values).
+limit_count: 0
+limits: []
 headers:
-  retryAfter: Retry-After
-  requestId: request-id
-  throttleScope: x-ms-throttle-scope
-  throttleLimit: x-ms-throttle-limit-percentage
-responseCodes:
-  throttled: 429
-  serviceUnavailable: 503
-limits:
-  - name: Read ResourceUnits — small tenant (<50 users) per app
-    scope: app/tenant
-    metric: resource_units_per_10_seconds
-    limit: 3500
-    timeFrame: second
-    notes: 10-second sliding window
-  - name: Read ResourceUnits — medium tenant (50–500 users) per app
-    scope: app/tenant
-    metric: resource_units_per_10_seconds
-    limit: 5000
-    timeFrame: second
-    notes: 10-second sliding window
-  - name: Read ResourceUnits — large tenant (>500 users) per app
-    scope: app/tenant
-    metric: resource_units_per_10_seconds
-    limit: 8000
-    timeFrame: second
-    notes: 10-second sliding window
-  - name: Write requests per app/tenant
-    scope: app/tenant
-    metric: requests_per_2m30s
-    limit: 3000
-    timeFrame: second
-    notes: 2-minute 30-second window
-  - name: Read ResourceUnits per application across all tenants
-    scope: application
-    metric: resource_units_per_20_seconds
-    limit: 150000
-    timeFrame: second
-  - name: Write requests per application across all tenants
-    scope: application
-    metric: requests_per_5_minutes
-    limit: 35000
-    timeFrame: minute
-  - name: Write requests per tenant across all apps
-    scope: tenant
-    metric: requests_per_5_minutes
-    limit: 18000
-    timeFrame: minute
-  - name: Identity & Access Reports — any request
-    scope: app/tenant
-    metric: requests_per_10_seconds
-    limit: 5
-    timeFrame: second
-  - name: signInActivity GET
-    scope: app/tenant
-    metric: requests_per_minute
-    limit: 10
-    timeFrame: minute
-policies:
-  - name: ResourceUnit cost model
-    description: Each Graph request to Entra is charged a base ResourceUnit cost (most are 1 RU; some
-      paths cost 2–5 RU, e.g. group transitiveMembers = 5 RU). Plan capacity in ResourceUnits, not raw
-      requests.
-  - name: Backoff Strategy
-    description: Honour the Retry-After header on 429; otherwise apply exponential backoff with jitter.
-  - name: Tenant-size scaling
-    description: Read budget grows with tenant user count (3500 / 5000 / 8000 RU per 10s for Small / Medium
-      / Large).
-  - name: Use change-tracking
-    description: Prefer delta queries and change notifications over polling for directory objects.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- Retry-After
+exceeded_status: 429
