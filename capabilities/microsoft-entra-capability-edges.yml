@@ -15,7 +15,8 @@ capability_model:
 edge_count: 4
 edges:
 - tag: ServicePrincipals
-  spec_file: microsoft-entra-serviceprincipals-api-openapi.yml
+  spec_file: microsoft-entra-service-principals-api-openapi.yml
+  reanchored_from: microsoft-entra-serviceprincipals-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
