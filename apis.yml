@@ -405,6 +405,8 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
 common:
+- type: VendorFacets
+  url: vendor-facets/microsoft-entra-vendor-facets.yml
 - type: RateLimits
   url: rate-limits/microsoft-entra-rate-limits.yml
 - type: Plans
