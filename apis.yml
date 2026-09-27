@@ -122,6 +122,11 @@ apis:
   baseURL: https://graph.microsoft.com/v1.0
   tags:
   - B2B
+  - Consumer
+  - Customer Identity
+  - External Identities
+  tags_raw:
+  - B2B
   - B2C
   - Customer Identity
   - External Identities

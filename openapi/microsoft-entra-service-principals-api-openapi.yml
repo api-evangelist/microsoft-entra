@@ -212,96 +212,9 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    Expand:
-      name: $expand
-      in: query
-      required: false
-      description: Comma-separated list of relationships to expand and include
-      schema:
-        type: string
-      example: memberOf
-    Search:
-      name: $search
-      in: query
-      required: false
-      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: string
-      example: '"displayName:John"'
-    Filter:
-      name: $filter
-      in: query
-      required: false
-      description: OData filter expression to restrict the returned collection
-      schema:
-        type: string
-      example: startswith(displayName,'J')
-    Select:
-      name: $select
-      in: query
-      required: false
-      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
-      schema:
-        type: string
-      example: id,displayName,mail
-    Skip:
-      name: $skip
-      in: query
-      required: false
-      description: Number of items to skip in the result set
-      schema:
-        type: integer
-        minimum: 0
-    Count:
-      name: $count
-      in: query
-      required: false
-      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: boolean
-    OrderBy:
-      name: $orderby
-      in: query
-      required: false
-      description: Comma-separated list of properties to sort results by
-      schema:
-        type: string
-      example: displayName asc
-    ServicePrincipalId:
-      name: servicePrincipal-id
-      in: path
-      required: true
-      description: Unique identifier of the service principal (object ID)
-      schema:
-        type: string
-    Top:
-      name: $top
-      in: query
-      required: false
-      description: Maximum number of items to return in the response
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 999
-    ConsistencyLevel:
-      name: ConsistencyLevel
-      in: header
-      required: false
-      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
-      schema:
-        type: string
-        enum:
-        - eventual
   responses:
-    BadRequest:
-      description: Bad request - invalid input or malformed request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Forbidden:
-      description: Forbidden - insufficient permissions for the requested operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
       content:
         application/json:
           schema:
@@ -312,179 +225,45 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ODataError'
   schemas:
-    PasswordCredential:
+    ODataError:
       type: object
-      description: Represents a password credential (client secret) associated with an application or service principal
+      description: OData error response
       properties:
-        keyId:
-          type: string
-          format: uuid
-          readOnly: true
-          description: Unique identifier for the password
-          example: '500123'
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Friendly name for the password credential
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
           example: example_value
-        hint:
-          type: string
-          readOnly: true
-          description: Contains the first three characters of the password (returned on read operations)
-          example: example_value
-        secretText:
-          type: string
-          readOnly: true
-          description: The generated password value. Only returned at creation time and cannot be retrieved later.
-          example: example_value
-        startDateTime:
-          type: string
-          format: date-time
-          description: The date and time at which the password becomes valid
-          example: '2026-01-15T10:30:00Z'
-        endDateTime:
-          type: string
-          format: date-time
-          description: The date and time at which the password expires. Maximum lifetime varies by policy.
-          example: '2026-01-15T10:30:00Z'
-    AppRoleAssignmentCollectionResponse:
-      type: object
-      description: Paged collection of app role assignments
-      properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        '@odata.count':
-          type: integer
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppRoleAssignment'
-          example: []
-    PermissionScope:
-      type: object
-      description: Defines an OAuth 2.0 delegated permission scope exposed by a web API application
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the scope
-          example: abc123
-        value:
-          type: string
-          description: The value that identifies the scope in OAuth 2.0 authorization requests
-          example: example_value
-        type:
-          type: string
-          description: Whether the scope can be consented to by a user or requires admin consent
-          enum:
-          - User
-          - Admin
-          example: User
-        adminConsentDisplayName:
-          type: string
-          description: Display name shown on the admin consent experience
-          example: example_value
-        adminConsentDescription:
-          type: string
-          description: Description shown on the admin consent experience
-          example: example_value
-        userConsentDisplayName:
-          type:
-          - string
-          - 'null'
-          description: Display name shown on the user consent experience
-          example: example_value
-        userConsentDescription:
-          type:
-          - string
-          - 'null'
-          description: Description shown on the user consent experience
-          example: example_value
-        isEnabled:
-          type: boolean
-          description: Whether the scope is enabled and can be requested
-          example: true
-    ServicePrincipalCollectionResponse:
-      type: object
-      description: Paged collection of service principal objects
-      properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        '@odata.count':
-          type: integer
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServicePrincipal'
-          example: []
-    AppRoleAssignment:
-      type: object
-      description: Represents an app role granted to a user, group, or service principal
-      properties:
-        id:
-          type: string
-          readOnly: true
-          description: Unique identifier for the assignment (GUID)
-          example: abc123
-        appRoleId:
-          type: string
-          format: uuid
-          description: The ID of the app role to assign. Use the default role ID 00000000-0000-0000-0000-000000000000 for default access.
-          example: '500123'
-        principalId:
-          type: string
-          format: uuid
-          description: The unique identifier of the user, group, or service principal being granted the app role
-          example: '500123'
-        principalType:
-          type: string
-          description: The type of the assigned principal
-          enum:
-          - User
-          - Group
-          - ServicePrincipal
-          example: User
-        principalDisplayName:
-          type: string
-          readOnly: true
-          description: Display name of the principal
-          example: example_value
-        resourceId:
-          type: string
-          format: uuid
-          description: The unique identifier of the resource service principal to which the assignment is made
-          example: '500123'
-        resourceDisplayName:
-          type: string
-          readOnly: true
-          description: Display name of the resource application
-          example: example_value
-        createdDateTime:
-          type: string
-          format: date-time
-          readOnly: true
-          description: Time when the app role assignment was created
-          example: '2026-01-15T10:30:00Z'
     ServicePrincipal:
       type: object
       description: Represents an instance of an application in a tenant. The service principal is the local representation used for sign-in and access to resources. It inherits certain properties from the application object.
@@ -613,6 +392,73 @@ components:
           readOnly: true
           description: Date and time the service principal was created
           example: '2026-01-15T10:30:00Z'
+    AppRoleAssignment:
+      type: object
+      description: Represents an app role granted to a user, group, or service principal
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the assignment (GUID)
+          example: abc123
+        appRoleId:
+          type: string
+          format: uuid
+          description: The ID of the app role to assign. Use the default role ID 00000000-0000-0000-0000-000000000000 for default access.
+          example: '500123'
+        principalId:
+          type: string
+          format: uuid
+          description: The unique identifier of the user, group, or service principal being granted the app role
+          example: '500123'
+        principalType:
+          type: string
+          description: The type of the assigned principal
+          enum:
+          - User
+          - Group
+          - ServicePrincipal
+          example: User
+        principalDisplayName:
+          type: string
+          readOnly: true
+          description: Display name of the principal
+          example: example_value
+        resourceId:
+          type: string
+          format: uuid
+          description: The unique identifier of the resource service principal to which the assignment is made
+          example: '500123'
+        resourceDisplayName:
+          type: string
+          readOnly: true
+          description: Display name of the resource application
+          example: example_value
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Time when the app role assignment was created
+          example: '2026-01-15T10:30:00Z'
+    ServicePrincipalCollectionResponse:
+      type: object
+      description: Paged collection of service principal objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePrincipal'
+          example: []
     AppRole:
       type: object
       description: Represents a role defined by an application that can be assigned to users, groups, or service principals
@@ -651,32 +497,105 @@ components:
           type: boolean
           description: Whether the app role is enabled
           example: true
-    ODataError:
+    PermissionScope:
       type: object
-      description: OData error response
+      description: Defines an OAuth 2.0 delegated permission scope exposed by a web API application
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code
-            message:
-              type: string
-              description: Human-readable error message
-            innerError:
-              type: object
-              properties:
-                date:
-                  type: string
-                  format: date-time
-                request-id:
-                  type: string
-                  format: uuid
-                client-request-id:
-                  type: string
-                  format: uuid
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the scope
+          example: abc123
+        value:
+          type: string
+          description: The value that identifies the scope in OAuth 2.0 authorization requests
           example: example_value
+        type:
+          type: string
+          description: Whether the scope can be consented to by a user or requires admin consent
+          enum:
+          - User
+          - Admin
+          example: User
+        adminConsentDisplayName:
+          type: string
+          description: Display name shown on the admin consent experience
+          example: example_value
+        adminConsentDescription:
+          type: string
+          description: Description shown on the admin consent experience
+          example: example_value
+        userConsentDisplayName:
+          type:
+          - string
+          - 'null'
+          description: Display name shown on the user consent experience
+          example: example_value
+        userConsentDescription:
+          type:
+          - string
+          - 'null'
+          description: Description shown on the user consent experience
+          example: example_value
+        isEnabled:
+          type: boolean
+          description: Whether the scope is enabled and can be requested
+          example: true
+    AppRoleAssignmentCollectionResponse:
+      type: object
+      description: Paged collection of app role assignments
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppRoleAssignment'
+          example: []
+    PasswordCredential:
+      type: object
+      description: Represents a password credential (client secret) associated with an application or service principal
+      properties:
+        keyId:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the password
+          example: '500123'
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Friendly name for the password credential
+          example: example_value
+        hint:
+          type: string
+          readOnly: true
+          description: Contains the first three characters of the password (returned on read operations)
+          example: example_value
+        secretText:
+          type: string
+          readOnly: true
+          description: The generated password value. Only returned at creation time and cannot be retrieved later.
+          example: example_value
+        startDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the password becomes valid
+          example: '2026-01-15T10:30:00Z'
+        endDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the password expires. Maximum lifetime varies by policy.
+          example: '2026-01-15T10:30:00Z'
     KeyCredential:
       type: object
       description: Contains a key credential (certificate) associated with an application or service principal
@@ -721,6 +640,87 @@ components:
           format: date-time
           description: The date and time at which the credential expires
           example: '2026-01-15T10:30:00Z'
+  parameters:
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
+    ServicePrincipalId:
+      name: servicePrincipal-id
+      in: path
+      required: true
+      description: Unique identifier of the service principal (object ID)
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
