@@ -185,6 +185,32 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ODataError:
+      type: object
+      description: OData error response
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
+          example: example_value
     DirectoryObjectCollectionResponse:
       type: object
       description: Paged collection of directory objects
@@ -418,51 +444,6 @@ components:
           readOnly: true
           description: The date and time of the user's most recent interactive sign-in activity
           example: '2026-01-15T10:30:00Z'
-    ODataError:
-      type: object
-      description: OData error response
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code
-            message:
-              type: string
-              description: Human-readable error message
-            innerError:
-              type: object
-              properties:
-                date:
-                  type: string
-                  format: date-time
-                request-id:
-                  type: string
-                  format: uuid
-                client-request-id:
-                  type: string
-                  format: uuid
-          example: example_value
-    PasswordProfile:
-      type: object
-      description: Contains the password profile associated with a user. The passwordProfile property of the user entity is a passwordProfile object.
-      properties:
-        password:
-          type: string
-          writeOnly: true
-          description: The password for the user. Must satisfy the password complexity requirements of the tenant. Required on create.
-          example: example_value
-        forceChangePasswordNextSignIn:
-          type: boolean
-          description: true if the user must change the password on the next sign-in; false otherwise
-          default: false
-          example: true
-        forceChangePasswordNextSignInWithMfa:
-          type: boolean
-          description: true if the user must perform multi-factor authentication before being forced to change the password
-          default: false
-          example: true
     DirectoryObject:
       type: object
       description: Base type for many directory resources including users, groups, and service principals
@@ -484,6 +465,25 @@ components:
           - 'null'
           description: The display name of the directory object
           example: example_value
+    PasswordProfile:
+      type: object
+      description: Contains the password profile associated with a user. The passwordProfile property of the user entity is a passwordProfile object.
+      properties:
+        password:
+          type: string
+          writeOnly: true
+          description: The password for the user. Must satisfy the password complexity requirements of the tenant. Required on create.
+          example: example_value
+        forceChangePasswordNextSignIn:
+          type: boolean
+          description: true if the user must change the password on the next sign-in; false otherwise
+          default: false
+          example: true
+        forceChangePasswordNextSignInWithMfa:
+          type: boolean
+          description: true if the user must perform multi-factor authentication before being forced to change the password
+          default: false
+          example: true
     AssignedLicense:
       type: object
       description: Represents a license assigned to a user
@@ -500,21 +500,96 @@ components:
           format: uuid
           description: Unique identifier for the SKU
           example: '500123'
+  parameters:
+    UserId:
+      name: user-id
+      in: path
+      required: true
+      description: Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)
+      schema:
+        type: string
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
   responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
     Forbidden:
       description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
       content:
         application/json:
           schema:
@@ -525,87 +600,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ODataError'
-  parameters:
-    OrderBy:
-      name: $orderby
-      in: query
-      required: false
-      description: Comma-separated list of properties to sort results by
-      schema:
-        type: string
-      example: displayName asc
-    Expand:
-      name: $expand
-      in: query
-      required: false
-      description: Comma-separated list of relationships to expand and include
-      schema:
-        type: string
-      example: memberOf
-    Select:
-      name: $select
-      in: query
-      required: false
-      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
-      schema:
-        type: string
-      example: id,displayName,mail
-    Count:
-      name: $count
-      in: query
-      required: false
-      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: boolean
-    Skip:
-      name: $skip
-      in: query
-      required: false
-      description: Number of items to skip in the result set
-      schema:
-        type: integer
-        minimum: 0
-    Search:
-      name: $search
-      in: query
-      required: false
-      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: string
-      example: '"displayName:John"'
-    Top:
-      name: $top
-      in: query
-      required: false
-      description: Maximum number of items to return in the response
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 999
-    ConsistencyLevel:
-      name: ConsistencyLevel
-      in: header
-      required: false
-      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
-      schema:
-        type: string
-        enum:
-        - eventual
-    Filter:
-      name: $filter
-      in: query
-      required: false
-      description: OData filter expression to restrict the returned collection
-      schema:
-        type: string
-      example: startswith(displayName,'J')
-    UserId:
-      name: user-id
-      in: path
-      required: true
-      description: Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)
-      schema:
-        type: string
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
   securitySchemes:
     oauth2:
       type: oauth2

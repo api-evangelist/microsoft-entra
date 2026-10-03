@@ -224,31 +224,6 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Forbidden:
-      description: Forbidden - insufficient permissions for the requested operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    BadRequest:
-      description: Bad request - invalid input or malformed request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
   schemas:
     ODataError:
       type: object
@@ -275,216 +250,6 @@ components:
                 client-request-id:
                   type: string
                   format: uuid
-          example: example_value
-    ApplicationCollectionResponse:
-      type: object
-      description: Paged collection of application objects
-      properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        '@odata.count':
-          type: integer
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Application'
-          example: []
-    AppRole:
-      type: object
-      description: Represents a role defined by an application that can be assigned to users, groups, or service principals
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the app role
-          example: abc123
-        allowedMemberTypes:
-          type: array
-          description: Specifies whether the role can be assigned to users/groups, applications, or both
-          items:
-            type: string
-            enum:
-            - User
-            - Application
-          example: []
-        displayName:
-          type: string
-          description: Display name for the app role
-          example: example_value
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the app role
-          example: A sample description.
-        value:
-          type:
-          - string
-          - 'null'
-          description: Value that is included in the roles claim in authentication tokens
-          example: example_value
-        isEnabled:
-          type: boolean
-          description: Whether the app role is enabled
-          example: true
-    RequiredResourceAccess:
-      type: object
-      description: Specifies the set of OAuth 2.0 permission scopes and app roles under a specified resource that an application requires access to
-      properties:
-        resourceAppId:
-          type: string
-          description: The unique identifier for the resource that the application requires access to (the appId of the target application)
-          example: '500123'
-        resourceAccess:
-          type: array
-          description: The list of OAuth 2.0 permission scopes and app roles required from the specified resource
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                description: Unique identifier for the app role or OAuth 2.0 permission scope
-              type:
-                type: string
-                description: Specifies whether the id property references a Scope (delegated permission) or a Role (application permission)
-                enum:
-                - Scope
-                - Role
-          example: []
-    Application:
-      type: object
-      description: Represents an application registration in Microsoft Entra ID. Defines the app's identity configuration, credentials, permissions requested, and reply URLs.
-      properties:
-        id:
-          type: string
-          readOnly: true
-          description: Unique identifier for the application object (GUID). This is the object ID, not the appId.
-          example: abc123
-        appId:
-          type: string
-          readOnly: true
-          description: The unique application identifier assigned by Microsoft Entra ID (also known as the client ID)
-          example: '500123'
-        displayName:
-          type: string
-          description: The display name for the application
-          example: example_value
-        description:
-          type:
-          - string
-          - 'null'
-          description: An optional description of the application
-          example: A sample description.
-        signInAudience:
-          type: string
-          description: Specifies which Microsoft accounts are supported for the application
-          enum:
-          - AzureADMyOrg
-          - AzureADMultipleOrgs
-          - AzureADandPersonalMicrosoftAccount
-          - PersonalMicrosoftAccount
-          example: AzureADMyOrg
-        identifierUris:
-          type: array
-          description: URIs that uniquely identify the application within its Azure AD tenant or verified custom domain
-          items:
-            type: string
-          example: []
-        web:
-          $ref: '#/components/schemas/WebApplication'
-        spa:
-          $ref: '#/components/schemas/SpaApplication'
-        api:
-          $ref: '#/components/schemas/ApiApplication'
-        requiredResourceAccess:
-          type: array
-          description: Specifies the resources that the application needs access to and the set of OAuth permission scopes and app roles needed under each resource
-          items:
-            $ref: '#/components/schemas/RequiredResourceAccess'
-          example: []
-        appRoles:
-          type: array
-          description: Collection of roles defined for the application that can be assigned to users, groups, or service principals
-          items:
-            $ref: '#/components/schemas/AppRole'
-          example: []
-        keyCredentials:
-          type: array
-          description: Collection of certificate credentials associated with the app
-          items:
-            $ref: '#/components/schemas/KeyCredential'
-          example: []
-        passwordCredentials:
-          type: array
-          description: Collection of password credentials (client secrets)
-          items:
-            $ref: '#/components/schemas/PasswordCredential'
-          example: []
-        publicClient:
-          type: object
-          description: Public client settings for mobile and desktop apps
-          properties:
-            redirectUris:
-              type: array
-              items:
-                type: string
-          example: example_value
-        tags:
-          type: array
-          description: Custom strings used to categorize and identify the application
-          items:
-            type: string
-          example: []
-        createdDateTime:
-          type: string
-          format: date-time
-          readOnly: true
-          description: The date and time the application was registered
-          example: '2026-01-15T10:30:00Z'
-    WebApplication:
-      type: object
-      description: Web application configuration including redirect URIs
-      properties:
-        redirectUris:
-          type: array
-          description: URIs to which Microsoft Entra ID will redirect after authentication
-          items:
-            type: string
-            format: uri
-          example: []
-        homePageUrl:
-          type:
-          - string
-          - 'null'
-          description: Home page URL of the application
-          format: uri
-          example: https://www.example.com
-        logoutUrl:
-          type:
-          - string
-          - 'null'
-          description: URL used by the authorization service to sign out the user
-          format: uri
-          example: https://www.example.com
-        implicitGrantSettings:
-          type: object
-          description: Settings for implicit grant flow tokens
-          properties:
-            enableIdTokenIssuance:
-              type: boolean
-              description: Whether ID tokens can be issued using the implicit flow
-              default: false
-            enableAccessTokenIssuance:
-              type: boolean
-              description: Whether access tokens can be issued using the implicit flow
-              default: false
           example: example_value
     PermissionScope:
       type: object
@@ -577,53 +342,107 @@ components:
           - 2
           - null
           example: 1
-    SpaApplication:
+    WebApplication:
       type: object
-      description: Single-page application configuration
+      description: Web application configuration including redirect URIs
       properties:
         redirectUris:
           type: array
-          description: Redirect URIs for single-page application authentication
+          description: URIs to which Microsoft Entra ID will redirect after authentication
           items:
             type: string
             format: uri
           example: []
-    PasswordCredential:
-      type: object
-      description: Represents a password credential (client secret) associated with an application or service principal
-      properties:
-        keyId:
-          type: string
-          format: uuid
-          readOnly: true
-          description: Unique identifier for the password
-          example: '500123'
-        displayName:
+        homePageUrl:
           type:
           - string
           - 'null'
-          description: Friendly name for the password credential
+          description: Home page URL of the application
+          format: uri
+          example: https://www.example.com
+        logoutUrl:
+          type:
+          - string
+          - 'null'
+          description: URL used by the authorization service to sign out the user
+          format: uri
+          example: https://www.example.com
+        implicitGrantSettings:
+          type: object
+          description: Settings for implicit grant flow tokens
+          properties:
+            enableIdTokenIssuance:
+              type: boolean
+              description: Whether ID tokens can be issued using the implicit flow
+              default: false
+            enableAccessTokenIssuance:
+              type: boolean
+              description: Whether access tokens can be issued using the implicit flow
+              default: false
           example: example_value
-        hint:
+    AppRole:
+      type: object
+      description: Represents a role defined by an application that can be assigned to users, groups, or service principals
+      properties:
+        id:
           type: string
-          readOnly: true
-          description: Contains the first three characters of the password (returned on read operations)
+          format: uuid
+          description: Unique identifier for the app role
+          example: abc123
+        allowedMemberTypes:
+          type: array
+          description: Specifies whether the role can be assigned to users/groups, applications, or both
+          items:
+            type: string
+            enum:
+            - User
+            - Application
+          example: []
+        displayName:
+          type: string
+          description: Display name for the app role
           example: example_value
-        secretText:
-          type: string
-          readOnly: true
-          description: The generated password value. Only returned at creation time and cannot be retrieved later.
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the app role
+          example: A sample description.
+        value:
+          type:
+          - string
+          - 'null'
+          description: Value that is included in the roles claim in authentication tokens
           example: example_value
-        startDateTime:
+        isEnabled:
+          type: boolean
+          description: Whether the app role is enabled
+          example: true
+    RequiredResourceAccess:
+      type: object
+      description: Specifies the set of OAuth 2.0 permission scopes and app roles under a specified resource that an application requires access to
+      properties:
+        resourceAppId:
           type: string
-          format: date-time
-          description: The date and time at which the password becomes valid
-          example: '2026-01-15T10:30:00Z'
-        endDateTime:
-          type: string
-          format: date-time
-          description: The date and time at which the password expires. Maximum lifetime varies by policy.
-          example: '2026-01-15T10:30:00Z'
+          description: The unique identifier for the resource that the application requires access to (the appId of the target application)
+          example: '500123'
+        resourceAccess:
+          type: array
+          description: The list of OAuth 2.0 permission scopes and app roles required from the specified resource
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: Unique identifier for the app role or OAuth 2.0 permission scope
+              type:
+                type: string
+                description: Specifies whether the id property references a Scope (delegated permission) or a Role (application permission)
+                enum:
+                - Scope
+                - Role
+          example: []
     KeyCredential:
       type: object
       description: Contains a key credential (certificate) associated with an application or service principal
@@ -668,45 +487,188 @@ components:
           format: date-time
           description: The date and time at which the credential expires
           example: '2026-01-15T10:30:00Z'
+    Application:
+      type: object
+      description: Represents an application registration in Microsoft Entra ID. Defines the app's identity configuration, credentials, permissions requested, and reply URLs.
+      properties:
+        id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the application object (GUID). This is the object ID, not the appId.
+          example: abc123
+        appId:
+          type: string
+          readOnly: true
+          description: The unique application identifier assigned by Microsoft Entra ID (also known as the client ID)
+          example: '500123'
+        displayName:
+          type: string
+          description: The display name for the application
+          example: example_value
+        description:
+          type:
+          - string
+          - 'null'
+          description: An optional description of the application
+          example: A sample description.
+        signInAudience:
+          type: string
+          description: Specifies which Microsoft accounts are supported for the application
+          enum:
+          - AzureADMyOrg
+          - AzureADMultipleOrgs
+          - AzureADandPersonalMicrosoftAccount
+          - PersonalMicrosoftAccount
+          example: AzureADMyOrg
+        identifierUris:
+          type: array
+          description: URIs that uniquely identify the application within its Azure AD tenant or verified custom domain
+          items:
+            type: string
+          example: []
+        web:
+          $ref: '#/components/schemas/WebApplication'
+        spa:
+          $ref: '#/components/schemas/SpaApplication'
+        api:
+          $ref: '#/components/schemas/ApiApplication'
+        requiredResourceAccess:
+          type: array
+          description: Specifies the resources that the application needs access to and the set of OAuth permission scopes and app roles needed under each resource
+          items:
+            $ref: '#/components/schemas/RequiredResourceAccess'
+          example: []
+        appRoles:
+          type: array
+          description: Collection of roles defined for the application that can be assigned to users, groups, or service principals
+          items:
+            $ref: '#/components/schemas/AppRole'
+          example: []
+        keyCredentials:
+          type: array
+          description: Collection of certificate credentials associated with the app
+          items:
+            $ref: '#/components/schemas/KeyCredential'
+          example: []
+        passwordCredentials:
+          type: array
+          description: Collection of password credentials (client secrets)
+          items:
+            $ref: '#/components/schemas/PasswordCredential'
+          example: []
+        publicClient:
+          type: object
+          description: Public client settings for mobile and desktop apps
+          properties:
+            redirectUris:
+              type: array
+              items:
+                type: string
+          example: example_value
+        tags:
+          type: array
+          description: Custom strings used to categorize and identify the application
+          items:
+            type: string
+          example: []
+        createdDateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The date and time the application was registered
+          example: '2026-01-15T10:30:00Z'
+    ApplicationCollectionResponse:
+      type: object
+      description: Paged collection of application objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+          example: []
+    PasswordCredential:
+      type: object
+      description: Represents a password credential (client secret) associated with an application or service principal
+      properties:
+        keyId:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for the password
+          example: '500123'
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Friendly name for the password credential
+          example: example_value
+        hint:
+          type: string
+          readOnly: true
+          description: Contains the first three characters of the password (returned on read operations)
+          example: example_value
+        secretText:
+          type: string
+          readOnly: true
+          description: The generated password value. Only returned at creation time and cannot be retrieved later.
+          example: example_value
+        startDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the password becomes valid
+          example: '2026-01-15T10:30:00Z'
+        endDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the password expires. Maximum lifetime varies by policy.
+          example: '2026-01-15T10:30:00Z'
+    SpaApplication:
+      type: object
+      description: Single-page application configuration
+      properties:
+        redirectUris:
+          type: array
+          description: Redirect URIs for single-page application authentication
+          items:
+            type: string
+            format: uri
+          example: []
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
   parameters:
-    OrderBy:
-      name: $orderby
-      in: query
-      required: false
-      description: Comma-separated list of properties to sort results by
-      schema:
-        type: string
-      example: displayName asc
-    Expand:
-      name: $expand
-      in: query
-      required: false
-      description: Comma-separated list of relationships to expand and include
-      schema:
-        type: string
-      example: memberOf
-    ApplicationId:
-      name: application-id
-      in: path
-      required: true
-      description: Unique identifier of the application (object ID, not appId)
-      schema:
-        type: string
-    Select:
-      name: $select
-      in: query
-      required: false
-      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
-      schema:
-        type: string
-      example: id,displayName,mail
-    Count:
-      name: $count
-      in: query
-      required: false
-      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: boolean
     Skip:
       name: $skip
       in: query
@@ -715,6 +677,14 @@ components:
       schema:
         type: integer
         minimum: 0
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
     Search:
       name: $search
       in: query
@@ -723,15 +693,13 @@ components:
       schema:
         type: string
       example: '"displayName:John"'
-    Top:
-      name: $top
+    Count:
+      name: $count
       in: query
       required: false
-      description: Maximum number of items to return in the response
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
       schema:
-        type: integer
-        minimum: 1
-        maximum: 999
+        type: boolean
     ConsistencyLevel:
       name: ConsistencyLevel
       in: header
@@ -741,6 +709,38 @@ components:
         type: string
         enum:
         - eventual
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    ApplicationId:
+      name: application-id
+      in: path
+      required: true
+      description: Unique identifier of the application (object ID, not appId)
+      schema:
+        type: string
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
     Filter:
       name: $filter
       in: query
