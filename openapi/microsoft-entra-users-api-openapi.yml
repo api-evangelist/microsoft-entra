@@ -184,6 +184,112 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+  parameters:
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    UserId:
+      name: user-id
+      in: path
+      required: true
+      description: Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)
+      schema:
+        type: string
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
   schemas:
     ODataError:
       type: object
@@ -211,47 +317,6 @@ components:
                   type: string
                   format: uuid
           example: example_value
-    DirectoryObjectCollectionResponse:
-      type: object
-      description: Paged collection of directory objects
-      properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        '@odata.count':
-          type: integer
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/DirectoryObject'
-          example: []
-    UserCollectionResponse:
-      type: object
-      description: Paged collection of user objects
-      properties:
-        '@odata.context':
-          type: string
-          description: OData context URL
-          example: example_value
-        '@odata.count':
-          type: integer
-          description: Total count of matching resources (if $count=true)
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          description: URL to retrieve the next page of results
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-          example: []
     User:
       type: object
       description: Represents a Microsoft Entra ID user account. Contains identity, contact, organizational, and authentication properties.
@@ -444,27 +509,28 @@ components:
           readOnly: true
           description: The date and time of the user's most recent interactive sign-in activity
           example: '2026-01-15T10:30:00Z'
-    DirectoryObject:
+    UserCollectionResponse:
       type: object
-      description: Base type for many directory resources including users, groups, and service principals
+      description: Paged collection of user objects
       properties:
-        '@odata.type':
+        '@odata.context':
           type: string
-          description: The OData type string for the directory object
-          examples:
-          - '#microsoft.graph.user'
-          - '#microsoft.graph.group'
-          - '#microsoft.graph.servicePrincipal'
-        id:
-          type: string
-          description: Unique identifier for the directory object
-          example: abc123
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: The display name of the directory object
+          description: OData context URL
           example: example_value
+        '@odata.count':
+          type: integer
+          description: Total count of matching resources (if $count=true)
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          description: URL to retrieve the next page of results
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          example: []
     PasswordProfile:
       type: object
       description: Contains the password profile associated with a user. The passwordProfile property of the user entity is a passwordProfile object.
@@ -500,112 +566,46 @@ components:
           format: uuid
           description: Unique identifier for the SKU
           example: '500123'
-  parameters:
-    UserId:
-      name: user-id
-      in: path
-      required: true
-      description: Unique identifier of the user (object ID) or the userPrincipalName (e.g., user@contoso.com)
-      schema:
-        type: string
-    Skip:
-      name: $skip
-      in: query
-      required: false
-      description: Number of items to skip in the result set
-      schema:
-        type: integer
-        minimum: 0
-    Select:
-      name: $select
-      in: query
-      required: false
-      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
-      schema:
-        type: string
-      example: id,displayName,mail
-    Search:
-      name: $search
-      in: query
-      required: false
-      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: string
-      example: '"displayName:John"'
-    Count:
-      name: $count
-      in: query
-      required: false
-      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: boolean
-    ConsistencyLevel:
-      name: ConsistencyLevel
-      in: header
-      required: false
-      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
-      schema:
-        type: string
-        enum:
-        - eventual
-    OrderBy:
-      name: $orderby
-      in: query
-      required: false
-      description: Comma-separated list of properties to sort results by
-      schema:
-        type: string
-      example: displayName asc
-    Top:
-      name: $top
-      in: query
-      required: false
-      description: Maximum number of items to return in the response
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 999
-    Expand:
-      name: $expand
-      in: query
-      required: false
-      description: Comma-separated list of relationships to expand and include
-      schema:
-        type: string
-      example: memberOf
-    Filter:
-      name: $filter
-      in: query
-      required: false
-      description: OData filter expression to restrict the returned collection
-      schema:
-        type: string
-      example: startswith(displayName,'J')
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions for the requested operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    BadRequest:
-      description: Bad request - invalid input or malformed request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
+    DirectoryObjectCollectionResponse:
+      type: object
+      description: Paged collection of directory objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryObject'
+          example: []
+    DirectoryObject:
+      type: object
+      description: Base type for many directory resources including users, groups, and service principals
+      properties:
+        '@odata.type':
+          type: string
+          description: The OData type string for the directory object
+          examples:
+          - '#microsoft.graph.user'
+          - '#microsoft.graph.group'
+          - '#microsoft.graph.servicePrincipal'
+        id:
+          type: string
+          description: Unique identifier for the directory object
+          example: abc123
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: The display name of the directory object
+          example: example_value
   securitySchemes:
     oauth2:
       type: oauth2

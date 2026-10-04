@@ -224,77 +224,157 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Bad request - invalid input or malformed request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Forbidden:
+      description: Forbidden - insufficient permissions for the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+  parameters:
+    Count:
+      name: $count
+      in: query
+      required: false
+      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: boolean
+    Select:
+      name: $select
+      in: query
+      required: false
+      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
+      schema:
+        type: string
+      example: id,displayName,mail
+    Expand:
+      name: $expand
+      in: query
+      required: false
+      description: Comma-separated list of relationships to expand and include
+      schema:
+        type: string
+      example: memberOf
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      description: Number of items to skip in the result set
+      schema:
+        type: integer
+        minimum: 0
+    ApplicationId:
+      name: application-id
+      in: path
+      required: true
+      description: Unique identifier of the application (object ID, not appId)
+      schema:
+        type: string
+    Top:
+      name: $top
+      in: query
+      required: false
+      description: Maximum number of items to return in the response
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 999
+    ConsistencyLevel:
+      name: ConsistencyLevel
+      in: header
+      required: false
+      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
+      schema:
+        type: string
+        enum:
+        - eventual
+    Filter:
+      name: $filter
+      in: query
+      required: false
+      description: OData filter expression to restrict the returned collection
+      schema:
+        type: string
+      example: startswith(displayName,'J')
+    Search:
+      name: $search
+      in: query
+      required: false
+      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
+      schema:
+        type: string
+      example: '"displayName:John"'
+    OrderBy:
+      name: $orderby
+      in: query
+      required: false
+      description: Comma-separated list of properties to sort results by
+      schema:
+        type: string
+      example: displayName asc
   schemas:
-    ODataError:
+    RequiredResourceAccess:
       type: object
-      description: OData error response
+      description: Specifies the set of OAuth 2.0 permission scopes and app roles under a specified resource that an application requires access to
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code
-            message:
-              type: string
-              description: Human-readable error message
-            innerError:
-              type: object
-              properties:
-                date:
-                  type: string
-                  format: date-time
-                request-id:
-                  type: string
-                  format: uuid
-                client-request-id:
-                  type: string
-                  format: uuid
-          example: example_value
-    PermissionScope:
-      type: object
-      description: Defines an OAuth 2.0 delegated permission scope exposed by a web API application
-      properties:
-        id:
+        resourceAppId:
           type: string
-          format: uuid
-          description: Unique identifier for the scope
-          example: abc123
+          description: The unique identifier for the resource that the application requires access to (the appId of the target application)
+          example: '500123'
+        resourceAccess:
+          type: array
+          description: The list of OAuth 2.0 permission scopes and app roles required from the specified resource
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: Unique identifier for the app role or OAuth 2.0 permission scope
+              type:
+                type: string
+                description: Specifies whether the id property references a Scope (delegated permission) or a Role (application permission)
+                enum:
+                - Scope
+                - Role
+          example: []
+    ApplicationCollectionResponse:
+      type: object
+      description: Paged collection of application objects
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.count':
+          type: integer
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
         value:
-          type: string
-          description: The value that identifies the scope in OAuth 2.0 authorization requests
-          example: example_value
-        type:
-          type: string
-          description: Whether the scope can be consented to by a user or requires admin consent
-          enum:
-          - User
-          - Admin
-          example: User
-        adminConsentDisplayName:
-          type: string
-          description: Display name shown on the admin consent experience
-          example: example_value
-        adminConsentDescription:
-          type: string
-          description: Description shown on the admin consent experience
-          example: example_value
-        userConsentDisplayName:
-          type:
-          - string
-          - 'null'
-          description: Display name shown on the user consent experience
-          example: example_value
-        userConsentDescription:
-          type:
-          - string
-          - 'null'
-          description: Description shown on the user consent experience
-          example: example_value
-        isEnabled:
-          type: boolean
-          description: Whether the scope is enabled and can be requested
-          example: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+          example: []
     ApiApplication:
       type: object
       description: Settings for an application that implements a web API
@@ -342,151 +422,6 @@ components:
           - 2
           - null
           example: 1
-    WebApplication:
-      type: object
-      description: Web application configuration including redirect URIs
-      properties:
-        redirectUris:
-          type: array
-          description: URIs to which Microsoft Entra ID will redirect after authentication
-          items:
-            type: string
-            format: uri
-          example: []
-        homePageUrl:
-          type:
-          - string
-          - 'null'
-          description: Home page URL of the application
-          format: uri
-          example: https://www.example.com
-        logoutUrl:
-          type:
-          - string
-          - 'null'
-          description: URL used by the authorization service to sign out the user
-          format: uri
-          example: https://www.example.com
-        implicitGrantSettings:
-          type: object
-          description: Settings for implicit grant flow tokens
-          properties:
-            enableIdTokenIssuance:
-              type: boolean
-              description: Whether ID tokens can be issued using the implicit flow
-              default: false
-            enableAccessTokenIssuance:
-              type: boolean
-              description: Whether access tokens can be issued using the implicit flow
-              default: false
-          example: example_value
-    AppRole:
-      type: object
-      description: Represents a role defined by an application that can be assigned to users, groups, or service principals
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the app role
-          example: abc123
-        allowedMemberTypes:
-          type: array
-          description: Specifies whether the role can be assigned to users/groups, applications, or both
-          items:
-            type: string
-            enum:
-            - User
-            - Application
-          example: []
-        displayName:
-          type: string
-          description: Display name for the app role
-          example: example_value
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the app role
-          example: A sample description.
-        value:
-          type:
-          - string
-          - 'null'
-          description: Value that is included in the roles claim in authentication tokens
-          example: example_value
-        isEnabled:
-          type: boolean
-          description: Whether the app role is enabled
-          example: true
-    RequiredResourceAccess:
-      type: object
-      description: Specifies the set of OAuth 2.0 permission scopes and app roles under a specified resource that an application requires access to
-      properties:
-        resourceAppId:
-          type: string
-          description: The unique identifier for the resource that the application requires access to (the appId of the target application)
-          example: '500123'
-        resourceAccess:
-          type: array
-          description: The list of OAuth 2.0 permission scopes and app roles required from the specified resource
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-                description: Unique identifier for the app role or OAuth 2.0 permission scope
-              type:
-                type: string
-                description: Specifies whether the id property references a Scope (delegated permission) or a Role (application permission)
-                enum:
-                - Scope
-                - Role
-          example: []
-    KeyCredential:
-      type: object
-      description: Contains a key credential (certificate) associated with an application or service principal
-      properties:
-        keyId:
-          type: string
-          format: uuid
-          description: Unique identifier for the key
-          example: '500123'
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Friendly name for the key
-          example: example_value
-        type:
-          type: string
-          description: Type of key credential
-          enum:
-          - AsymmetricX509Cert
-          - X509CertAndPassword
-          example: AsymmetricX509Cert
-        usage:
-          type: string
-          description: Describes the purpose of the key
-          enum:
-          - Sign
-          - Verify
-          example: Sign
-        key:
-          type: string
-          format: byte
-          description: The certificate's raw data in byte array converted to Base64 string
-          example: example_value
-        startDateTime:
-          type: string
-          format: date-time
-          description: The date and time at which the credential becomes valid
-          example: '2026-01-15T10:30:00Z'
-        endDateTime:
-          type: string
-          format: date-time
-          description: The date and time at which the credential expires
-          example: '2026-01-15T10:30:00Z'
     Application:
       type: object
       description: Represents an application registration in Microsoft Entra ID. Defines the app's identity configuration, credentials, permissions requested, and reply URLs.
@@ -577,25 +512,196 @@ components:
           readOnly: true
           description: The date and time the application was registered
           example: '2026-01-15T10:30:00Z'
-    ApplicationCollectionResponse:
+    PermissionScope:
       type: object
-      description: Paged collection of application objects
+      description: Defines an OAuth 2.0 delegated permission scope exposed by a web API application
       properties:
-        '@odata.context':
+        id:
           type: string
+          format: uuid
+          description: Unique identifier for the scope
+          example: abc123
+        value:
+          type: string
+          description: The value that identifies the scope in OAuth 2.0 authorization requests
           example: example_value
-        '@odata.count':
-          type: integer
-          example: 10
-        '@odata.nextLink':
+        type:
           type: string
+          description: Whether the scope can be consented to by a user or requires admin consent
+          enum:
+          - User
+          - Admin
+          example: User
+        adminConsentDisplayName:
+          type: string
+          description: Display name shown on the admin consent experience
+          example: example_value
+        adminConsentDescription:
+          type: string
+          description: Description shown on the admin consent experience
+          example: example_value
+        userConsentDisplayName:
+          type:
+          - string
+          - 'null'
+          description: Display name shown on the user consent experience
+          example: example_value
+        userConsentDescription:
+          type:
+          - string
+          - 'null'
+          description: Description shown on the user consent experience
+          example: example_value
+        isEnabled:
+          type: boolean
+          description: Whether the scope is enabled and can be requested
+          example: true
+    KeyCredential:
+      type: object
+      description: Contains a key credential (certificate) associated with an application or service principal
+      properties:
+        keyId:
+          type: string
+          format: uuid
+          description: Unique identifier for the key
+          example: '500123'
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Friendly name for the key
+          example: example_value
+        type:
+          type: string
+          description: Type of key credential
+          enum:
+          - AsymmetricX509Cert
+          - X509CertAndPassword
+          example: AsymmetricX509Cert
+        usage:
+          type: string
+          description: Describes the purpose of the key
+          enum:
+          - Sign
+          - Verify
+          example: Sign
+        key:
+          type: string
+          format: byte
+          description: The certificate's raw data in byte array converted to Base64 string
+          example: example_value
+        startDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the credential becomes valid
+          example: '2026-01-15T10:30:00Z'
+        endDateTime:
+          type: string
+          format: date-time
+          description: The date and time at which the credential expires
+          example: '2026-01-15T10:30:00Z'
+    WebApplication:
+      type: object
+      description: Web application configuration including redirect URIs
+      properties:
+        redirectUris:
+          type: array
+          description: URIs to which Microsoft Entra ID will redirect after authentication
+          items:
+            type: string
+            format: uri
+          example: []
+        homePageUrl:
+          type:
+          - string
+          - 'null'
+          description: Home page URL of the application
           format: uri
           example: https://www.example.com
-        value:
+        logoutUrl:
+          type:
+          - string
+          - 'null'
+          description: URL used by the authorization service to sign out the user
+          format: uri
+          example: https://www.example.com
+        implicitGrantSettings:
+          type: object
+          description: Settings for implicit grant flow tokens
+          properties:
+            enableIdTokenIssuance:
+              type: boolean
+              description: Whether ID tokens can be issued using the implicit flow
+              default: false
+            enableAccessTokenIssuance:
+              type: boolean
+              description: Whether access tokens can be issued using the implicit flow
+              default: false
+          example: example_value
+    ODataError:
+      type: object
+      description: OData error response
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+            message:
+              type: string
+              description: Human-readable error message
+            innerError:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                request-id:
+                  type: string
+                  format: uuid
+                client-request-id:
+                  type: string
+                  format: uuid
+          example: example_value
+    AppRole:
+      type: object
+      description: Represents a role defined by an application that can be assigned to users, groups, or service principals
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the app role
+          example: abc123
+        allowedMemberTypes:
           type: array
+          description: Specifies whether the role can be assigned to users/groups, applications, or both
           items:
-            $ref: '#/components/schemas/Application'
+            type: string
+            enum:
+            - User
+            - Application
           example: []
+        displayName:
+          type: string
+          description: Display name for the app role
+          example: example_value
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the app role
+          example: A sample description.
+        value:
+          type:
+          - string
+          - 'null'
+          description: Value that is included in the roles claim in authentication tokens
+          example: example_value
+        isEnabled:
+          type: boolean
+          description: Whether the app role is enabled
+          example: true
     PasswordCredential:
       type: object
       description: Represents a password credential (client secret) associated with an application or service principal
@@ -643,112 +749,6 @@ components:
             type: string
             format: uri
           example: []
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions for the requested operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    BadRequest:
-      description: Bad request - invalid input or malformed request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-  parameters:
-    Skip:
-      name: $skip
-      in: query
-      required: false
-      description: Number of items to skip in the result set
-      schema:
-        type: integer
-        minimum: 0
-    Select:
-      name: $select
-      in: query
-      required: false
-      description: Comma-separated list of properties to include in the response. If unspecified, a default set of properties is returned.
-      schema:
-        type: string
-      example: id,displayName,mail
-    Search:
-      name: $search
-      in: query
-      required: false
-      description: Search string to filter results using tokenized search across displayName and description properties. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: string
-      example: '"displayName:John"'
-    Count:
-      name: $count
-      in: query
-      required: false
-      description: Include a count of the total number of items in the collection. Requires ConsistencyLevel header set to eventual.
-      schema:
-        type: boolean
-    ConsistencyLevel:
-      name: ConsistencyLevel
-      in: header
-      required: false
-      description: Consistency level for advanced query capabilities. Set to 'eventual' to enable $count, $search, and advanced $filter.
-      schema:
-        type: string
-        enum:
-        - eventual
-    OrderBy:
-      name: $orderby
-      in: query
-      required: false
-      description: Comma-separated list of properties to sort results by
-      schema:
-        type: string
-      example: displayName asc
-    Top:
-      name: $top
-      in: query
-      required: false
-      description: Maximum number of items to return in the response
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 999
-    ApplicationId:
-      name: application-id
-      in: path
-      required: true
-      description: Unique identifier of the application (object ID, not appId)
-      schema:
-        type: string
-    Expand:
-      name: $expand
-      in: query
-      required: false
-      description: Comma-separated list of relationships to expand and include
-      schema:
-        type: string
-      example: memberOf
-    Filter:
-      name: $filter
-      in: query
-      required: false
-      description: OData filter expression to restrict the returned collection
-      schema:
-        type: string
-      example: startswith(displayName,'J')
   securitySchemes:
     oauth2:
       type: oauth2
