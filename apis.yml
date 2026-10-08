@@ -410,6 +410,8 @@ apis:
   - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview
 common:
+- type: FinOps
+  url: finops/microsoft-entra-finops.yml
 - type: VendorFacets
   url: vendor-facets/microsoft-entra-vendor-facets.yml
 - type: RateLimits
