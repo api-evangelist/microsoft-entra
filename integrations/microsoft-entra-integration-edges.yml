@@ -1,0 +1,16 @@
+generated: '2026-10-13'
+method: searched
+checked:
+- https://graph.microsoft.com/v1.0/applicationTemplates
+- https://learn.microsoft.com/entra/identity/saas-apps/
+marketplace_apps:
+- marketplace: own
+  channel: partner-built
+  app: microsoft-entra
+  url: https://learn.microsoft.com/entra/identity/saas-apps/
+  api: https://graph.microsoft.com/v1.0/applicationTemplates
+  app_count: null
+  adapter: sweep-identity.py:unreadable
+  listed: 0
+  status: not-machine-readable (HTTP 401; the app gallery is Graph /applicationTemplates, 401 without a tenant token)
+edges: []
