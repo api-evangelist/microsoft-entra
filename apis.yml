@@ -35,6 +35,18 @@ specificationVersion: '0.23'
 type: Index
 access: 3rd-Party
 tags:
+- Identity and Access Management
+- Authentication
+- Azure AD
+- Entra
+- Identity
+- Identity Governance
+- Microsoft
+- Network Security
+- Security
+- Zero Trust
+- Identity Federation
+tags_raw:
 - Access Management
 - Authentication
 - Azure AD
@@ -86,7 +98,7 @@ apis:
   tags:
   - Just-In-Time
   - Product Information Management
-  - Privileged Access
+  - Privileged Access Management
   - Role Management
   tags_raw:
   - Just-In-Time
