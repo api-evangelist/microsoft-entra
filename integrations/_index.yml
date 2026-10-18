@@ -107,7 +107,7 @@
     - alpha
     in_cloud: true
     builder: unknown (community connector; contributor not in the record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: microsoft-entra-fivetran
   label: Fivetran
@@ -133,5 +133,5 @@
     - connectors/applications/microsoft-entra-id
     vendor_link: https://www.microsoft.com/en-us/security/business/microsoft-entra
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
