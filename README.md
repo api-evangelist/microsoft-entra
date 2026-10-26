@@ -1,0 +1,434 @@
+# Microsoft Entra (microsoft-entra)
+
+<!-- API-EVANGELIST-PROVENANCE:BEGIN -->
+> ### About this repository
+>
+> **This is not our API.** This repository is an independent, third-party profile of a company's
+> **publicly available** API surface, maintained by [API Evangelist](https://apievangelist.com).
+> API Evangelist does not operate, host, resell, or support this company's APIs, and is not
+> affiliated with or endorsed by the company unless stated on the profile.
+>
+> **Where the information came from.** Everything here is assembled from material a member of the
+> public can reach with a browser and no credentials — the company's own website, developer portal
+> and documentation, the specifications it publishes for public use (OpenAPI, AsyncAPI, JSON Schema,
+> `apis.json`, `llms.txt` and similar), its public repositories, and its public status, pricing and
+> changelog pages. **Nothing here is obtained by breaching a system, defeating an access control, or
+> using credentials of any kind.**
+>
+> **The rating is an independent assessment.** The Kin Score and Agent Readiness rating are
+> independently calculated scores of a company's *public* API artifacts, produced by API Evangelist
+> against a published rubric. They are not certifications, endorsements, security assessments, or
+> audits, and they score published artifacts — not the quality, safety, or security of the software.
+>
+> **Corrections, re-scores, and removal are free.** No partnership, contract, or purchase is
+> required, and you do not need to justify the request.
+>
+> - **Something wrong?** Open an issue on this repository, or email
+>   [info@apievangelist.com](mailto:info@apievangelist.com).
+> - **Published something new?** Ask for a re-score and we will re-run the rating.
+> - **Want the listing taken down?** Say so and we will honor it. The profile is reduced to your
+>   company name, a factual description, and a link to your own site, and the company is recorded as
+>   **unrated** — never scored zero for having asked.
+>
+> **Response times.** Acknowledgement within **one business day**; removal or restriction within
+> **two business days**; corrections and re-scores within **five business days**.
+>
+> **Not from the company, and here with a question?** You are welcome here — we would rather be the
+> front line and point you the right way than have a good report go nowhere. What this repository
+> can answer is narrow, though, so it is worth knowing who you are actually looking for:
+>
+> - **A question about how the API works, an account, billing, or a bug in the service** — that is
+>   the company's own support, not us. We profile this API; we do not operate it and cannot see
+>   your account.
+> - **A bug in an open-source project we only catalog** — file it on that project's own repository.
+>   This has happened with a real and correct bug report that reached us instead of the people who
+>   could fix it, which helped nobody.
+> - **Anything about this listing itself** — the description, the tags, the rating, a missing or
+>   wrong artifact — is ours. Open an issue here.
+> - **Not sure, or something general about API Evangelist or APIs.io** — open an issue on the
+>   [APIs.io Inbox](https://github.com/api-search/inbox) and we will route it.
+>
+> **This repository contains no software, and we will never ask you to download anything.** There is
+> no build, release, installer, or binary here — only text and machine-readable API descriptions, so
+> there is nothing here that can be "corrupt" or need "repairing". Any issue, comment, or email
+> claiming otherwise and offering a download link is not from us and is hostile. Do not follow the
+> link; it is a lure. Report it to GitHub and, if you like, tell us at
+> [info@apievangelist.com](mailto:info@apievangelist.com) so we can take it down.
+>
+> **On a security or compliance team?** Email
+> [info@apievangelist.com](mailto:info@apievangelist.com) with *security* in the subject line and
+> you will get a person, not a form. We will tell you exactly which public URLs this profile was
+> built from so your team can see the same surface we did, and we will take the listing down on
+> request while you work through it.
+>
+> Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
+<!-- API-EVANGELIST-PROVENANCE:END -->
+
+Microsoft Entra (formerly Azure Active Directory) provides identity and access management services including authentication, authorization, and directory services.
+
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/microsoft-entra/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/microsoft-entra/refs/heads/main/apis.yml)
+
+## Scope
+
+- **Type:** Index
+- **Access:** 3rd-Party
+
+## Tags
+
+- Access Management
+- Authentication
+- Azure AD
+- Entra
+- Identity
+- Identity Governance
+- Microsoft
+- Network Security
+- Security
+- Zero Trust
+
+## Timestamps
+
+- **Created:** 2024-01-01
+- **Modified:** 2026-05-19
+
+## APIs
+
+### Microsoft Entra ID (Azure AD) API
+
+Core identity and access management API for user authentication, authorization, and directory management.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview](https://learn.microsoft.com/en-us/graph/azuread-identity-access-management-concept-overview)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Authentication
+- Authorization
+- Directory
+- Groups
+- Identity
+- Users
+
+#### Properties
+
+- [OpenAPI](openapi/microsoft-entra-graph-identity-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Documentation](https://learn.microsoft.com/en-us/entra/identity/)
+- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
+- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
+- [Pricing](https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing)
+- [Getting Started](https://learn.microsoft.com/en-us/graph/tutorial-applications-basics)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview)
+
+### Microsoft Entra ID Protection API
+
+API for identity risk detection, investigation, and remediation.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/identityprotection-overview](https://learn.microsoft.com/en-us/graph/api/resources/identityprotection-overview)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Identity Protection
+- Risk Detection
+- Security
+- Threat Protection
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/id-protection/)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/identityprotectionroot)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Conditional Access API
+
+API for managing conditional access policies and controls.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccessroot](https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccessroot)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Access Control
+- Conditional Access
+- Policies
+- Security
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccessroot)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Privileged Identity Management API
+
+API for managing privileged access and just-in-time administration.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview](https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Just-In-Time
+- PIM
+- Privileged Access
+- Role Management
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/privilegedidentitymanagementv3-overview)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Verified ID API
+
+API for issuing and verifying decentralized identity credentials.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/entra/verified-id/](https://learn.microsoft.com/en-us/entra/verified-id/)
+- **Base URL:** `https://verifiedid.did.msidentity.com/v1.0`
+
+#### Tags
+
+- Decentralized Identity
+- DID
+- SSI
+- Verifiable Credentials
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/verified-id/verifiable-credentials-configure-tenant)
+- [API Reference](https://learn.microsoft.com/en-us/entra/verified-id/get-started-request-api)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra External ID API
+
+API for managing customer and partner identity and access management.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/entra/external-id/](https://learn.microsoft.com/en-us/entra/external-id/)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- B2B
+- B2C
+- Customer Identity
+- External Identities
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/external-id/external-identities-overview)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/identity-network-access-overview)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra ID Governance API
+
+API for managing identity governance including access reviews, entitlement management, and lifecycle workflows to ensure the right people have the right access at the right time.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/identitygovernance-overview](https://learn.microsoft.com/en-us/graph/api/resources/identitygovernance-overview)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Access Reviews
+- Compliance
+- Entitlement Management
+- Identity Governance
+- Lifecycle Workflows
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/id-governance/identity-governance-overview)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/identitygovernance-overview)
+- [Getting Started](https://learn.microsoft.com/en-us/graph/tutorial-access-package-api)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Application Management API
+
+API for registering, configuring, and managing applications and service principals in Microsoft Entra ID.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/applications-concept-overview](https://learn.microsoft.com/en-us/graph/applications-concept-overview)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- App Registration
+- Applications
+- Credentials
+- OAuth
+- Service Principals
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/applications-api-overview)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/applications-api-overview)
+- [Getting Started](https://learn.microsoft.com/en-us/graph/tutorial-applications-basics)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Authentication Methods API
+
+API for managing user authentication methods including FIDO2 security keys, passwordless phone sign-in, Microsoft Authenticator, and MFA registration.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/authenticationmethods-overview](https://learn.microsoft.com/en-us/graph/api/resources/authenticationmethods-overview)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Authentication Methods
+- FIDO2
+- MFA
+- Passkeys
+- Passwordless
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/authenticationmethods-overview)
+- [Getting Started](https://learn.microsoft.com/en-us/graph/authenticationmethods-get-started)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Workload ID API
+
+API for managing and securing identities for software workloads such as applications, services, scripts, and containers.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/entra/workload-id/](https://learn.microsoft.com/en-us/entra/workload-id/)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Managed Identities
+- Service Principals
+- Workload Identities
+- Workload Identity Federation
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-overview)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Provisioning API
+
+API for automating user provisioning and deprovisioning using SCIM protocol, including API-driven inbound provisioning from any system of record.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/entra/identity/app-provisioning/inbound-provisioning-api-concepts](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/inbound-provisioning-api-concepts)
+- **Base URL:** `https://graph.microsoft.com/v1.0`
+
+#### Tags
+
+- Inbound Provisioning
+- Provisioning
+- SCIM
+- Synchronization
+- User Lifecycle
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/how-provisioning-works)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/synchronization-overview)
+- [Getting Started](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/inbound-provisioning-api-configure-app)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Global Secure Access API
+
+API for managing Microsoft Entra Internet Access and Microsoft Entra Private Access, providing identity-centric secure web gateway and zero-trust network access.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/entra/global-secure-access/overview-what-is-global-secure-access](https://learn.microsoft.com/en-us/entra/global-secure-access/overview-what-is-global-secure-access)
+- **Base URL:** `https://graph.microsoft.com/beta`
+
+#### Tags
+
+- Internet Access
+- Network Security
+- Private Access
+- Secure Web Gateway
+- Zero Trust
+- ZTNA
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/global-secure-access/)
+- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/networkaccess-global-secure-access-api-overview)
+- [Getting Started](https://learn.microsoft.com/en-us/graph/tutorial-entra-private-access)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Identity Platform API
+
+API endpoints for OAuth 2.0, OpenID Connect, and SAML authentication protocols enabling application integration with Microsoft Entra ID.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/entra/identity-platform/](https://learn.microsoft.com/en-us/entra/identity-platform/)
+- **Base URL:** `https://login.microsoftonline.com`
+
+#### Tags
+
+- Identity Platform
+- OAuth 2.0
+- OpenID Connect
+- SAML
+- Token Service
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/entra/identity-platform/)
+- [API Reference](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Microsoft Entra Agent ID API
+
+API for creating, securing, and monitoring AI agent identities, providing authentication, authorization, and lifecycle management for AI agents.
+
+- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/agentid-platform-overview](https://learn.microsoft.com/en-us/graph/api/resources/agentid-platform-overview)
+- **Base URL:** `https://graph.microsoft.com/beta`
+
+#### Tags
+
+- Agent Identity
+- Agent Registry
+- AI Agents
+- Machine Identity
+
+#### Properties
+
+- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/agentid-platform-overview)
+- [Getting Started](https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/interactive-agent-request-user-tokens)
+- [Postman Collection](collections/microsoft-entra-graph-identity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/microsoft-entra-graph-identity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
+- [Portal](https://entra.microsoft.com/)
+- [Getting Started](https://learn.microsoft.com/en-us/entra/fundamentals/)
+- [Blog](https://techcommunity.microsoft.com/t5/microsoft-entra-azure-ad-blog/bg-p/Identity)
+- [Support](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-get-support)
+- [Status Page](https://status.azure.com/)
+- [Terms of Service](https://www.microsoft.com/licensing/terms/)
+- [Privacy Policy](https://privacy.microsoft.com/)
+- [Changelog](https://learn.microsoft.com/en-us/entra/fundamentals/whats-new)
+- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
+- [GitHub Organization](https://github.com/microsoftgraph)
+- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
+- [Pricing](https://www.microsoft.com/en-us/security/business/microsoft-entra-pricing)
+- [JSON-LD](json-ld/microsoft-entra-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [JSON Schema](json-schema/microsoft-entra-user-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/microsoft-entra-application-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Features](undefined)
+- [Use Cases](undefined)
+- [Integrations](undefined)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
+**URL:** https://apievangelist.com/
